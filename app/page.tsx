@@ -174,8 +174,20 @@ export default function Home() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
+  const updateCartCount = () => {
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+    const total = cart.reduce(
+      (sum: number, item: { quantity: number }) => sum + item.quantity,
+      0
+    );
+    setCartCount(total);
+  };
+
   useEffect(() => {
-    updateCartCount();
+    const loadCart = () => {
+      updateCartCount();
+    };
+    loadCart();
   }, []);
 
   useEffect(() => {
@@ -192,15 +204,6 @@ export default function Home() {
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  const updateCartCount = () => {
-    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-    const total = cart.reduce(
-      (sum: number, item: { quantity: number }) => sum + item.quantity,
-      0
-    );
-    setCartCount(total);
   };
 
   const filteredProducts = products.filter((p) => p.category === selectedCategory);

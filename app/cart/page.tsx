@@ -17,10 +17,13 @@ export default function CartPage() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
   useEffect(() => {
-    const savedCart = localStorage.getItem("cart");
-    if (savedCart) {
-      setCartItems(JSON.parse(savedCart));
-    }
+    const loadCart = () => {
+      const savedCart = localStorage.getItem("cart");
+      if (savedCart) {
+        setCartItems(JSON.parse(savedCart));
+      }
+    };
+    loadCart();
   }, []);
 
   const persistCart = (items: CartItem[]) => {
@@ -57,7 +60,6 @@ export default function CartPage() {
   const uniqueCategories = new Set(cartItems.map(item => item.category));
   const shipping = uniqueCategories.size > 0 ? uniqueCategories.size * 50 : 0;
   
-  const tax = 0;
   const total = subtotal + shipping;
 
   return (
