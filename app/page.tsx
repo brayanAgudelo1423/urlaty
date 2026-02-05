@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { FaWhatsapp } from "react-icons/fa";
 
 interface Product {
   id: number;
@@ -170,10 +171,28 @@ const aliados = [
 export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState("Joyería");
   const [cartCount, setCartCount] = useState(0);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   useEffect(() => {
     updateCartCount();
   }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrolled = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      setScrollProgress(scrolled);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   const updateCartCount = () => {
     const cart = JSON.parse(localStorage.getItem("cart") || "[]");
@@ -202,58 +221,59 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      <header className="bg-black/90 border-b border-amber-500/30 backdrop-blur sticky top-0 z-50">
-        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex items-center space-x-2">
-              <svg className="w-8 h-8 text-amber-600" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+      <header className="bg-black sticky top-0 z-50 !bg-black">
+        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 bg-black">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <Image 
+                src="/joyeria/logo.png.jpg" 
+                alt="Urlaty Logo" 
+                width={50} 
+                height={50} 
+                className="object-contain"
+              />
+              <h1 className="text-2xl font-bold text-white">Urlaty_Handless</h1>
+            </div>
+            <Link
+              href="/cart"
+              className="relative p-2 text-zinc-200 hover:text-amber-400 transition"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
               </svg>
-              <h1 className="text-2xl font-bold text-white">Elegancia Joyería</h1>
-            </div>
-            <div className="flex flex-wrap items-center gap-4">
-              <a
-                href="#catalogo"
-                className="text-zinc-200 hover:text-amber-400 transition"
-              >
-                Ver catálogo
-              </a>
-              <a
-                href="#estilos"
-                className="text-zinc-200 hover:text-amber-400 transition"
-              >
-                Ver estilos
-              </a>
-              <Link
-                href="/cart"
-                className="relative p-2 text-zinc-200 hover:text-amber-400 transition"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-                {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-amber-500 text-black text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                    {cartCount}
-                  </span>
-                )}
-              </Link>
-            </div>
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-amber-500 text-black text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
+            </Link>
           </div>
         </nav>
       </header>
 
-      <section className="relative overflow-hidden bg-gradient-to-r from-black via-zinc-900 to-amber-900">
-        <div className="absolute inset-0 bg-black/50" />
+      <section className="relative overflow-hidden bg-black min-h-[500px] sm:min-h-[600px]">
+        {/* Imagen de fondo difuminada */}
+        <div className="absolute inset-0">
+          <Image
+            src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=1920&h=1080&fit=crop&q=80"
+            alt="Background"
+            fill
+            className="object-cover opacity-30 blur-sm"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/80" />
+        </div>
+        
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="max-w-2xl text-white">
             <p className="uppercase tracking-[0.3em] text-xs font-semibold text-amber-300">
-              Colección 2026
+              Colección con tiendas aliadas
             </p>
             <h2 className="text-4xl sm:text-5xl font-bold mt-4">
               Brilla con piezas que cuentan tu historia
             </h2>
             <p className="text-lg mt-4 text-zinc-200">
-              Joyas diseñadas para momentos únicos: compromiso, celebración y estilo diario.
+              descubre la magia de brillar y tener accesorios que te haras sentir unico.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <a
@@ -274,7 +294,7 @@ export default function Home() {
       </section>
 
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="bg-zinc-950/80 border border-amber-500/20 rounded-2xl p-6 sm:p-10">
+        <div className="bg-zinc-950/80 rounded-2xl p-6 sm:p-10">
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
             <div>
               <h3 className="text-2xl sm:text-3xl font-bold text-white">Tiendas aliadas</h3>
@@ -345,30 +365,30 @@ export default function Home() {
             </button>
           ))}
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
           {filteredProducts.map((product) => (
             <div
               key={product.id}
-              className="bg-zinc-900/80 border border-amber-500/20 rounded-xl shadow-lg overflow-hidden hover:shadow-amber-500/20 transition"
+              className="bg-zinc-900/80 border border-amber-500/20 rounded-lg shadow-lg overflow-hidden hover:shadow-amber-500/20 transition"
             >
-              <div className="relative h-64 bg-black">
+              <div className="relative h-40 sm:h-48 bg-black cursor-pointer" onClick={() => setSelectedImage(product.image)}>
                 <Image src={product.image} alt={product.name} fill className="object-cover" />
-                <span className="absolute top-4 right-4 bg-amber-500 text-black text-xs px-3 py-1 rounded-full font-semibold">
+                <span className="absolute top-2 right-2 bg-amber-500 text-black text-[10px] px-2 py-0.5 rounded-full font-semibold">
                   {product.category}
                 </span>
               </div>
-              <div className="p-6">
-                <h4 className="text-xl font-bold text-white mb-2">{product.name}</h4>
-                <p className="text-zinc-300 text-sm mb-4 line-clamp-2">
+              <div className="p-3">
+                <h4 className="text-sm sm:text-base font-bold text-white mb-1 line-clamp-1">{product.name}</h4>
+                <p className="text-zinc-300 text-xs mb-2 line-clamp-1">
                   {product.description}
                 </p>
-                <div className="flex justify-between items-center">
-                  <span className="text-2xl font-bold text-amber-400">
+                <div className="flex justify-between items-center gap-2">
+                  <span className="text-base sm:text-lg font-bold text-amber-400">
                     ${product.price.toLocaleString()}
                   </span>
                   <button
                     onClick={() => addToCart(product)}
-                    className="bg-amber-500 text-black px-5 py-2 rounded-full hover:bg-amber-400 transition font-medium"
+                    className="bg-amber-500 text-black px-3 py-1.5 text-xs sm:text-sm rounded-full hover:bg-amber-400 transition font-medium"
                   >
                     Agregar
                   </button>
@@ -382,15 +402,15 @@ export default function Home() {
       <section className="bg-zinc-950 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-10 items-center">
           <div>
-            <h3 className="text-3xl font-bold text-white">Sobre Elegancia Joyería</h3>
+            <h3 className="text-3xl font-bold text-white">Sobre Urlaty</h3>
             <p className="text-zinc-300 mt-4">
-              Desde 1995, creamos joyas que acompañan historias únicas. Trabajamos con
+              creamos joyas que acompañan historias únicas. Trabajamos con
               materiales premium y diseños exclusivos.
             </p>
             <div className="grid grid-cols-3 gap-4 mt-6">
               <div className="text-center">
-                <div className="text-3xl font-bold text-amber-400">30+</div>
-                <div className="text-sm text-zinc-300">Años</div>
+                <div className="text-3xl font-bold text-amber-400">30k</div>
+                <div className="text-sm text-zinc-300">Productos</div>
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold text-amber-400">10k+</div>
@@ -408,7 +428,7 @@ export default function Home() {
                 <div key={item} className="bg-zinc-900/80 border border-amber-500/20 p-6 rounded-lg">
                   <h4 className="font-semibold text-white">{item}</h4>
                   <p className="text-sm text-zinc-300 mt-2">
-                    Tu compra está respaldada por nuestro equipo experto.
+                    Tu compra es 100% certificada, segura, rapida y asesorada
                   </p>
                 </div>
               )
@@ -417,12 +437,51 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Botones flotantes lado izquierdo */}
+      <div className="fixed bottom-6 left-6 flex flex-col gap-4 z-40">
+        <a 
+          href="https://wa.me/?text=Hola" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="w-14 h-14 flex items-center justify-center bg-green-500 rounded-full shadow-lg hover:bg-green-600 transition"
+        >
+          <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421-7.403h-.004a9.87 9.87 0 00-4.935 1.24l-.339-.16-3.54 1.27 1.27-3.54-.16-.339A9.9 9.9 0 005.064 3.051c2.47-.003 4.99.542 7.351 1.64 2.36 1.099 4.454 2.742 6.115 4.74 1.66 1.998 2.708 4.508 2.711 7.097 0 5.424-4.39 9.814-9.814 9.814-2.505 0-4.905-.93-6.75-2.632l-.34-.255-3.66 1.32 1.32-3.66-.254-.34A9.865 9.865 0 015.064 21.88c5.424 0 9.814-4.39 9.814-9.814 0-2.62-.998-5.09-2.811-7.01-1.813-1.922-4.290-3.101-6.918-3.248z"/>
+          </svg>
+        </a>
+      </div>
+
+      {/* Botón flecha lado derecho */}
+      <div className="fixed bottom-6 right-6 z-40">
+        <button
+          onClick={scrollToTop}
+          className="relative w-14 h-14 flex items-center justify-center bg-black rounded-full shadow-lg hover:shadow-amber-500/50 transition"
+        >
+          <svg className="absolute w-14 h-14" viewBox="0 0 56 56">
+            <circle cx="28" cy="28" r="26" fill="none" stroke="rgba(217, 119, 6, 0.3)" strokeWidth="2" />
+            <circle
+              cx="28"
+              cy="28"
+              r="26"
+              fill="none"
+              stroke="#d97706"
+              strokeWidth="2"
+              strokeDasharray={`${163.36 * (scrollProgress / 100)} 163.36`}
+              style={{ transition: "stroke-dasharray 0.1s ease" }}
+            />
+          </svg>
+          <svg className="w-7 h-7 text-amber-500 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+          </svg>
+        </button>
+      </div>
+
       <footer className="bg-gray-900 text-white py-10 mt-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-3 gap-8">
           <div>
-            <h5 className="font-bold text-amber-400">Elegancia Joyería</h5>
+            <h5 className="font-bold text-amber-400">Elegancia Handless</h5>
             <p className="text-gray-400 text-sm mt-2">
-              Creando momentos inolvidables desde 1995.
+              Creando momentos inolvidables.
             </p>
           </div>
           <div>
@@ -440,12 +499,53 @@ export default function Home() {
             </ul>
           </div>
           <div>
-            <h5 className="font-bold mb-2">Contacto</h5>
-            <p className="text-sm text-gray-400">contacto@elegancia.com</p>
-            <p className="text-sm text-gray-400">+1 (555) 123-4567</p>
+            <h5 className="font-bold mb-2">Contacto de soporte</h5>
+            <p className="text-sm text-gray-400">3216974633</p>
+            <p className="text-sm text-gray-400"> (+57)3009902243</p>
           </div>
         </div>
       </footer>
+
+      {/* Modal para imagen grande */}
+      {selectedImage && (
+        <div
+          className="fixed inset-0 bg-black/90 z-[100] flex items-center justify-center p-4"
+          onClick={() => setSelectedImage(null)}
+        >
+          <button
+            onClick={() => setSelectedImage(null)}
+            className="absolute top-4 right-4 text-white hover:text-amber-400 transition z-[101]"
+          >
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+          <div className="relative max-w-5xl max-h-[90vh] w-full" onClick={(e) => e.stopPropagation()}>
+            <Image
+              src={selectedImage}
+              alt="Imagen ampliada"
+              width={1200}
+              height={800}
+              className="object-contain w-full h-full rounded-lg"
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Botón flotante WhatsApp */}
+      <a
+        href="https://wa.me/?text=Hola"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-6 left-6 z-50 flex items-center gap-3 group"
+      >
+        <div className="bg-green-500 w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:bg-green-600 transition-all hover:scale-110">
+          <FaWhatsapp className="w-7 h-7 text-white" />
+        </div>
+        <div className="bg-white px-4 py-2 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <p className="text-sm font-medium text-gray-800 whitespace-nowrap">¿En qué podemos ayudarte?</p>
+        </div>
+      </a>
     </div>
   );
 }

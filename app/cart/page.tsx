@@ -94,49 +94,54 @@ export default function CartPage() {
           </div>
         ) : (
           <div className="grid lg:grid-cols-3 gap-3 sm:gap-4">
-            <div className="lg:col-span-2 space-y-2">
+            <div className="lg:col-span-2 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
               {cartItems.map((item) => (
-                <div key={item.id} className="bg-zinc-900/80 border border-amber-500/20 rounded-lg shadow-lg p-2.5">
-                  <div className="flex flex-col items-center gap-2">
-                    <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-black flex-shrink-0">
-                      <Image src={item.image} alt={item.name} fill className="object-cover" />
-                    </div>
-                    <div className="text-center w-full">
-                      <h3 className="text-sm font-bold text-white mb-0.5">{item.name}</h3>
-                      <p className="text-xs text-zinc-400 mb-1">{item.category}</p>
-                      <p className="text-base font-bold text-amber-400">
-                        ${item.price.toLocaleString('es-CO')}
-                      </p>
-                    </div>
+                <div key={item.id} className="bg-zinc-900/80 border border-amber-500/20 rounded-lg shadow-lg overflow-hidden hover:shadow-amber-500/20 transition">
+                  <div className="relative h-32 sm:h-40 bg-black">
+                    <Image src={item.image} alt={item.name} fill className="object-cover" />
+                    <span className="absolute top-1.5 right-1.5 bg-amber-500 text-black text-[9px] px-1.5 py-0.5 rounded-full font-semibold">
+                      {item.category}
+                    </span>
                   </div>
-                  <div className="flex items-center justify-center gap-8 mt-2.5 pt-2.5 border-t border-amber-500/10">
-                    <div className="flex items-center space-x-2">
+                  <div className="p-2">
+                    <h3 className="text-xs sm:text-sm font-bold text-white mb-0.5 line-clamp-1">{item.name}</h3>
+                    <p className="text-[10px] text-zinc-300 mb-1.5 line-clamp-1">
+                      Cantidad: {item.quantity}
+                    </p>
+                    <div className="flex justify-between items-center gap-1 mb-1.5">
+                      <span className="text-sm sm:text-base font-bold text-amber-400">
+                        ${item.price.toLocaleString()}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between gap-1">
+                      <div className="flex items-center space-x-0.5">
+                        <button
+                          onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                          className="w-5 h-5 rounded-full bg-zinc-800 hover:bg-amber-500 hover:text-black transition flex items-center justify-center font-bold text-[10px]"
+                        >
+                          -
+                        </button>
+                        <span className="text-xs font-semibold w-5 text-center text-white">{item.quantity}</span>
+                        <button
+                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                          className="w-5 h-5 rounded-full bg-zinc-800 hover:bg-amber-500 hover:text-black transition flex items-center justify-center font-bold text-[10px]"
+                        >
+                          +
+                        </button>
+                      </div>
                       <button
-                        onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                        className="w-7 h-7 rounded-full bg-zinc-800 hover:bg-amber-500 hover:text-black transition flex items-center justify-center font-bold text-sm"
+                        onClick={() => removeItem(item.id)}
+                        className="text-red-400 hover:text-red-300 transition font-medium text-[9px]"
                       >
-                        <span>-</span>
-                      </button>
-                      <span className="text-base font-semibold w-7 text-center text-white">{item.quantity}</span>
-                      <button
-                        onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                        className="w-7 h-7 rounded-full bg-zinc-800 hover:bg-amber-500 hover:text-black transition flex items-center justify-center font-bold text-sm"
-                      >
-                        <span>+</span>
+                        Eliminar
                       </button>
                     </div>
-                    <button
-                      onClick={() => removeItem(item.id)}
-                      className="text-red-400 hover:text-red-300 transition font-medium text-xs"
-                    >
-                      Eliminar
-                    </button>
                   </div>
                 </div>
               ))}
               <button
                 onClick={clearCart}
-                className="w-full py-2.5 text-red-400 hover:text-red-300 transition font-medium text-sm"
+                className="w-full py-2.5 text-red-400 hover:text-red-300 transition font-medium text-sm text-center"
               >
                 Vaciar carrito
               </button>

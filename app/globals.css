@@ -20,7 +20,21 @@
 }
 
 body {
-  background: var(--background);
+  background: linear-gradient(135deg, #000000 0%, #1a0f0a 15%, #4a3018 30%, #8b6914 45%, #c9941a 50%, #8b6914 55%, #4a3018 70%, #1a0f0a 85%, #000000 100%);
+  background-attachment: fixed;
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+}
+
+/* Eliminar separaciones entre secciones */
+header, section, footer {
+  background: transparent !important;
+  border: none !important;
+}
+
+section {
+  padding-top: 2rem !important;
+  padding-bottom: 2rem !important;
+  margin: 0 !important;
 }
