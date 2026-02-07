@@ -15,6 +15,13 @@ interface CartItem {
 
 export default function CartPage() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const assetBasePath = process.env.NODE_ENV === "production" ? "/urlaty" : "";
+  const withBasePath = (src: string) => {
+    if (src.startsWith("http") || src.startsWith(assetBasePath)) {
+      return src;
+    }
+    return `${assetBasePath}${src}`;
+  };
 
   useEffect(() => {
     const loadCart = () => {
@@ -104,7 +111,7 @@ export default function CartPage() {
               {cartItems.map((item) => (
                 <div key={item.id} className="bg-zinc-900/80 border border-amber-500/20 rounded-lg shadow-lg overflow-hidden hover:shadow-amber-500/20 transition">
                   <div className="relative h-32 sm:h-40 bg-black">
-                    <Image src={item.image} alt={item.name} fill className="object-cover" />
+                    <Image src={withBasePath(item.image)} alt={item.name} fill className="object-cover" />
                     <span className="absolute top-1.5 right-1.5 bg-amber-500 text-black text-[9px] px-1.5 py-0.5 rounded-full font-semibold">
                       {item.category}
                     </span>

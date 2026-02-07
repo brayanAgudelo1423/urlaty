@@ -111,7 +111,7 @@ const products: Product[] = [
     price: 459,
     category: "Oro laminado 18K",
     image:
-      "/joyeria/comboPul.jpeg",
+      "/joyeria/ComboPul.jpeg",
     description:
       "Dije lunar en oro de 10k con cadena fina y elegante.",
   },
@@ -173,6 +173,13 @@ export default function Home() {
   const [cartCount, setCartCount] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const assetBasePath = process.env.NODE_ENV === "production" ? "/urlaty" : "";
+  const withBasePath = (src: string) => {
+    if (src.startsWith("http") || src.startsWith(assetBasePath)) {
+      return src;
+    }
+    return `${assetBasePath}${src}`;
+  };
 
   const updateCartCount = () => {
     const cart = JSON.parse(localStorage.getItem("cart") || "[]");
@@ -375,7 +382,7 @@ export default function Home() {
               className="bg-zinc-900/80 border border-amber-500/20 rounded-lg shadow-lg overflow-hidden hover:shadow-amber-500/20 transition"
             >
               <div className="relative h-40 sm:h-48 bg-black cursor-pointer" onClick={() => setSelectedImage(product.image)}>
-                <Image src={product.image} alt={product.name} fill className="object-cover" />
+                <Image src={withBasePath(product.image)} alt={product.name} fill className="object-cover" />
                 <span className="absolute top-2 right-2 bg-amber-500 text-black text-[10px] px-2 py-0.5 rounded-full font-semibold">
                   {product.category}
                 </span>
@@ -525,7 +532,7 @@ export default function Home() {
           </button>
           <div className="relative max-w-5xl max-h-[90vh] w-full" onClick={(e) => e.stopPropagation()}>
             <Image
-              src={selectedImage}
+              src={withBasePath(selectedImage ?? "")}
               alt="Imagen ampliada"
               width={1200}
               height={800}
