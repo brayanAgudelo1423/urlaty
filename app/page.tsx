@@ -19,9 +19,9 @@ const products: Product[] = [
     id: 1,
     name: "Anillo demo",
     price: 2499,
-    category: "Joyería",
+    category: "Oro laminado 18K",
     image:
-      "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=900&h=900&fit=crop",
+      "/joyeria/combito.jpeg",
     description:
       "Elegante anillo con diamante solitario de 1 quilate en oro blanco de 18k.",
   },
@@ -29,9 +29,9 @@ const products: Product[] = [
     id: 2,
     name: "Collar de Perlas",
     price: 899,
-    category: "Joyería",
+    category: "Oro laminado 18K",
     image:
-      "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=900&h=900&fit=crop",
+      "/joyeria/rolex grande.jpeg",
     description:
       "Collar de perlas cultivadas naturales con cierre de plata 925.",
   },
@@ -39,9 +39,9 @@ const products: Product[] = [
     id: 3,
     name: "Aretes de Esmeralda",
     price: 1599,
-    category: "Joyería",
+    category: "Oro laminado 18K",
     image:
-      "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=900&h=900&fit=crop",
+      "/joyeria/3k.jpeg",
     description:
       "Aretes con esmeraldas colombianas y diamantes en oro amarillo.",
   },
@@ -49,9 +49,9 @@ const products: Product[] = [
     id: 4,
     name: "Pulsera de Oro Rosa",
     price: 749,
-    category: "Joyería",
+    category: "Oro laminado 18K",
     image:
-      "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=900&h=900&fit=crop",
+      "/joyeria/pulseras viej.jpeg",
     description:
       "Pulsera tejida en oro rosa de 14k con detalles de circonitas.",
   },
@@ -59,9 +59,9 @@ const products: Product[] = [
     id: 5,
     name: "Anillo Compromiso Corona",
     price: 3299,
-    category: "Joyería",
+    category: "Oro laminado 18K",
     image:
-      "https://images.unsplash.com/photo-1603561596112-0a132b757442?w=900&h=900&fit=crop",
+      "/joyeria/aguila comb.jpeg",
     description:
       "Diseño corona con diamante central y halo de brillantes.",
   },
@@ -69,9 +69,9 @@ const products: Product[] = [
     id: 6,
     name: "Collar Infinity Gold",
     price: 599,
-    category: "Joyería",
+    category: "Oro laminado 18K",
     image:
-      "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=900&h=900&fit=crop",
+      "/joyeria/pulsera sanVieja.jpeg",
     description:
       "Collar símbolo infinito en oro de 10k con cadena ajustable.",
   },
@@ -79,9 +79,9 @@ const products: Product[] = [
     id: 7,
     name: "Aretes Diamante Clásicos",
     price: 1899,
-    category: "Joyería",
+    category: "Oro laminado 18K",
     image:
-      "https://images.unsplash.com/photo-1588444650733-4d6155e7c935?w=900&h=900&fit=crop",
+      "/joyeria/virgenVieja.jpeg",
     description:
       "Aretes tipo stud con diamantes certificados de 0.5ct.",
   },
@@ -89,9 +89,9 @@ const products: Product[] = [
     id: 8,
     name: "Pulsera Tennis Brillantes",
     price: 2199,
-    category: "Joyería",
+    category: "Oro laminado 18K",
     image:
-      "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=900&h=900&fit=crop",
+      "/joyeria/cruz con gucci.jpeg",
     description:
       "Pulsera tennis con circonitas AAA en plata rodiada.",
   },
@@ -99,9 +99,9 @@ const products: Product[] = [
     id: 9,
     name: "Anillo Zafiro Azul",
     price: 1799,
-    category: "Joyería",
+    category: "Oro laminado 18K",
     image:
-      "https://images.unsplash.com/photo-1590408694841-3a8a63a4c5d1?w=900&h=900&fit=crop",
+      "/joyeria/comboViejo.jpeg",
     description:
       "Zafiro azul natural rodeado de diamantes en oro blanco.",
   },
@@ -109,9 +109,9 @@ const products: Product[] = [
     id: 10,
     name: "Collar Luna Dorada",
     price: 459,
-    category: "Joyería",
+    category: "Oro laminado 18K",
     image:
-      "https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=900&h=900&fit=crop",
+      "/joyeria/comboPul.jpeg",
     description:
       "Dije lunar en oro de 10k con cadena fina y elegante.",
   },
@@ -119,9 +119,9 @@ const products: Product[] = [
     id: 11,
     name: "Aretes Gota de Cristal",
     price: 329,
-    category: "Joyería",
+    category: "Oro laminado 18K",
     image:
-      "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=900&h=900&fit=crop",
+      "/joyeria/combo san.jpeg",
     description:
       "Aretes con cristales tallados y baño en oro.",
   },
@@ -129,15 +129,15 @@ const products: Product[] = [
     id: 12,
     name: "Pulsera Estelar",
     price: 699,
-    category: "Joyería",
+    category: "Oro laminado 18K",
     image:
-      "https://images.unsplash.com/photo-1518544801976-3e159e50e5bb?w=900&h=900&fit=crop",
+      "/joyeria/pulseraHiloVieja.jpeg",
     description:
       "Pulsera con charms de estrellas y detalles en plata 925.",
   },
 ];
 
-const categories = ["Joyería"];
+const categories = ["Plata ley 925", "Oro laminado 18K"];
 
 const styles = [
   {
@@ -169,7 +169,7 @@ const aliados = [
 ];
 
 export default function Home() {
-  const [selectedCategory, setSelectedCategory] = useState("Joyería");
+  const [selectedCategory, setSelectedCategory] = useState("Oro laminado 18K");
   const [cartCount, setCartCount] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -350,7 +350,7 @@ export default function Home() {
         <div className="text-center mb-10">
           <h3 className="text-3xl font-bold text-white">Catálogo</h3>
           <p className="text-zinc-300 mt-2">
-            Selecciona una categoría para encontrar tu joya perfecta.
+            Joyas que fueron muy destacadas 
           </p>
         </div>
         <div className="flex flex-wrap justify-center gap-4 mb-10">

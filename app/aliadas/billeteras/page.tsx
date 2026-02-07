@@ -103,30 +103,22 @@ export default function BilleterasPage() {
           </Link>
         </div>
 
-        <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-          {items.map((item) => (
-            <div
-              key={item.id}
-              className="rounded-lg border border-amber-500/20 bg-zinc-900/80 overflow-hidden"
-            >
-              <div className="relative h-40 sm:h-48 bg-black cursor-pointer" onClick={() => setSelectedImage(item.image)}>
-                <Image src={item.image} alt={item.name} fill className="object-cover" />
-              </div>
-              <div className="p-3">
-                <h3 className="text-sm sm:text-base font-semibold text-white line-clamp-1">{item.name}</h3>
-                <p className="text-xs text-zinc-300 mt-1 line-clamp-1">{item.description}</p>
-                <div className="mt-2 flex items-center justify-between gap-2">
-                  <span className="text-base sm:text-lg text-amber-300 font-semibold">${item.price}</span>
-                  <button
-                    onClick={() => addToCart(item)}
-                    className="rounded-full bg-amber-500 text-black px-3 py-1.5 text-xs sm:text-sm font-semibold hover:bg-amber-400 transition"
-                  >
-                    {addedId === item.id ? "✓" : "Agregar"}
-                  </button>
-                </div>
-              </div>
+        <div className="mt-16 flex items-center justify-center min-h-[400px]">
+          <div className="max-w-md w-full">
+            <div className="text-center">
+              <div className="text-6xl mb-6">🔄</div>
+              <h2 className="text-3xl font-bold text-white mb-4">Aún no disponible</h2>
+              <p className="text-zinc-300 mb-8">
+                Esta tienda aliada abrirá pronto. Estamos preparando una increíble colección de billeteras para ti.
+              </p>
+              <Link
+                href="/"
+                className="inline-block bg-amber-500 text-black px-8 py-3 rounded-full font-semibold hover:bg-amber-400 transition"
+              >
+                Volver al inicio
+              </Link>
             </div>
-          ))}
+          </div>
         </div>
       </div>
 
