@@ -17,10 +17,13 @@ export default function CartPage() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const assetBasePath = process.env.NODE_ENV === "production" ? "/urlaty" : "";
   const withBasePath = (src: string) => {
-    if (src.startsWith("http") || src.startsWith(assetBasePath)) {
+    if (src.startsWith("http")) {
       return src;
     }
-    return `${assetBasePath}${src}`;
+    if (src.startsWith(assetBasePath)) {
+      return encodeURI(src);
+    }
+    return encodeURI(`${assetBasePath}${src}`);
   };
 
   useEffect(() => {
@@ -76,7 +79,7 @@ export default function CartPage() {
           <div className="flex justify-between items-center">
             <Link href="/" className="flex items-center space-x-2">
               <Image 
-                src={`${process.env.NODE_ENV === 'production' ? '/urlaty' : ''}/joyeria/logo.png.jpg`}
+                src={withBasePath("/joyeria/logo.png.jpg")}
                 alt="Urlaty Logo" 
                 width={40} 
                 height={40} 

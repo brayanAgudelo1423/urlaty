@@ -175,10 +175,13 @@ export default function Home() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const assetBasePath = process.env.NODE_ENV === "production" ? "/urlaty" : "";
   const withBasePath = (src: string) => {
-    if (src.startsWith("http") || src.startsWith(assetBasePath)) {
+    if (src.startsWith("http")) {
       return src;
     }
-    return `${assetBasePath}${src}`;
+    if (src.startsWith(assetBasePath)) {
+      return encodeURI(src);
+    }
+    return encodeURI(`${assetBasePath}${src}`);
   };
 
   const updateCartCount = () => {
