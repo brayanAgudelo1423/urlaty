@@ -4,6 +4,7 @@ const nextConfig: NextConfig = {
   output: "export",
   basePath: "/urlaty",
   assetPrefix: "/urlaty",
+  trailingSlash: true,
   
   images: {
     unoptimized: true,
