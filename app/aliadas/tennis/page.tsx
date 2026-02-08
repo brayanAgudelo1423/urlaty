@@ -2,8 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { FaWhatsapp } from "react-icons/fa";
+import { FaInstagram, FaWhatsapp } from "react-icons/fa";
 
 interface Product {
   id: number;
@@ -14,6 +15,7 @@ interface Product {
 }
 
 export default function TennisPage() {
+  const router = useRouter();
   const [addedId, setAddedId] = useState<number | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -34,13 +36,28 @@ export default function TennisPage() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const handleBack = () => {
+    if (typeof window === "undefined") {
+      return;
+    }
+    if (window.history.length > 1) {
+      router.back();
+      return;
+    }
+    if (document.referrer) {
+      window.location.href = document.referrer;
+      return;
+    }
+    router.push("/");
+  };
+
   const items: Product[] = [
     {
       id: 31,
       name: "Urban Gold",
       price: 280,
       image:
-        "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=900&h=900&fit=crop",
+        "/tennis/tennisTwo.jpeg",
       description: "Suela cómoda con detalles dorados.",
     },
     {
@@ -48,7 +65,7 @@ export default function TennisPage() {
       name: "Sport Luxe",
       price: 320,
       image:
-        "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=900&h=900&fit=crop",
+        "/tennis/tennisOne.jpeg",
       description: "Amortiguación premium y estilo moderno.",
     },
     {
@@ -56,7 +73,7 @@ export default function TennisPage() {
       name: "Minimal White",
       price: 240,
       image:
-        "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=900&h=900&fit=crop",
+        "/tennis/tennisThree.jpeg",
       description: "Estilo limpio y elegante.",
     },
     {
@@ -64,8 +81,16 @@ export default function TennisPage() {
       name: "Edición Gold",
       price: 350,
       image:
-        "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=900&h=900&fit=crop",
+        "/tennis/tennisFour.jpeg",
       description: "Acabados metálicos exclusivos.",
+    },
+    {
+      id: 35,
+      name: "Street Runner",
+      price: 295,
+      image:
+        "/tennis/tennisFive.jpeg",
+      description: "Diseño urbano con suela liviana.",
     },
   ];
 
@@ -89,9 +114,13 @@ export default function TennisPage() {
       <div className="max-w-5xl mx-auto">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <Link href="/" className="text-amber-300 hover:text-amber-200">
+            <button
+              type="button"
+              onClick={handleBack}
+              className="text-amber-300 hover:text-amber-200"
+            >
               ← Volver
-            </Link>
+            </button>
             <h1 className="text-3xl sm:text-4xl font-bold mt-3">Tennis</h1>
             <p className="text-zinc-300 mt-2">
               Sneakers premium con detalles metálicos y confort.
@@ -130,6 +159,21 @@ export default function TennisPage() {
             </div>
           ))}
         </div>
+
+        <div className="mt-8 rounded-2xl border border-amber-500/20 bg-zinc-900/80 p-5 text-center">
+          <p className="text-sm sm:text-base text-zinc-200">
+            Para estar mas enterados de los nuevos stylos y tendencias de tennis ir a este Instagram
+          </p>
+          <a
+            href="https://www.instagram.com/paradaisegil_urban?igsh=MXA0ZjYzYTg0Yjlucg=="
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-4 inline-flex items-center justify-center gap-3 rounded-full border border-amber-500/40 bg-black/60 px-5 py-3 text-amber-200 hover:bg-amber-500/10 transition"
+          >
+            <FaInstagram className="h-5 w-5" />
+            <span className="text-sm sm:text-base font-semibold">Instagram</span>
+          </a>
+        </div>
       </div>
 
       {/* Botón flecha lado derecho */}
@@ -165,9 +209,10 @@ export default function TennisPage() {
         >
           <button
             onClick={() => setSelectedImage(null)}
-            className="absolute top-4 right-4 text-white hover:text-amber-400 transition z-[101]"
+            className="absolute -top-4 -right-4 sm:top-3 sm:right-3 bg-black/80 border border-amber-500/40 text-white rounded-full w-9 h-9 flex items-center justify-center hover:text-amber-400 transition z-[101]"
+            aria-label="Cerrar"
           >
-            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>

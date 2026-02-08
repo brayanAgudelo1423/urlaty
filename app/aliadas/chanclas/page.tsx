@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaWhatsapp } from "react-icons/fa";
 
@@ -14,6 +15,7 @@ interface Product {
 }
 
 export default function ChanclasPage() {
+  const router = useRouter();
   const [addedId, setAddedId] = useState<number | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -32,6 +34,21 @@ export default function ChanclasPage() {
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleBack = () => {
+    if (typeof window === "undefined") {
+      return;
+    }
+    if (window.history.length > 1) {
+      router.back();
+      return;
+    }
+    if (document.referrer) {
+      window.location.href = document.referrer;
+      return;
+    }
+    router.push("/");
   };
 
   const items: Product[] = [
@@ -89,9 +106,13 @@ export default function ChanclasPage() {
       <div className="max-w-5xl mx-auto">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <Link href="/" className="text-amber-300 hover:text-amber-200">
+            <button
+              type="button"
+              onClick={handleBack}
+              className="text-amber-300 hover:text-amber-200"
+            >
               ← Volver
-            </Link>
+            </button>
             <h1 className="text-3xl sm:text-4xl font-bold mt-3">Chanclas</h1>
             <p className="text-zinc-300 mt-2">Comodidad y estilo con detalles dorados.</p>
           </div>
@@ -163,9 +184,10 @@ export default function ChanclasPage() {
         >
           <button
             onClick={() => setSelectedImage(null)}
-            className="absolute top-4 right-4 text-white hover:text-amber-400 transition z-[101]"
+            className="absolute -top-4 -right-4 sm:top-3 sm:right-3 bg-black/80 border border-amber-500/40 text-white rounded-full w-9 h-9 flex items-center justify-center hover:text-amber-400 transition z-[101]"
+            aria-label="Cerrar"
           >
-            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>

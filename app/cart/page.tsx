@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface CartItem {
@@ -14,7 +15,26 @@ interface CartItem {
 }
 
 export default function CartPage() {
+  const router = useRouter();
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const checkoutPhone = "3216974633";
+  const checkoutMessageBase =
+    "hola, estos son los productos que quiero adquirir, me das los numeros de cuentas para consignarte y ya te mando is datos para el envio o dimicilio";
+  const handleBack = () => {
+    if (typeof window === "undefined") {
+      return;
+    }
+    if (window.history.length > 1) {
+      router.back();
+      return;
+    }
+    if (document.referrer) {
+      window.location.href = document.referrer;
+      return;
+    }
+    router.push("/");
+  };
   const assetBasePath = process.env.NODE_ENV === "production" ? "/urlaty" : "";
   const withBasePath = (src: string) => {
     if (src.startsWith("http")) {
@@ -71,11 +91,38 @@ export default function CartPage() {
   const shipping = uniqueCategories.size > 0 ? uniqueCategories.size * 50 : 0;
   
   const total = subtotal + shipping;
+  const normalizePhone = (value: string) => value.replace(/\D/g, "");
+  const buildCheckoutMessage = () => {
+    const lines = cartItems
+      .map((item) => {
+        const itemTotal = item.price * item.quantity;
+        return `- ${item.name} x${item.quantity} - $${itemTotal.toLocaleString("es-CO")}`;
+      })
+      .join("\n");
+    return [
+      checkoutMessageBase.trim(),
+      "",
+      "Productos:",
+      lines,
+      "",
+      `Total: $${total.toLocaleString("es-CO")}`,
+    ].join("\n");
+  };
+  const handleCheckout = () => {
+    if (typeof window === "undefined" || cartItems.length === 0) {
+      return;
+    }
+    const rawPhone = normalizePhone(checkoutPhone);
+    const phone = rawPhone.length === 10 ? `57${rawPhone}` : rawPhone;
+    const message = buildCheckoutMessage();
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
 
   return (
     <div className="min-h-screen bg-black text-white">
-      <header className="bg-black/90 border-b border-amber-500/30 sticky top-0 z-50">
-        <nav className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3">
+      <header className="bg-black sticky top-0 z-50 !bg-black">
+        <nav className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3 bg-black">
           <div className="flex justify-between items-center">
             <Link href="/" className="flex items-center space-x-2">
               <Image 
@@ -87,9 +134,13 @@ export default function CartPage() {
               />
               <h1 className="text-lg sm:text-2xl font-bold text-white">Urlaty</h1>
             </Link>
-            <Link href="/#catalogo" className="text-zinc-200 hover:text-amber-400 transition text-sm sm:text-base">
+            <button
+              type="button"
+              onClick={handleBack}
+              className="text-zinc-200 hover:text-amber-400 transition text-sm sm:text-base"
+            >
               ← Volver
-            </Link>
+            </button>
           </div>
         </nav>
       </header>
@@ -113,7 +164,10 @@ export default function CartPage() {
             <div className="lg:col-span-2 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
               {cartItems.map((item) => (
                 <div key={item.id} className="bg-zinc-900/80 border border-amber-500/20 rounded-lg shadow-lg overflow-hidden hover:shadow-amber-500/20 transition">
-                  <div className="relative h-32 sm:h-40 bg-black">
+                  <div
+                    className="relative h-32 sm:h-40 bg-black cursor-pointer"
+                    onClick={() => setSelectedImage(item.image)}
+                  >
                     <Image src={withBasePath(item.image)} alt={item.name} fill className="object-cover" />
                     <span className="absolute top-1.5 right-1.5 bg-amber-500 text-black text-[9px] px-1.5 py-0.5 rounded-full font-semibold">
                       {item.category}
@@ -165,7 +219,10 @@ export default function CartPage() {
 
             <div className="lg:col-span-1">
               <div className="bg-zinc-900/80 border border-amber-500/20 rounded-lg shadow-lg p-4 sticky top-20">
-                <h3 className="text-base sm:text-lg font-bold text-white mb-3">Resumen</h3>
+                <h3 className="text-base sm:text-lg font-bold text-white mb-3"></h3>
+                <p className="mt-1 mb-3 text-[11px] sm:text-xs text-zinc-300 text-center">
+                  Aceptamos pagos en efectivo y transferencias: Bancolombia, Daviplata, Davivienda, Nequi, entre otras entidades.
+                </p>
                 <div className="space-y-2 mb-4">
                   <div className="flex justify-between text-xl font-bold text-white">
                     <span>Total</span>
@@ -174,7 +231,11 @@ export default function CartPage() {
                     </span>
                   </div>
                 </div>
-                <button className="w-full bg-amber-500 text-black py-3 rounded-full hover:bg-amber-400 transition font-semibold text-sm">
+                <button
+                  type="button"
+                  onClick={handleCheckout}
+                  className="w-full bg-amber-500 text-black py-3 rounded-full hover:bg-amber-400 transition font-semibold text-sm"
+                >
                   Proceder al pago
                 </button>
                 <Link
@@ -188,6 +249,34 @@ export default function CartPage() {
           </div>
         )}
       </div>
+      {selectedImage && (
+        <div
+          className="fixed inset-0 bg-black/90 z-[100] flex items-center justify-center p-4"
+          onClick={() => setSelectedImage(null)}
+        >
+          <div
+            className="relative w-full max-w-3xl max-h-[80vh]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute -top-4 -right-4 sm:top-3 sm:right-3 bg-black/80 border border-amber-500/40 text-white rounded-full w-9 h-9 flex items-center justify-center hover:text-amber-400 transition z-[101]"
+              aria-label="Cerrar"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            <Image
+              src={withBasePath(selectedImage ?? "")}
+              alt="Imagen ampliada"
+              width={1000}
+              height={700}
+              className="object-contain w-full h-full rounded-lg"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
