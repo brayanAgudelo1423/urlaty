@@ -73,7 +73,7 @@ export default function TennisPage() {
       name: "Minimal White",
       price: 240,
       image:
-        "/tennis/tennisThree.jpeg",
+        "/tennis/TennisThree.jpeg",
       description: "Estilo limpio y elegante.",
     },
     {
