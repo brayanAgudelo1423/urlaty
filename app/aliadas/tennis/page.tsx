@@ -19,6 +19,16 @@ export default function TennisPage() {
   const [addedId, setAddedId] = useState<number | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const assetBasePath = process.env.NODE_ENV === "production" ? "/urlaty" : "";
+  const withBasePath = (src: string) => {
+    if (src.startsWith("http")) {
+      return src;
+    }
+    if (src.startsWith(assetBasePath)) {
+      return encodeURI(src);
+    }
+    return encodeURI(`${assetBasePath}${src}`);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -141,7 +151,7 @@ export default function TennisPage() {
               className="rounded-lg border border-amber-500/20 bg-zinc-900/80 overflow-hidden"
             >
               <div className="relative h-40 sm:h-48 bg-black cursor-pointer" onClick={() => setSelectedImage(item.image)}>
-                <Image src={item.image} alt={item.name} fill className="object-cover" />
+                <Image src={withBasePath(item.image)} alt={item.name} fill className="object-cover" />
               </div>
               <div className="p-3">
                 <h3 className="text-sm sm:text-base font-semibold text-white line-clamp-1">{item.name}</h3>
@@ -218,7 +228,7 @@ export default function TennisPage() {
           </button>
           <div className="relative max-w-5xl max-h-[90vh] w-full" onClick={(e) => e.stopPropagation()}>
             <Image
-              src={selectedImage}
+              src={withBasePath(selectedImage)}
               alt="Imagen ampliada"
               width={1200}
               height={800}
