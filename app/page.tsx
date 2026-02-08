@@ -17,123 +17,123 @@ interface Product {
 const products: Product[] = [
   {
     id: 1,
-    name: "Anillo demo",
-    price: 2499,
+    name: "Combo one dios",
+    price: 310000,
     category: "Oro laminado 18K",
     image:
       "/joyeria/combito.jpeg",
     description:
-      "Elegante anillo con diamante solitario de 1 quilate en oro blanco de 18k.",
+      "Combo pulsera, dos dijes y cadena",
   },
   {
     id: 2,
-    name: "Collar de Perlas",
-    price: 899,
+    name: "Pulsera RX grande",
+    price: 185000,
     category: "Oro laminado 18K",
     image:
       "/joyeria/rolex grande.jpeg",
     description:
-      "Collar de perlas cultivadas naturales con cierre de plata 925.",
+      "Pulsera RX grande con balineria",
   },
   {
     id: 3,
-    name: "Aretes de Esmeralda",
-    price: 1599,
+    name: "3 carriles",
+    price: 120000,
     category: "Oro laminado 18K",
     image:
       "/joyeria/3k.jpeg",
     description:
-      "Aretes con esmeraldas colombianas y diamantes en oro amarillo.",
+      "3 carriles elegante",
   },
   {
     id: 4,
-    name: "Pulsera de Oro Rosa",
-    price: 749,
+    name: "Pulseras",
+    price: 85000,
     category: "Oro laminado 18K",
     image:
       "/joyeria/pulseras viej.jpeg",
     description:
-      "Pulsera tejida en oro rosa de 14k con detalles de circonitas.",
+      "Pulseras ",
   },
   {
     id: 5,
-    name: "Anillo Compromiso Corona",
-    price: 3299,
+    name: "Combo aguila",
+    price: 220000,
     category: "Oro laminado 18K",
     image:
       "/joyeria/aguila comb.jpeg",
     description:
-      "Diseño corona con diamante central y halo de brillantes.",
+      "cadena, dije y aretes ",
   },
   {
     id: 6,
-    name: "Collar Infinity Gold",
-    price: 599,
+    name: "pulsera san miguel",
+    price: 105000,
     category: "Oro laminado 18K",
     image:
       "/joyeria/pulsera sanVieja.jpeg",
     description:
-      "Collar símbolo infinito en oro de 10k con cadena ajustable.",
+      "Pulsera san miguel en oro laminado 18K.",
   },
   {
     id: 7,
-    name: "Aretes Diamante Clásicos",
-    price: 1899,
+    name: "cadena virgen de guadalupe",
+    price: 180000,
     category: "Oro laminado 18K",
     image:
       "/joyeria/virgenVieja.jpeg",
     description:
-      "Aretes tipo stud con diamantes certificados de 0.5ct.",
+      "cadena con dije de la virgen ",
   },
   {
     id: 8,
-    name: "Pulsera Tennis Brillantes",
-    price: 2199,
+    name: "combo cruz gucci",
+    price: 200000,
     category: "Oro laminado 18K",
     image:
       "/joyeria/cruz con gucci.jpeg",
     description:
-      "Pulsera tennis con circonitas AAA en plata rodiada.",
+      "cadena con dije y aretes gucci",
   },
   {
     id: 9,
-    name: "Anillo Zafiro Azul",
-    price: 1799,
+    name: "combo pulsera aretes",
+    price: 150000,
     category: "Oro laminado 18K",
     image:
       "/joyeria/comboViejo.jpeg",
     description:
-      "Zafiro azul natural rodeado de diamantes en oro blanco.",
+      "pulsera diamantada con aretes ",
   },
   {
     id: 10,
-    name: "Collar Luna Dorada",
-    price: 459,
+    name: "pulsera crucificada",
+    price: 110000,
     category: "Oro laminado 18K",
     image:
       "/joyeria/ComboPul.jpeg",
     description:
-      "Dije lunar en oro de 10k con cadena fina y elegante.",
+      "pulsera con dije crucificado ",
   },
   {
     id: 11,
-    name: "Aretes Gota de Cristal",
-    price: 329,
+    name: "combo virgen san miguel",
+    price: 165000,
     category: "Oro laminado 18K",
     image:
       "/joyeria/combo san.jpeg",
     description:
-      "Aretes con cristales tallados y baño en oro.",
+      "combo pareja de proteccion",
   },
   {
     id: 12,
-    name: "Pulsera Estelar",
-    price: 699,
+    name: "combo Estelar",
+    price: 160000,
     category: "Oro laminado 18K",
     image:
       "/joyeria/pulseraHiloVieja.jpeg",
     description:
-      "Pulsera con charms de estrellas y detalles en plata 925.",
+      "combo pulsera, dije, aretes",
   },
 ];
 
@@ -397,7 +397,7 @@ export default function Home() {
                 </p>
                 <div className="flex justify-between items-center gap-2">
                   <span className="text-base sm:text-lg font-bold text-amber-400">
-                    ${product.price.toLocaleString()}
+                    ${product.price.toLocaleString("es-CO")}
                   </span>
                   <button
                     onClick={() => addToCart(product)}
@@ -525,21 +525,21 @@ export default function Home() {
           className="fixed inset-0 bg-black/90 z-[100] flex items-center justify-center p-4"
           onClick={() => setSelectedImage(null)}
         >
-          <button
-            onClick={() => setSelectedImage(null)}
-            className="absolute -top-4 -right-4 sm:top-3 sm:right-3 bg-black/80 border border-amber-500/40 text-white rounded-full w-9 h-9 flex items-center justify-center hover:text-amber-400 transition z-[101]"
-            aria-label="Cerrar"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-          <div className="relative max-w-5xl max-h-[90vh] w-full" onClick={(e) => e.stopPropagation()}>
+          <div className="relative w-full max-w-3xl max-h-[75vh]" onClick={(e) => e.stopPropagation()}>
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-2 right-2 bg-black/80 border border-amber-500/40 text-white rounded-full w-9 h-9 flex items-center justify-center hover:text-amber-400 transition z-[101]"
+              aria-label="Cerrar"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
             <Image
               src={withBasePath(selectedImage ?? "")}
               alt="Imagen ampliada"
-              width={1200}
-              height={800}
+              width={1000}
+              height={700}
               className="object-contain w-full h-full rounded-lg"
             />
           </div>

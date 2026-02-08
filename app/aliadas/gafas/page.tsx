@@ -55,34 +55,114 @@ export default function GafasPage() {
     {
       id: 1,
       name: "Aviador Dorado",
-      price: 220,
+      price: 400000,
       image:
-        "https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=900&h=900&fit=crop",
-      description: "Marco ligero con protección UV y detalles en dorado.",
+        "/gafas/miuOne.jpeg",
+      description: "Gafas miu originales envio gratis",
     },
     {
       id: 2,
       name: "Cat Eye Noir",
-      price: 190,
+      price: 400000,
       image:
-        "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=900&h=900&fit=crop",
-      description: "Silueta elegante con acabado negro brillante.",
+        "/gafas/miuTwo.jpeg",
+      description: "Gafas miu originales envio gratis",
     },
     {
       id: 3,
       name: "Rectangulares Urban",
-      price: 160,
+      price: 400000,
       image:
-        "https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=900&h=900&fit=crop",
-      description: "Minimalistas y cómodas para uso diario.",
+        "/gafas/miuTres.jpeg",
+      description: "Gafas miu originales envio gratis",
     },
     {
       id: 4,
       name: "Vintage Luxe",
-      price: 240,
+      price: 400000,
       image:
-        "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=900&h=900&fit=crop",
-      description: "Acabado premium con lentes oscuros.",
+        "/gafas/miuCuatro.jpeg",
+      description: "Gafas miu originales envio gratis",
+    },
+    {
+      id: 5,
+      name: "Prada Classic",
+      price: 420000,
+      image:
+        "/gafas/pradaOne.jpeg",
+      description: "Gafas Prada originales envio gratis",
+    },
+    {
+      id: 6,
+      name: "Prada Urban",
+      price: 420000,
+      image:
+        "/gafas/Pradatwo.jpeg",
+      description: "Gafas Prada originales envio gratis",
+    },
+    {
+      id: 7,
+      name: "Miu Chic",
+      price: 100000,
+      image:
+        "/gafas/miuDosDos.jpeg",
+      description: "Gafas miu miu",
+    },
+    {
+      id: 8,
+      name: "Miu Soft",
+      price: 400000,
+      image:
+        "/gafas/miuTwo.jpeg",
+      description: "Gafas miu originales envio gratis",
+    },
+    {
+      id: 9,
+      name: "Miu Edge",
+      price: 400000,
+      image:
+        "/gafas/miuTres.jpeg",
+      description: "Gafas miu originales envio gratis",
+    },
+    {
+      id: 10,
+      name: "Miu Glam",
+      price: 400000,
+      image:
+        "/gafas/miuCuatro.jpeg",
+      description: "Gafas miu originales envio gratis",
+    },
+    {
+      id: 11,
+      name: "Prada Icon",
+      price: 420000,
+      image:
+        "/gafas/pradaOne.jpeg",
+      description: "Gafas Prada originales envio gratis",
+    },
+    {
+      id: 12,
+      name: "Prada Noir",
+      price: 420000,
+      image:
+        "/gafas/Pradatwo.jpeg",
+      description: "Gafas Prada originales envio gratis",
+    },
+    {
+      id: 13,
+      name: "Miu Sun",
+      price: 400000,
+      image:
+        "/gafas/miuTwo.jpeg",
+      description: "Gafas miu originales envio gratis",
+    },
+    {
+      id: 14,
+      name: "Miu Retro",
+      price: 400000,
+      image:
+        "/gafas/miuTres.jpeg",
+      description: "Gafas miu originales envio gratis",
     },
   ];
 
@@ -139,7 +219,7 @@ export default function GafasPage() {
                 <h3 className="text-sm sm:text-base font-semibold text-white line-clamp-1">{item.name}</h3>
                 <p className="text-xs text-zinc-300 mt-1 line-clamp-1">{item.description}</p>
                 <div className="mt-2 flex items-center justify-between gap-2">
-                  <span className="text-base sm:text-lg text-amber-300 font-semibold">${item.price}</span>
+                  <span className="text-base sm:text-lg text-amber-300 font-semibold">${item.price.toLocaleString("es-CO")}</span>
                   <button
                     onClick={() => addToCart(item)}
                     className="rounded-full bg-amber-500 text-black px-3 py-1.5 text-xs sm:text-sm font-semibold hover:bg-amber-400 transition"
@@ -184,21 +264,21 @@ export default function GafasPage() {
           className="fixed inset-0 bg-black/90 z-[100] flex items-center justify-center p-4"
           onClick={() => setSelectedImage(null)}
         >
-          <button
-            onClick={() => setSelectedImage(null)}
-            className="absolute -top-4 -right-4 sm:top-3 sm:right-3 bg-black/80 border border-amber-500/40 text-white rounded-full w-9 h-9 flex items-center justify-center hover:text-amber-400 transition z-[101]"
-            aria-label="Cerrar"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-          <div className="relative max-w-5xl max-h-[90vh] w-full" onClick={(e) => e.stopPropagation()}>
+          <div className="relative w-full max-w-3xl max-h-[75vh]" onClick={(e) => e.stopPropagation()}>
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-2 right-2 bg-black/80 border border-amber-500/40 text-white rounded-full w-9 h-9 flex items-center justify-center hover:text-amber-400 transition z-[101]"
+              aria-label="Cerrar"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
             <Image
               src={selectedImage}
               alt="Imagen ampliada"
-              width={1200}
-              height={800}
+              width={1000}
+              height={700}
               className="object-contain w-full h-full rounded-lg"
             />
           </div>

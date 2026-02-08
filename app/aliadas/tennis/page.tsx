@@ -64,24 +64,24 @@ export default function TennisPage() {
   const items: Product[] = [
     {
       id: 31,
-      name: "Urban Gold",
-      price: 280,
+      name: "Diesel Gold",
+      price: 140000,
       image:
         "/tennis/tennisTwo.jpeg",
       description: "Suela cómoda con detalles dorados.",
     },
     {
       id: 32,
-      name: "Sport Luxe",
-      price: 320,
+      name: "LV",
+      price: 125000,
       image:
         "/tennis/tennisOne.jpeg",
-      description: "Amortiguación premium y estilo moderno.",
+      description: "Caballero",
     },
     {
       id: 33,
-      name: "Minimal White",
-      price: 240,
+      name: "boss",
+      price: 140000,
       image:
         "/tennis/TennisThree.jpeg",
       description: "Estilo limpio y elegante.",
@@ -89,18 +89,18 @@ export default function TennisPage() {
     {
       id: 34,
       name: "Edición Gold",
-      price: 350,
+      price: 140000,
       image:
         "/tennis/tennisFour.jpeg",
-      description: "Acabados metálicos exclusivos.",
+      description: "Caballero",
     },
     {
       id: 35,
-      name: "Street Runner",
-      price: 295,
+      name: "Adidas Runner",
+      price: 140000,
       image:
         "/tennis/tennisFive.jpeg",
-      description: "Diseño urbano con suela liviana.",
+      description: "Dama",
     },
   ];
 
@@ -157,7 +157,7 @@ export default function TennisPage() {
                 <h3 className="text-sm sm:text-base font-semibold text-white line-clamp-1">{item.name}</h3>
                 <p className="text-xs text-zinc-300 mt-1 line-clamp-1">{item.description}</p>
                 <div className="mt-2 flex items-center justify-between gap-2">
-                  <span className="text-base sm:text-lg text-amber-300 font-semibold">${item.price}</span>
+                  <span className="text-base sm:text-lg text-amber-300 font-semibold">${item.price.toLocaleString("es-CO")}</span>
                   <button
                     onClick={() => addToCart(item)}
                     className="rounded-full bg-amber-500 text-black px-3 py-1.5 text-xs sm:text-sm font-semibold hover:bg-amber-400 transition"
@@ -217,21 +217,21 @@ export default function TennisPage() {
           className="fixed inset-0 bg-black/90 z-[100] flex items-center justify-center p-4"
           onClick={() => setSelectedImage(null)}
         >
-          <button
-            onClick={() => setSelectedImage(null)}
-            className="absolute -top-4 -right-4 sm:top-3 sm:right-3 bg-black/80 border border-amber-500/40 text-white rounded-full w-9 h-9 flex items-center justify-center hover:text-amber-400 transition z-[101]"
-            aria-label="Cerrar"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-          <div className="relative max-w-5xl max-h-[90vh] w-full" onClick={(e) => e.stopPropagation()}>
+          <div className="relative w-full max-w-3xl max-h-[75vh]" onClick={(e) => e.stopPropagation()}>
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-2 right-2 bg-black/80 border border-amber-500/40 text-white rounded-full w-9 h-9 flex items-center justify-center hover:text-amber-400 transition z-[101]"
+              aria-label="Cerrar"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
             <Image
               src={withBasePath(selectedImage)}
               alt="Imagen ampliada"
-              width={1200}
-              height={800}
+              width={1000}
+              height={700}
               className="object-contain w-full h-full rounded-lg"
             />
           </div>

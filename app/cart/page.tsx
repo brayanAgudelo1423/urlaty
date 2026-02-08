@@ -180,7 +180,7 @@ export default function CartPage() {
                     </p>
                     <div className="flex justify-between items-center gap-1 mb-1.5">
                       <span className="text-sm sm:text-base font-bold text-amber-400">
-                        ${item.price.toLocaleString()}
+                        ${item.price.toLocaleString("es-CO")}
                       </span>
                     </div>
                     <div className="flex items-center justify-between gap-1">

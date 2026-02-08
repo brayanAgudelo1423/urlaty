@@ -62,53 +62,50 @@ export default function BolsosPage() {
   };
 
   const items: Product[] = [
-    { id: 11, name: "Clutch Aurora", price: 180, image: "/bolsos/uno.jpeg", description: "Compacto con herrajes dorados." },
-    { id: 12, name: "Tote Milano", price: 260, image: "/bolsos/dos.jpeg", description: "Espacioso y elegante." },
-    { id: 13, name: "Bandolera Ciel", price: 210, image: "/bolsos/tres.jpeg", description: "Correa ajustable premium." },
-    { id: 14, name: "Mini Luxe", price: 190, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.22 PM.jpeg", description: "Perfecto para eventos nocturnos." },
-    { id: 15, name: "Elegancia Premium", price: 220, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.23 PM (1).jpeg", description: "Diseño exclusivo." },
-    { id: 16, name: "Tote Clásico", price: 245, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.23 PM (2).jpeg", description: "Para la oficina y eventos." },
-    { id: 17, name: "Sofisticado Lujo", price: 275, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.23 PM (3).jpeg", description: "Lujo y comodidad." },
-    { id: 18, name: "Clutch Dorado", price: 195, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.24 PM (1).jpeg", description: "Pequeño pero elegante." },
-    { id: 19, name: "Bolso Versátil", price: 235, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.24 PM (2).jpeg", description: "Uso diario o formal." },
-    { id: 20, name: "Tote Elegante", price: 255, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.24 PM.jpeg", description: "Comodidad y estilo." },
-    { id: 21, name: "Bandolera Chic", price: 205, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.25 PM (1).jpeg", description: "Moderna y práctica." },
-    { id: 22, name: "Clutch Brillante", price: 185, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.25 PM (2).jpeg", description: "Detalles dorados." },
-    { id: 23, name: "Tote Premium", price: 280, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.25 PM (3).jpeg", description: "Máxima calidad." },
-    { id: 24, name: "Bolso Elegante", price: 215, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.25 PM.jpeg", description: "Textura suave." },
-    { id: 25, name: "Clutch Noche", price: 200, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.26 PM (1).jpeg", description: "Para ocasiones especiales." },
-    { id: 26, name: "Tote Sofisticado", price: 250, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.26 PM (2).jpeg", description: "Estilo único." },
-    { id: 27, name: "Bandolera Clásica", price: 225, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.26 PM.jpeg", description: "Diseño atemporal." },
-    { id: 28, name: "Mini Elegancia", price: 175, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.27 PM (1).jpeg", description: "Pequeño y exclusivo." },
-    { id: 29, name: "Bolso Versión", price: 265, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.27 PM (2).jpeg", description: "Nueva colección." },
-    { id: 30, name: "Tote Exclusivo", price: 270, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.27 PM (3).jpeg", description: "Limitado." },
-    { id: 31, name: "Clutch Oro", price: 188, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.27 PM.jpeg", description: "Con herrajes especiales." },
-    { id: 32, name: "Bandolera Lujo", price: 240, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.28 PM.jpeg", description: "Para todas las ocasiones." },
-    { id: 33, name: "Tote Moderno", price: 260, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.29 PM (1).jpeg", description: "Diseño contemporáneo." },
-    { id: 34, name: "Bolso Perfecto", price: 215, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.29 PM (2).jpeg", description: "Para cualquier estilo." },
-    { id: 35, name: "Mini Premium", price: 190, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.29 PM.jpeg", description: "Lujo en tamaño pequeño." },
-    { id: 36, name: "Clutch Sofisticado", price: 205, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.30 PM (1).jpeg", description: "Elegancia pura." },
-    { id: 37, name: "Tote Gold", price: 275, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.30 PM (2).jpeg", description: "Con detalles dorados." },
-    { id: 38, name: "Bandolera Bella", price: 220, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.30 PM (3).jpeg", description: "Hermoso y práctico." },
-    { id: 39, name: "Bolso Noche", price: 200, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.30 PM.jpeg", description: "Para eventos elegantes." },
-    { id: 40, name: "Clutch Brillo", price: 195, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.31 PM (1).jpeg", description: "Destella con estilo." },
-    { id: 41, name: "Tote Chic", price: 245, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.31 PM (2).jpeg", description: "Lo último en moda." },
-    { id: 42, name: "Bandolera Premium", price: 230, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.31 PM.jpeg", description: "Calidad excepcional." },
-    { id: 43, name: "Mini Elegante", price: 185, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.32 PM (1).jpeg", description: "Perfecto para salidas." },
-    { id: 44, name: "Bolso Dorado", price: 255, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.32 PM (2).jpeg", description: "Con accesorios dorados." },
-    { id: 45, name: "Tote Lujo", price: 280, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.32 PM (3).jpeg", description: "Premium absoluto." },
-    { id: 46, name: "Clutch Diamante", price: 210, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.32 PM.jpeg", description: "Con brillantes." },
-    { id: 47, name: "Bandolera Oro", price: 235, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.33 PM (1).jpeg", description: "Detalles dorados exclusivos." },
-    { id: 48, name: "Tote Exclusiva", price: 265, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.33 PM (2).jpeg", description: "Edición limitada." },
-    { id: 49, name: "Bolso Sofisticado", price: 225, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.33 PM.jpeg", description: "De buen gusto." },
-    { id: 50, name: "Mini Lujo", price: 190, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.34 PM (1).jpeg", description: "Pequeño pero impactante." },
-    { id: 51, name: "Clutch Elegancia", price: 200, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.34 PM (2).jpeg", description: "Diseño clásico." },
-    { id: 52, name: "Tote Bella", price: 270, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.34 PM (3).jpeg", description: "Hermosa silueta." },
-    { id: 53, name: "Bandolera Chique", price: 215, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.34 PM.jpeg", description: "Moderna y sofisticada." },
-    { id: 54, name: "Bolso Premium", price: 240, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.35 PM (1).jpeg", description: "Máxima elegancia." },
-    { id: 55, name: "Clutch Nudo", price: 185, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.35 PM (2).jpeg", description: "Color neutro perfecto." },
-    { id: 56, name: "Tote Real", price: 260, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.35 PM (3).jpeg", description: "Auténtico y radiante." },
-    { id: 57, name: "Bandolera Final", price: 220, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.35 PM.jpeg", description: "Cierre de colección." },
+     { id: 50, name: "Tula de la caja original", price: 0, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.34 PM (1).jpeg", description: "Pequeño pero impactante." },
+    { id: 51, name: "Caja Original", price: 0, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.34 PM (2).jpeg", description: "Caja original, depende el bolso" },
+    { id: 11, name: "Bolso Fresa Coach", price: 130000, image: "/bolsos/uno.jpeg", description: "bolso con caja original" },
+    { id: 12, name: "Bolso estrellitas Coach ", price: 120000, image: "/bolsos/dos.jpeg", description: "Elegante." },
+    { id: 13, name: "Bolso Coach Elegantes", price: 130000, image: "/bolsos/tres.jpeg", description: "Correa premium, con caja original." },
+    { id: 14, name: "Bolso Coach cereza", price: 120000, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.22 PM.jpeg", description: "Perfecto para convinar." },
+    { id: 15, name: "Elegancia Premium Coach", price: 130000, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.23 PM (1).jpeg", description: "Diseño exclusivo." },
+    { id: 16, name: "Bolso cereza Rosado", price: 130000, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.23 PM (2).jpeg", description: "Para buenas ocasiones." },
+    { id: 17, name: "Sofisticado Lujo Coach", price: 130000, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.23 PM (3).jpeg", description: "perfecto para lucir." },
+    { id: 18, name: "Coach Sencillo", price: 120000, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.24 PM (1).jpeg", description: "Pequeño pero elegante." },
+    { id: 19, name: "Bolso Elegante", price: 120000, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.24 PM (2).jpeg", description: "Uso diario o formal." },
+    { id: 20, name: "Bolso Coach Azul cielo", price: 130000, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.24 PM.jpeg", description: "Comodidad y estilo con caja original" },
+    { id: 21, name: "Bolsos Coach", price: 130000, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.25 PM (1).jpeg", description: "el color que elija con su caja original" },
+    { id: 22, name: " Bolso Coach Cafe", price: 130000, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.25 PM (2).jpeg", description: "Detalles exraordinarios." },
+    { id: 23, name: "Bolso Coach Rosado", price: 120000, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.25 PM (3).jpeg", description: "Máxima calidad." },
+    { id: 24, name: "Bolso Elegante", price: 130000, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.25 PM.jpeg", description: "Textura suave." },
+    { id: 25, name: "Bolso Noche", price: 130000, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.26 PM (1).jpeg", description: "Para ocasiones especiales." },
+    { id: 26, name: "Bolso Sofisticado", price: 120000, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.26 PM (2).jpeg", description: "Estilo único." },
+    { id: 27, name: "Clásica", price: 130000, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.26 PM.jpeg", description: "Diseño unico." },
+    { id: 28, name: "Elegancia", price: 130000, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.27 PM (1).jpeg", description: "Pequeño y exclusivo." },
+    { id: 29, name: "Bolso Coffe", price: 130000, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.27 PM (2).jpeg", description: "Nueva colección." },
+    { id: 30, name: "Bolso Exclusivo", price: 130000, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.27 PM (3).jpeg", description: "Limitado." },
+    { id: 31, name: "Bolso Blanco Coach", price: 130000, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.27 PM.jpeg", description: "muy especiales." },
+    { id: 32, name: "Bolso Coach Vino tinto", price: 120000, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.28 PM.jpeg", description: "Para todas las ocasiones." },
+    { id: 33, name: "Bolso Coach Tote Moderno", price: 140000, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.29 PM (1).jpeg", description: "Diseño robusto y espacioso." },
+    { id: 34, name: "Bolso diamantado coach", price: 120000, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.29 PM (2).jpeg", description: "Para cualquier estilo." },
+    { id: 35, name: "Bolso Premium Rosado ", price: 130000, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.29 PM.jpeg", description: "bolso muy femenino." },
+    { id: 36, name: "Bolso negro", price: 110000, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.30 PM (1).jpeg", description: "Sencillo." },
+    { id: 37, name: "Bolso muy elegante doble ", price: 120000, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.30 PM (2).jpeg", description: "Con detalles muy bonitos." },
+    { id: 38, name: "Bolso Practico", price: 120000, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.30 PM (3).jpeg", description: "Hermoso y práctico." },
+    { id: 39, name: "Bolso Noche elegante", price: 144900, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.30 PM.jpeg", description: "Para eventos elegantes." },
+    { id: 40, name: "Bolso besos Coach", price: 140000, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.31 PM (1).jpeg", description: "Destella con estilo." },
+    { id: 41, name: "Bolso Chic Coach", price: 120000, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.31 PM (2).jpeg", description: "Lo último en moda." },
+    { id: 42, name: "Bolso Coach especial", price: 160000, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.31 PM.jpeg", description: "Calidad excepcional." },
+    { id: 43, name: "Bolso Coach", price: 185000 , image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.32 PM (1).jpeg", description: "Perfecto para salidas." },
+    { id: 44, name: "Bolso Coach negro grande", price: 185000, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.32 PM (2).jpeg", description: "bolso tendencia." },
+    { id: 45, name: "Bolso Coach ten Lujo", price: 185000, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.32 PM (3).jpeg", description: "Premium absoluto." },
+    { id: 46, name: "Bolso coach super elegante", price: 195000, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.32 PM.jpeg", description: "Con brillantes." },
+    { id: 47, name: "Bolso Coach Rosado", price: 180000, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.33 PM (1).jpeg", description: "Bolso rosado espacioso." },
+    { id: 48, name: "Tote combo Exclusiva", price: 199900, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.33 PM (2).jpeg", description: "Edición limitada." },
+    { id: 49, name: "Bolso Coach moderno", price: 190000, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.33 PM.jpeg", description: "De buen gusto." },
+    { id: 52, name: "Bolso clasico moderno", price: 120000, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.34 PM (3).jpeg", description: "bolso muy clasico hermoso." },
+    { id: 53, name: "Bolso snoopy", price: 120000, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.34 PM.jpeg", description: "Moderna y sofisticada." },
+    { id: 54, name: "Bolso Premium corazon", price: 130000, image: "/bolsos/WhatsApp Image 2026-02-02 at 5.31.35 PM (1).jpeg", description: "hermosa silueta" },
   ];
 
   const addToCart = (product: Product) => {
@@ -164,7 +161,7 @@ export default function BolsosPage() {
                 <h3 className="text-sm sm:text-base font-semibold text-white line-clamp-1">{item.name}</h3>
                 <p className="text-xs text-zinc-300 mt-1 line-clamp-1">{item.description}</p>
                 <div className="mt-2 flex items-center justify-between gap-2">
-                  <span className="text-base sm:text-lg text-amber-300 font-semibold">${item.price}</span>
+                  <span className="text-base sm:text-lg text-amber-300 font-semibold">${item.price.toLocaleString("es-CO")}</span>
                   <button
                     onClick={() => addToCart(item)}
                     className="rounded-full bg-amber-500 text-black px-3 py-1.5 text-xs sm:text-sm font-semibold hover:bg-amber-400 transition"
@@ -209,21 +206,21 @@ export default function BolsosPage() {
           className="fixed inset-0 bg-black/90 z-[100] flex items-center justify-center p-4"
           onClick={() => setSelectedImage(null)}
         >
-          <button
-            onClick={() => setSelectedImage(null)}
-            className="absolute -top-4 -right-4 sm:top-3 sm:right-3 bg-black/80 border border-amber-500/40 text-white rounded-full w-9 h-9 flex items-center justify-center hover:text-amber-400 transition z-[101]"
-            aria-label="Cerrar"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-          <div className="relative max-w-5xl max-h-[90vh] w-full" onClick={(e) => e.stopPropagation()}>
+          <div className="relative w-full max-w-3xl max-h-[75vh]" onClick={(e) => e.stopPropagation()}>
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-2 right-2 bg-black/80 border border-amber-500/40 text-white rounded-full w-9 h-9 flex items-center justify-center hover:text-amber-400 transition z-[101]"
+              aria-label="Cerrar"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
             <Image
               src={withBasePath(selectedImage ?? "")}
               alt="Imagen ampliada"
-              width={1200}
-              height={800}
+              width={1000}
+              height={700}
               className="object-contain w-full h-full rounded-lg"
             />
           </div>
