@@ -118,62 +118,7 @@ export default function GafasPage() {
         "/gafas/miuDosDos.jpeg",
       description: "Gafas miu miu",
     },
-    {
-      id: 8,
-      name: "Miu Soft",
-      price: 400000,
-      image:
-        "/gafas/miuTwo.jpeg",
-      description: "Gafas miu originales envio gratis",
-    },
-    {
-      id: 9,
-      name: "Miu Edge",
-      price: 400000,
-      image:
-        "/gafas/miuTres.jpeg",
-      description: "Gafas miu originales envio gratis",
-    },
-    {
-      id: 10,
-      name: "Miu Glam",
-      price: 400000,
-      image:
-        "/gafas/miuCuatro.jpeg",
-      description: "Gafas miu originales envio gratis",
-    },
-    {
-      id: 11,
-      name: "Prada Icon",
-      price: 420000,
-      image:
-        "/gafas/pradaOne.jpeg",
-      description: "Gafas Prada originales envio gratis",
-    },
-    {
-      id: 12,
-      name: "Prada Noir",
-      price: 420000,
-      image:
-        "/gafas/Pradatwo.jpeg",
-      description: "Gafas Prada originales envio gratis",
-    },
-    {
-      id: 13,
-      name: "Miu Sun",
-      price: 400000,
-      image:
-        "/gafas/miuTwo.jpeg",
-      description: "Gafas miu originales envio gratis",
-    },
-    {
-      id: 14,
-      name: "Miu Retro",
-      price: 400000,
-      image:
-        "/gafas/miuTres.jpeg",
-      description: "Gafas miu originales envio gratis",
-    },
+
   ];
 
   const addToCart = (product: Product) => {
