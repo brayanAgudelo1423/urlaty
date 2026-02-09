@@ -240,7 +240,7 @@ export default function BolsosPage() {
 
       {/* Botón flotante WhatsApp */}
       <a
-        href="https://wa.me/?text=Hola"
+        href="https://wa.me/3009870850?text=Hola"
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 left-6 z-50 flex items-center gap-3 group"

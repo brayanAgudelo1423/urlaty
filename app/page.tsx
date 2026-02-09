@@ -453,7 +453,7 @@ export default function Home() {
       {/* Botones flotantes lado izquierdo */}
       <div className="fixed bottom-6 left-6 flex flex-col gap-4 z-40">
         <a 
-          href="https://wa.me/?text=Hola" 
+          href="https://wa.me/3009870850?text=Hola" 
           target="_blank" 
           rel="noopener noreferrer"
           className="w-14 h-14 flex items-center justify-center bg-green-500 rounded-full shadow-lg hover:bg-green-600 transition"
@@ -563,7 +563,7 @@ export default function Home() {
 
       {/* Botón flotante WhatsApp */}
       <a
-        href="https://wa.me/?text=Hola"
+        href="https://wa.me/3009870850?text=Hola"
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 left-6 z-50 flex items-center gap-3 group"
