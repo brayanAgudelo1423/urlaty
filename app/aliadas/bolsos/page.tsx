@@ -127,7 +127,7 @@ export default function BolsosPage() {
     <div className="min-h-screen bg-black text-white px-4 py-10">
       <div className="max-w-5xl mx-auto">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
+          <div className="flex flex-col items-start">
             <button
               type="button"
               onClick={handleBack}
@@ -135,10 +135,21 @@ export default function BolsosPage() {
             >
               ← Volver
             </button>
-            <h1 className="text-3xl sm:text-4xl font-bold mt-3">Bolsos</h1>
-            <p className="text-zinc-300 mt-2">
-              Bolsos de lujo con detalles dorados y piel premium.
-            </p>
+            <div className="w-full text-center mt-3">
+              <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-amber-200">
+                Bolsos
+              </h1>
+              <div className="flex items-center justify-center gap-3 mt-3">
+                <span className="h-px w-10 bg-amber-500/70" />
+                <p className="text-xs sm:text-sm uppercase tracking-[0.35em] text-amber-300/90">
+                  Lujo que se siente
+                </p>
+                <span className="h-px w-10 bg-amber-500/70" />
+              </div>
+              <p className="text-zinc-300 mt-3 max-w-2xl mx-auto leading-relaxed">
+                Bolsos de lujo con detalles dorados y otros mas.
+              </p>
+            </div>
           </div>
           <Link
             href="/cart"

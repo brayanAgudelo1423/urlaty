@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { FaWhatsapp } from "react-icons/fa";
+import { FaInstagram, FaWhatsapp } from "react-icons/fa";
 
 interface Product {
   id: number;
@@ -545,6 +545,21 @@ export default function Home() {
           </div>
         </div>
       )}
+
+      {/* Botón flotante Instagram */}
+      <a
+        href="https://www.instagram.com/urlaty_handles?igsh=cmg4bmFpeWM0OGU4"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-24 left-6 z-50 flex items-center gap-3 group"
+      >
+        <div className="bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-all">
+          <FaInstagram className="w-7 h-7 text-white" />
+        </div>
+        <div className="bg-white px-4 py-2 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <p className="text-sm font-medium text-gray-800 whitespace-nowrap">Instagram de la tienda</p>
+        </div>
+      </a>
 
       {/* Botón flotante WhatsApp */}
       <a

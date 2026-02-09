@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { FaWhatsapp } from "react-icons/fa";
+import { FaInstagram, FaWhatsapp } from "react-icons/fa";
 
 interface Product {
   id: number;
@@ -145,10 +145,10 @@ export default function JoyeriaPage() {
     },
     {
       id: 203,
-      name: "topos san benito",
-      price: 90000,
+      name: "anillo 3 carriles",
+      price: 70000 ,
       image:
-        "/joyeria/oro laminado/oro46.jpeg",
+        "/joyeria/oro laminado/anillo3c.jpeg",
       description: "Acabado premium con tono dorado.",
     },
     {
@@ -162,7 +162,7 @@ export default function JoyeriaPage() {
     {
       id: 205,
       name: "combo intercalado anillo y pulsera ",
-      price: 149900,
+      price: 169900,
       image:
         "/joyeria/oro laminado/oro48.jpeg",
       description: "Estilo moderno en oro laminado 18K.",
@@ -170,7 +170,7 @@ export default function JoyeriaPage() {
     {
       id: 206,
       name: "pulsera 3 carriles diamantada",
-      price: 350000,
+      price: 349900,
       image:
         "/joyeria/oro laminado/oro49.jpeg",
       description: "Detalle fino con brillo intenso.",
@@ -791,6 +791,14 @@ export default function JoyeriaPage() {
         "/joyeria/oro laminado/3normal.jpeg",
       description: "Oro laminado 18K con detalle clasico.",
     },
+        {
+      id: 140,
+      name: "3 pulseras familiar",
+      price: 109900,
+      image:
+        "/joyeria/oro laminado/cadena1.jpeg",
+      description: "Oro laminado 18K",
+    },
   ];
 
   const silverItems: Product[] = [
@@ -890,6 +898,46 @@ export default function JoyeriaPage() {
         "/joyeria/plata/plataDoce.jpeg",
       description: "60 CM cadena plata ley 925.",
     },
+        {
+      id: 43,
+      name: "cadena congruente",
+      price: 90000,
+      image:
+        "/joyeria/plata/plata11.jpeg",
+      description: "45 CM cadena plata ley 925.",
+    },
+        {
+      id: 44,
+      name: "cadena gruesa chiref",
+      price: 320000,
+      image:
+        "/joyeria/plata/plata12.jpeg",
+      description: "60 CM cadena plata ley 925.",
+    },
+        {
+      id: 45,
+      name: "cadena intrcalada",
+      price: 260000,
+      image:
+        "/joyeria/plata/plata13.jpeg",
+      description: "70 CM cadena plata ley 925.",
+    },
+        {
+      id: 46,
+      name: "cadena chinesca delgada",
+      price: 175000,
+      image:
+        "/joyeria/plata/plata14.jpeg",
+      description: "45 CM cadena plata ley 925.",
+    },
+        {
+      id: 47,
+      name: "cadena Especial delgada",
+      price: 135000,
+      image:
+        "/joyeria/plata/plata15.jpeg",
+      description: "50 CM cadena plata ley 925.",
+    },
 
   ];
 
@@ -912,7 +960,7 @@ export default function JoyeriaPage() {
     <div className="min-h-screen bg-black text-white px-4 py-10">
       <div className="max-w-5xl mx-auto">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
+          <div className="flex flex-col items-start">
             <button
               type="button"
               onClick={handleBack}
@@ -920,10 +968,21 @@ export default function JoyeriaPage() {
             >
               ← Volver
             </button>
-            <h1 className="text-3xl sm:text-4xl font-bold mt-3">Joyería</h1>
-            <p className="text-zinc-300 mt-2">
-              Piezas exclusivas en oro, plata y piedras preciosas.
-            </p>
+            <div className="w-full text-center mt-3">
+              <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-amber-200">
+                Joyería
+              </h1>
+              <div className="flex items-center justify-center gap-3 mt-3">
+                <span className="h-px w-10 bg-amber-500/70" />
+                <p className="text-xs sm:text-sm uppercase tracking-[0.35em] text-amber-300/90">
+                  Detalles que trascienden
+                </p>
+                <span className="h-px w-10 bg-amber-500/70" />
+              </div>
+              <p className="text-zinc-300 mt-3 max-w-2xl mx-auto leading-relaxed">
+                Descubre joyas en oro laminado 18K y plata ley 925. En las pulseras puedes elegir el color del hilo que prefieras. Encuentra mas estilos en nuestro Instagram y, si deseas personalizar una pieza o tienes alguna duda, escribe a nuestra linea de atencion.
+              </p>
+            </div>
           </div>
           <Link
             href="/cart"
@@ -1076,6 +1135,21 @@ export default function JoyeriaPage() {
           </div>
         </div>
       )}
+
+      {/* Botón flotante Instagram */}
+      <a
+        href="https://www.instagram.com/urlaty_handles?igsh=cmg4bmFpeWM0OGU4"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-24 left-6 z-50 flex items-center gap-3 group"
+      >
+        <div className="bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-all">
+          <FaInstagram className="w-7 h-7 text-white" />
+        </div>
+        <div className="bg-white px-4 py-2 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <p className="text-sm font-medium text-gray-800 whitespace-nowrap">Instagram de la tienda</p>
+        </div>
+      </a>
 
       {/* Botón flotante WhatsApp */}
       <a
