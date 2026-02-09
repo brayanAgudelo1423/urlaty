@@ -84,7 +84,7 @@ export default function JoyeriaPage() {
       name: "candongas",
       price: 85000,
       image:
-        "/joyeria/oro laminado/oroDos.jpeg",
+        "/joyeria/oro laminado/orodos.jpeg",
       description: "Brillo elegante con acabado dorado.",
     },
     {
