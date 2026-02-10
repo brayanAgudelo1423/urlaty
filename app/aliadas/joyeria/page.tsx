@@ -162,7 +162,7 @@ export default function JoyeriaPage() {
     {
       id: 205,
       name: "combo intercalado anillo y pulsera ",
-      price: 169900,
+      price: 189900,
       image:
         "/joyeria/oro laminado/oro48.jpeg",
       description: "Estilo moderno en oro laminado 18K.",
@@ -202,7 +202,7 @@ export default function JoyeriaPage() {
     {
       id: 210,
       name: "pulsera neopreno con balines",
-      price: 55000,
+      price: 65000,
       image:
         "/joyeria/oro laminado/oro53.jpeg",
       description: "pulido en oro laminado neopreno",
@@ -298,7 +298,7 @@ export default function JoyeriaPage() {
     {
       id: 222,
       name: "virgen de guadalupe negra",
-      price: 490000,
+      price: 90000,
       image:
         "/joyeria/oro laminado/oro65.jpeg",
       description: "Detalle fino con acabado brillante.",
@@ -793,7 +793,7 @@ export default function JoyeriaPage() {
     },
         {
       id: 140,
-      name: "3 pulseras familiar",
+      name: "Cadena del ref2",
       price: 109900,
       image:
         "/joyeria/oro laminado/cadena1.jpeg",
@@ -860,7 +860,7 @@ export default function JoyeriaPage() {
     },
     {
       id: 38,
-      name: "Pulsera Brillo",
+      name: "cadena Brillo",
       price: 210000,
       image:
         "/joyeria/plata/plataocho.jpeg",
@@ -938,6 +938,478 @@ export default function JoyeriaPage() {
         "/joyeria/plata/plata15.jpeg",
       description: "50 CM cadena plata ley 925.",
     },
+        {
+          id: 48,
+          name: "EARCUF ref 1",
+          price: 55000,
+          image:
+            "/joyeria/plata/ore1.jpeg",
+          description: "Plata ley 925 muy bonitas para lucir.",
+        },
+        {
+          id: 49,
+          name: "EARCUF ref 2",
+          price: 45000,
+          image:
+            "/joyeria/plata/ore2.jpeg",
+          description: "Plata ley 925 muy bonitas para lucir.",
+        },
+        {
+          id: 50,
+          name: "EARCUF ref 3",
+          price: 55000,
+          image:
+            "/joyeria/plata/ore3.jpeg",
+          description: "Plata ley 925 muy bonitas para lucir.",
+        },
+        {
+          id: 51,
+          name: "EARCUF ref 4",
+          price: 51000,
+          image:
+            "/joyeria/plata/ore4.jpeg",
+          description: "Plata ley 925 muy bonitas para lucir.",
+        },
+        {
+          id: 52,
+          name: "EARCUF ref 5",
+          price: 50000,
+          image:
+            "/joyeria/plata/ore5.jpeg",
+          description: "Plata ley 925 muy bonitas para lucir.",
+        },
+        {
+          id: 53,
+          name: "EARCUF ref 6",
+          price: 52500,
+          image:
+            "/joyeria/plata/ore6.jpeg",
+          description: "Plata ley 925 muy bonitas para lucir.",
+        },
+        {
+          id: 54,
+          name: "EARCUF ref 7",
+          price: 57000,
+          image:
+            "/joyeria/plata/ore7.jpeg",
+          description: "Plata ley 925 muy bonitas para lucir.",
+        },
+        {
+          id: 55,
+          name: "EARCUF ref 8",
+          price: 42500,
+          image:
+            "/joyeria/plata/ore8.jpeg",
+          description: "Plata ley 925 muy bonitas para lucir.",
+        },
+        {
+          id: 56,
+          name: "EARCUF ref 9",
+          price: 69900,
+          image:
+            "/joyeria/plata/ore9.jpeg",
+          description: "Plata ley 925 muy bonitas para lucir.",
+        },
+        {
+          id: 57,
+          name: "EARCUF ref 10",
+          price: 49900,
+          image:
+            "/joyeria/plata/ore10.jpeg",
+          description: "Plata ley 925 muy bonitas para lucir.",
+        },
+        {
+          id: 58,
+          name: "Juego Corona",
+          price: 99900,
+          image:
+            "/joyeria/plata/jue1.jpeg",
+          description: "Plata ley 925 muy bonitas para lucir.",
+        },
+        {
+          id: 59,
+          name: "Juego mano Hamsa",
+          price: 72000,
+          image:
+            "/joyeria/plata/jue2.jpeg",
+          description: "Plata ley 925 muy bonitas para lucir.",
+        },
+        {
+          id: 60,
+          name: "Juego Huella",
+          price: 80000,
+          image:
+            "/joyeria/plata/jue3.jpeg",
+          description: "Plata ley 925 muy bonitas para lucir.",
+        },
+        {
+          id: 61,
+          name: "Juego angelito",
+          price: 75000,
+          image:
+            "/joyeria/plata/jue4.jpeg",
+          description: "Plata ley 925 muy bonitas para lucir.",
+        },
+        {
+          id: 62,
+          name: "Juego cruz dorada",
+          price: 99900,
+          image:
+            "/joyeria/plata/jue5.jpeg",
+          description: "Plata ley 925 muy bonitas para lucir.",
+        },
+        {
+          id: 63,
+          name: "Juego virgen de guadalupe",
+          price: 120000,
+          image:
+            "/joyeria/plata/jue6.jpeg",
+          description: "Plata ley 925 combo completo.",
+        },
+        {
+          id: 64,
+          name: "Juego 15años",
+          price: 180000,
+          image:
+            "/joyeria/plata/jue7.jpeg",
+          description: "Plata ley 925 combo completo.",
+        },
+        {
+          id: 65,
+          name: "Juego Hada",
+          price: 85000,
+          image:
+            "/joyeria/plata/jue8.jpeg",
+          description: "Plata ley 925 combo completo.",
+        },
+        {
+          id: 66,
+          name: "Juego Avion",
+          price: 120000,
+          image:
+            "/joyeria/plata/jue9.jpeg",
+          description: "Plata ley 925 combo completo.",
+        },
+        {
+          id: 67,
+          name: "Juego Colibri",
+          price: 80000,
+          image:
+            "/joyeria/plata/jue10.jpeg",
+          description: "Plata ley 925 combo completo.",
+        },
+        {
+          id: 68,
+          name: "Juego elefante ref1",
+          price: 75000,
+          image:
+            "/joyeria/plata/jue11.jpeg",
+          description: "Plata ley 925 combo completo.",
+        },
+        {
+          id: 69,
+          name: "Juego elefante ref2",
+          price: 85000,
+          image:
+            "/joyeria/plata/jue12.jpeg",
+          description: "Plata ley 925 combo completo.",
+        },
+        {
+          id: 70,
+          name: "Juego van cleef",
+          price: 150000,
+          image:
+            "/joyeria/plata/jue13.jpeg",
+          description: "Plata ley 925 combo completo.",
+        },
+        {
+          id: 71,
+          name: "Juego van cleef ref2",
+          price: 270000,
+          image:
+            "/joyeria/plata/jue14.jpeg",
+          description: "Plata ley 925 combo completo.",
+        },
+        {
+          id: 72,
+          name: "Dije Avion",
+          price: 60000,
+          image:
+            "/joyeria/plata/di1.jpeg",
+          description: "Plata ley 925, para que lo luzcas en tus cadenas.",
+        },
+        {
+          id: 73,
+          name: "Dije trebol",
+          price: 75000,
+          image:
+            "/joyeria/plata/di2.jpeg",
+          description: "Plata ley 925, para que lo luzcas en tus cadenas.",
+        },
+        {
+          id: 74,
+          name: "Dije FE",
+          price: 85000,
+          image:
+            "/joyeria/plata/di3.jpeg",
+          description: "Plata ley 925, para que lo luzcas en tus cadenas.",
+        },
+        {
+          id: 75,
+          name: "Dije Angel",
+          price: 70000,
+          image:
+            "/joyeria/plata/di4.jpeg",
+          description: "Plata ley 925, para que lo luzcas en tus cadenas.",
+        },
+        {
+          id: 76,
+          name: "Dije Cruz ref1",
+          price: 80000,
+          image:
+            "/joyeria/plata/di5.jpeg",
+          description: "Plata ley 925, para que lo luzcas en tus cadenas.",
+        },
+        {
+          id: 77,
+          name: "Dije Oso ref1",
+          price: 95000,
+          image:
+            "/joyeria/plata/di6.jpeg",
+          description: "Plata ley 925, para que lo luzcas en tus cadenas.",
+        },
+        {
+          id: 78,
+          name: "Dije Niño ref1",
+          price: 85000,
+          image:
+            "/joyeria/plata/di7.jpeg",
+          description: "Plata ley 925, para que lo luzcas en tus cadenas.",
+        },
+        {
+          id: 79,
+          name: "Dije corazon ref1",
+          price: 85000,
+          image:
+            "/joyeria/plata/di8.jpeg",
+          description: "Plata ley 925, para que lo luzcas en tus cadenas.",
+        },
+        {
+          id: 80,
+          name: "Dije Cruz ref2",
+          price: 110000,
+          image:
+            "/joyeria/plata/di9.jpeg",
+          description: "Plata ley 925, para que lo luzcas en tus cadenas.",
+        },
+        {
+          id: 81,
+          name: "Dije Niño santo ref1",
+          price: 110000,
+          image:
+            "/joyeria/plata/di10.jpeg",
+          description: "Plata ley 925, para que lo luzcas en tus cadenas.",
+        },
+        {
+          id: 82,
+          name: "Dije Cruz ref3",
+          price: 110000,
+          image:
+            "/joyeria/plata/di11.jpeg",
+          description: "Plata ley 925, para que lo luzcas en tus cadenas.",
+        },
+        {
+          id: 84,
+          name: "Dije Niño santo ref2",
+          price: 85000,
+          image:
+            "/joyeria/plata/di13.jpeg",
+          description: "Plata ley 925, para que lo luzcas en tus cadenas.",
+        },
+        {
+          id: 85,
+          name: "Dije virgen",
+          price: 115000,
+          image:
+            "/joyeria/plata/di14.jpeg",
+          description: "Plata ley 925, para que lo luzcas en tus cadenas.",
+        },
+        {
+          id: 86,
+          name: "Cadena liviana lazo 40 CM",
+          price: 170000,
+          image:
+            "/joyeria/plata/cad (1).jpeg",
+          description: "Plata ley 925",
+        },
+        {
+          id: 87,
+          name: "Cadena liviana re1 50CM",
+          price: 160000,
+          image:
+            "/joyeria/plata/cad (2).jpeg",
+          description: "Plata ley 925",
+        },
+        {
+          id: 88,
+          name: "Cadena liviana cubana 50 CM",
+          price: 150000,
+          image:
+            "/joyeria/plata/cad (3).jpeg",
+          description: "Plata ley 925, 50CM",
+        },
+        {
+          id: 89,
+          name: "Cadena Delgada singapur 45CM",
+          price: 120000,
+          image:
+            "/joyeria/plata/cad (4).jpeg",
+          description: "Plata ley 925, 45CM",
+        },
+        {
+          id: 90,
+          name: "Cadena Del ref1 40CM",
+          price: 170000,
+          image:
+            "/joyeria/plata/cad (5).jpeg",
+          description: "Plata ley 925",
+        },
+        {
+          id: 91,
+          name: "Dije Familia",
+          price: 90000,
+          image:
+            "/joyeria/plata/dijefal.jpeg",
+          description: "Plata ley 925",
+        },
+        {
+          id: 92,
+          name: "Cadena Del ref2 50CM",
+          price: 180000,
+          image:
+            "/joyeria/plata/cad (7).jpeg",
+          description: "Plata ley 925",
+        },
+        {
+          id: 93,
+          name: "Cadena Balines Cristal Azul",
+          price: 140000,
+          image:
+            "/joyeria/plata/cad (8).jpeg",
+          description: "Plata ley 925, ",
+        },
+        {
+          id: 94,
+          name: "Cadena Del ref3 45CM",
+          price: 145000,
+          image:
+            "/joyeria/plata/cad (9).jpeg",
+          description: "Plata ley 925",
+        },
+        {
+          id: 95,
+          name: "Cadena Liviana Lazo ref2",
+          price: 170000,
+          image:
+            "/joyeria/plata/cad (10).jpeg",
+          description: "Plata ley 925, 60CM",
+        },
+        {
+          id: 96,
+          name: "Cadena mediana ref1 60CM",
+          price: 850000,
+          image:
+            "/joyeria/plata/cad (11).jpeg",
+          description: "Plata ley 925",
+        },
+        {
+          id: 97,
+          name: "Tobillera Hamsa",
+          price: 159900,
+          image:
+            "/joyeria/plata/tob1 (1).jpeg",
+          description: "Plata ley 925",
+        },
+        {
+          id: 98,
+          name: "Tobillera Estrella",
+          price: 150000,
+          image:
+            "/joyeria/plata/tob1 (2).jpeg",
+          description: "Plata ley 925",
+        },
+        {
+          id: 99,
+          name: "Tobillera Mariposa Hojas",
+          price: 140000,
+          image:
+            "/joyeria/plata/tob1 (3).jpeg",
+          description: "Plata ley 925",
+        },
+        {
+          id: 100,
+          name: "Tobillera Corazon y Balin",
+          price: 99900,
+          image:
+            "/joyeria/plata/tob1 (4).jpeg",
+          description: "Plata ley 925",
+        },
+        {
+          id: 101,
+          name: "Tobillera Cristal",
+          price: 115000,
+          image:
+            "/joyeria/plata/tob1 (5).jpeg",
+          description: "Plata ley 925",
+        },
+        {
+          id: 102,
+          name: "Tobillera Ojos Turcos",
+          price: 105000,
+          image:
+            "/joyeria/plata/tob1 (6).jpeg",
+          description: "Plata ley 925",
+        },
+        {
+          id: 103,
+          name: "Topos Corazon ref1",
+          price: 99900,
+          image:
+            "/joyeria/plata/top (1).jpeg",
+          description: "Plata ley 925",
+        },
+        {
+          id: 104,
+          name: "Topos Oso ",
+          price: 110000,
+          image:
+            "/joyeria/plata/top (2).jpeg",
+          description: "Plata ley 925",
+        },
+        {
+          id: 105,
+          name: "Topos Hada Microcircon",
+          price: 80000,
+          image:
+            "/joyeria/plata/top (3).jpeg",
+          description: "Plata ley 925",
+        },
+        {
+          id: 106,
+          name: "Topos Conejita",
+          price: 99900,
+          image:
+            "/joyeria/plata/top (4).jpeg",
+          description: "Plata ley 925",
+        },
+        {
+          id: 107,
+          name: "Candonga ref1",
+          price: 45000,
+          image:
+            "/joyeria/plata/top (5).jpeg",
+          description: "Plata ley 925",
+        },
 
   ];
 
@@ -1020,8 +1492,14 @@ export default function JoyeriaPage() {
 
           {selectedCategory === "oro" && (
           <div className="mt-6">
-            <h2 className="text-xl sm:text-2xl font-bold text-white">Oro laminado 18K</h2>
-            <p className="text-zinc-300 mt-2 text-sm">Piezas premium con acabado dorado y brillo intenso.</p>
+            <div className="text-center">
+              <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+                Oro laminado 18K
+              </h2>
+              <p className="text-zinc-300 mt-2 text-sm sm:text-base">
+                Piezas premium con acabado dorado y brillo intenso.
+              </p>
+            </div>
             <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
               {goldItems.map((item) => (
                 <div
@@ -1035,7 +1513,9 @@ export default function JoyeriaPage() {
                     <h3 className="text-sm sm:text-base font-semibold text-white line-clamp-1">{item.name}</h3>
                     <p className="text-xs text-zinc-300 mt-1 line-clamp-1">{item.description}</p>
                     <div className="mt-2 flex items-center justify-between gap-2">
-                      <span className="text-base sm:text-lg text-amber-300 font-semibold">${item.price.toLocaleString("es-CO")}</span>
+                      <span className="text-base sm:text-lg text-amber-300 font-semibold">
+                        {item.price > 0 ? `$${item.price.toLocaleString("es-CO")}` : "Consultar"}
+                      </span>
                       <button
                         onClick={() => addToCart(item)}
                         className="rounded-full bg-amber-500 text-black px-3 py-1.5 text-xs sm:text-sm font-semibold hover:bg-amber-400 transition"
@@ -1052,8 +1532,17 @@ export default function JoyeriaPage() {
 
           {selectedCategory === "plata" && (
           <div className="mt-10">
-            <h2 className="text-xl sm:text-2xl font-bold text-white">Plata ley 925</h2>
-            <p className="text-zinc-300 mt-2 text-sm">Diseños elegantes con brillo natural y alta durabilidad.</p>
+            <div className="text-center">
+              <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+                Plata ley 925
+              </h2>
+              <p className="text-zinc-300 mt-2 text-sm sm:text-base">
+                Diseños elegantes con brillo natural y alta durabilidad.
+              </p>
+              <p className="mt-4 text-amber-200/90 text-xs sm:text-sm font-semibold uppercase tracking-[0.2em]">
+                A partir de dos unidades recibiras un descuento
+              </p>
+            </div>
             <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
               {silverItems.map((item) => (
                 <div
@@ -1067,7 +1556,9 @@ export default function JoyeriaPage() {
                     <h3 className="text-sm sm:text-base font-semibold text-white line-clamp-1">{item.name}</h3>
                     <p className="text-xs text-zinc-300 mt-1 line-clamp-1">{item.description}</p>
                     <div className="mt-2 flex items-center justify-between gap-2">
-                      <span className="text-base sm:text-lg text-amber-300 font-semibold">${item.price.toLocaleString("es-CO")}</span>
+                      <span className="text-base sm:text-lg text-amber-300 font-semibold">
+                        {item.price > 0 ? `$${item.price.toLocaleString("es-CO")}` : "Consultar"}
+                      </span>
                       <button
                         onClick={() => addToCart(item)}
                         className="rounded-full bg-amber-500 text-black px-3 py-1.5 text-xs sm:text-sm font-semibold hover:bg-amber-400 transition"

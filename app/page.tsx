@@ -137,7 +137,7 @@ const products: Product[] = [
   },
 ];
 
-const categories = ["Plata ley 925", "Oro laminado 18K"];
+const categories = ["Oro laminado 18K"];
 
 const styles = [
   {
