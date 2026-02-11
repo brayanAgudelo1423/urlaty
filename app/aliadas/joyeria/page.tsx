@@ -14,12 +14,29 @@ interface Product {
   description: string;
 }
 
+interface GalleryCartItem {
+  id: string;
+  name: string;
+  image: string;
+  optionLabel: string;
+  quantity: number;
+  imageNumber: number;
+  type: "cadenas" | "dijes";
+}
+
 export default function JoyeriaPage() {
   const router = useRouter();
   const [addedId, setAddedId] = useState<number | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<"oro" | "plata">("oro");
+  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
+  const [galleryCategory, setGalleryCategory] = useState<"oro" | "plata">("oro");
+  const [galleryMode, setGalleryMode] = useState<"cadenas" | "dijes">("cadenas");
+  const [galleryIndex, setGalleryIndex] = useState(0);
+  const [galleryCart, setGalleryCart] = useState<GalleryCartItem[]>([]);
+  // Filtro para oro laminado 18K
+  const [oroFilter, setOroFilter] = useState<string>("");
   const assetBasePath = process.env.NODE_ENV === "production" ? "/urlaty" : "";
   const withBasePath = (src: string) => {
     if (src.startsWith("http")) {
@@ -63,6 +80,325 @@ export default function JoyeriaPage() {
   };
 
   const goldItems: Product[] = [
+    {
+      id: 8,
+      name: "combo cruz gucci",
+      price: 200000,
+      image:
+        "/joyeria/cruz con gucci.jpeg",
+      description: "cadena con dije y aretes gucci",
+    },
+    {
+      id: 3,
+      name: " Pulsera 3 carriles",
+      price: 120000,
+      image:
+        "/joyeria/3k.jpeg",
+      description: "3 carriles elegante",
+    },
+      // Nuevos topos laminados
+      {
+        id: 3001,
+        name: "topos Virgen de guadalupe ref1",
+        price: 150000,
+        image: "/joyeria/oro laminado/to (1).jpeg",
+        description: "Oro laminado 18K, Elegantes para el uso diario",
+      },
+      {
+        id: 3002,
+        name: "topos Oso ref1",
+        price: 80000,
+        image: "/joyeria/oro laminado/to (2).jpeg",
+        description: "Oro laminado 18K, Elegantes para el uso diario",
+      },
+      {
+        id: 3003,
+        name: "topos Cangrejo ref1",
+        price: 65000,
+        image: "/joyeria/oro laminado/to (3).jpeg",
+        description: "Oro laminado 18K, Elegantes para el uso diario",
+      },
+      {
+        id: 3004,
+        name: "topos Huella ref1",
+        price: 65000,
+        image: "/joyeria/oro laminado/to (4).jpeg",
+        description: "Oro laminado 18K, Elegantes para el uso diario",
+      },
+      {
+        id: 3005,
+        name: "topos Hueso",
+        price: 80000,
+        image: "/joyeria/oro laminado/to (5).jpeg",
+        description: "Oro laminado 18K, Elegantes para el uso diario",
+      },
+      {
+        id: 3006,
+        name: "topos Perro ref1",
+        price: 45000,
+        image: "/joyeria/oro laminado/to (6).jpeg",
+        description: "Oro laminado 18K, Elegantes para el uso diario",
+      },
+      {
+        id: 3007,
+        name: "topos Cruz ref1",
+        price: 60000,
+        image: "/joyeria/oro laminado/to (7).jpeg",
+        description: "Oro laminado 18K, Elegantes para el uso diario",
+      },
+      {
+        id: 3008,
+        name: "topos alas ref1",
+        price: 85000,
+        image: "/joyeria/oro laminado/to (8).jpeg",
+        description: "Oro laminado 18K, Elegantes para el uso diario",
+      },
+      {
+        id: 3009,
+        name: "topos Cereza ref1",
+        price: 70000,
+        image: "/joyeria/oro laminado/to (9).jpeg",
+        description: "Oro laminado 18K, Elegantes para el uso diario",
+      },
+      {
+        id: 3010,
+        name: "topos Caballo ref1",
+        price: 90000,
+        image: "/joyeria/oro laminado/to (10).jpeg",
+        description: "Oro laminado 18K, Elegantes para el uso diario",
+      },
+      {
+        id: 3011,
+        name: "topos Cruz ref2",
+        price: 60000,
+        image: "/joyeria/oro laminado/to (11).jpeg",
+        description: "Oro laminado 18K, Elegantes para el uso diario",
+      },
+      {
+        id: 3012,
+        name: "topos Cruz ref3 ",
+        price: 55000,
+        image: "/joyeria/oro laminado/to (12).jpeg",
+        description: "Oro laminado 18K, Elegantes para el uso diario",
+      },
+      {
+        id: 3013,
+        name: "topos Cactus ref1",
+        price: 49000,
+        image: "/joyeria/oro laminado/to (13).jpeg",
+        description: "Oro laminado 18K, Elegantes para el uso diario",
+      },
+      {
+        id: 3014,
+        name: "topos largones",
+        price: 70000,
+        image: "/joyeria/oro laminado/to (14).jpeg",
+        description: "Oro laminado 18K, Elegantes para el uso diario",
+      },
+      {
+        id: 3015,
+        name: "topos Dino ref1",
+        price: 49000,
+        image: "/joyeria/oro laminado/to (15).jpeg",
+        description: "Oro laminado 18K, Elegantes para el uso diario",
+      },
+      {
+        id: 3016,
+        name: "topos libelula ref1",
+        price: 85000,
+        image: "/joyeria/oro laminado/to (16).jpeg",
+        description: "Oro laminado 18K, Elegantes para el uso diario",
+      },
+      {
+        id: 3017,
+        name: "topos Cruz ref4",
+        price: 70000,
+        image: "/joyeria/oro laminado/to (17).jpeg",
+        description: "Oro laminado 18K, Elegantes para el uso diario",
+      },
+      {
+        id: 3018,
+        name: "topos Caballo pequeños ref2",
+        price: 49000,
+        image: "/joyeria/oro laminado/to (10).jpeg",
+        description: "Oro laminado 18K, Elegantes para el uso diario",
+      },
+    {
+      id: 5,
+      name: "Combo aguila",
+      price: 260000,
+      image:
+        "/joyeria/aguila comb.jpeg",
+      description: "cadena, dije y aretes ",
+    },
+    {
+      id: 10,
+      name: "pulsera crucificada",
+      price: 110000,
+      image:
+        "/joyeria/ComboPul.jpeg",
+      description: "pulsera con dije crucificado ",
+    },
+    {
+      id: 1,
+      name: "Combo one dios",
+      price: 310000,
+      image:
+        "/joyeria/combito.jpeg",
+      description: "Combo pulsera, dos dijes y cadena",
+    },
+    {
+      id: 7,
+      name: "cadena virgen de guadalupe",
+      price: 180000,
+      image:
+        "/joyeria/virgenVieja.jpeg",
+      description: "cadena con dije de la virgen ",
+    },
+    {
+      id: 2,
+      name: "Pulsera RX grande",
+      price: 185000,
+      image:
+        "/joyeria/rolex grande.jpeg",
+      description: "Pulsera RX grande con balineria",
+    },
+    {
+      id: 11,
+      name: "combo virgen san miguel",
+      price: 165000,
+      image:
+        "/joyeria/combo san.jpeg",
+      description: "combo pareja de proteccion",
+    },
+    {
+      id: 6,
+      name: "pulsera san miguel",
+      price: 105000,
+      image:
+        "/joyeria/pulsera sanVieja.jpeg",
+      description: "Pulsera san miguel en oro laminado 18K.",
+    },
+    {
+      id: 4,
+      name: "Pulseras",
+      price: 85000,
+      image:
+        "/joyeria/pulseras viej.jpeg",
+      description: "Pulseras ",
+    },
+    {
+      id: 9,
+      name: "combo pulsera aretes",
+      price: 170000,
+      image:
+        "/joyeria/comboViejo.jpeg",
+      description: "pulsera diamantada con aretes ",
+    },
+    {
+      id: 901,
+      name: "cadena Lazo 50CM ref1 ",
+      price: 299900,
+      image:
+        "/joyeria/oro laminado/cad (1).jpeg",
+      description: "para darle stylo a tu presencia",
+    },
+    {
+      id: 902,
+      name: "cadena inter 60CM ref1 ",
+      price: 260000,
+      image:
+        "/joyeria/oro laminado/cad (2).jpeg",
+      description: "para darle stylo a tu presencia",
+    },
+    {
+      id: 903,
+      name: "cadena chinesca 50CM ref1",
+      price: 540000,
+      image:
+        "/joyeria/oro laminado/cad (3).jpeg",
+      description: "para darle stylo a tu presencia",
+    },
+    {
+      id: 904,
+      name: "cadena Militar 45CM REF1",
+      price: 130000,
+      image:
+        "/joyeria/oro laminado/cad (4).jpeg",
+      description: "para darle stylo a tu presencia",
+    },
+    {
+      id: 905,
+      name: "cadena Lazo 50CM ref2 ",
+      price: 350000,
+      image:
+        "/joyeria/oro laminado/cad (5).jpeg",
+      description: "para darle stylo a tu presencia",
+    },
+    {
+      id: 906,
+      name: "cadena Poli 50CM REF1",
+      price: 260000,
+      image:
+        "/joyeria/oro laminado/cad (6).jpeg",
+      description: "para darle stylo a tu presencia",
+    },
+    {
+      id: 907,
+      name: "cadena Chester 50CM REF1",
+      price: 170000,
+      image:
+        "/joyeria/oro laminado/cad (7).jpeg",
+      description: "para darle stylo a tu presencia",
+    },
+    {
+      id: 908,
+      name: "cadena Gucci 60CM REF1",
+      price: 699000,
+      image:
+        "/joyeria/oro laminado/cad (8).jpeg",
+      description: "para darle stylo a tu presencia",
+    },
+    {
+      id: 909,
+      name: "cadena Militar Gruesa 50CM REF2",
+      price: 399000,
+      image:
+        "/joyeria/oro laminado/cad (9).jpeg",
+      description: " 50CM sin dije.",
+    },
+    {
+      id: 910,
+      name: "cadena Avion REF1",
+      price: 170000,
+      image:
+        "/joyeria/oro laminado/cad (10).jpeg",
+      description: "para darle stylo a tu presencia",
+    },
+    {
+      id: 911,
+      name: "cadena virgen",
+      price: 170000,
+      image:
+        "/joyeria/oro laminado/cad (11).jpeg",
+      description: "para darle stylo a tu presencia",
+    },
+    {
+      id: 912,
+      name: "cadena chinesca Gruesa 60CM ref2",
+      price: 680000,
+      image:
+        "/joyeria/oro laminado/cad (12).jpeg",
+      description: "60 CM",
+    },
+    {
+      id: 913,
+      name: "cadena lazo gruesa  60CM ref2",
+      price: 340000,
+      image:
+        "/joyeria/oro laminado/cad (13).jpeg",
+      description: "para darle stylo a tu presencia",
+    },
     {
       id: 21,
       name: "topos teddy",
@@ -218,7 +554,7 @@ export default function JoyeriaPage() {
     {
       id: 212,
       name: "topos virgen de guadalupe",
-      price: 90000,
+      price: 80000,
       image:
         "/joyeria/oro laminado/oro55.jpeg",
       description: "Brillo elegante.",
@@ -538,7 +874,7 @@ export default function JoyeriaPage() {
     {
       id: 108,
       name: "aretes carro",
-      price: 120000,
+      price: 90000,
       image:
         "/joyeria/oro laminado/oro25.jpeg",
       description: "Diseño clasico en oro laminado.",
@@ -1428,6 +1764,405 @@ export default function JoyeriaPage() {
     setTimeout(() => setAddedId(null), 1200);
   };
 
+  const goldGalleryExtras: Product[] = [
+    {
+      id: 5001,
+      name: "cadena",
+      price: 0,
+      image: "/joyeria/oro laminado/gal (1).jpeg",
+      description: "Pregunta por tu cadena: son ediciones limitadas, mas economicas y muy apetecidas.",
+    },
+    {
+      id: 5002,
+      name: "cadena",
+      price: 0,
+      image: "/joyeria/oro laminado/gal (2).jpeg",
+      description: "Pregunta por tu cadena: son ediciones limitadas, mas economicas y muy apetecidas.",
+    },
+    {
+      id: 5003,
+      name: "cadena",
+      price: 0,
+      image: "/joyeria/oro laminado/gal (3).jpeg",
+      description: "Pregunta por tu cadena: son ediciones limitadas, mas economicas y muy apetecidas.",
+    },
+    {
+      id: 5004,
+      name: "cadena",
+      price: 0,
+      image: "/joyeria/oro laminado/gal (4).jpeg",
+      description: "Pregunta por tu cadena: son ediciones limitadas, mas economicas y muy apetecidas.",
+    },
+    {
+      id: 5005,
+      name: "cadena",
+      price: 0,
+      image: "/joyeria/oro laminado/gal (5).jpeg",
+      description: "Pregunta por tu cadena: son ediciones limitadas, mas economicas y muy apetecidas.",
+    },
+    {
+      id: 5006,
+      name: "cadena",
+      price: 0,
+      image: "/joyeria/oro laminado/gal (6).jpeg",
+      description: "Pregunta por tu cadena: son ediciones limitadas, mas economicas y muy apetecidas.",
+    },
+    {
+      id: 5007,
+      name: "cadena",
+      price: 0,
+      image: "/joyeria/oro laminado/gal (7).jpeg",
+      description: "Pregunta por tu cadena: son ediciones limitadas, mas economicas y muy apetecidas.",
+    },
+    {
+      id: 5008,
+      name: "cadena",
+      price: 0,
+      image: "/joyeria/oro laminado/gal (8).jpeg",
+      description: "Pregunta por tu cadena: son ediciones limitadas, mas economicas y muy apetecidas.",
+    },
+    {
+      id: 5009,
+      name: "cadena",
+      price: 0,
+      image: "/joyeria/oro laminado/gal (9).jpeg",
+      description: "Pregunta por tu cadena: son ediciones limitadas, mas economicas y muy apetecidas.",
+    },
+    {
+      id: 5010,
+      name: "cadena",
+      price: 0,
+      image: "/joyeria/oro laminado/gal (10).jpeg",
+      description: "Pregunta por tu cadena: son ediciones limitadas, mas economicas y muy apetecidas.",
+    },
+  ];
+  const dijGalleryExtras: Product[] = [
+    {
+      id: 6001,
+      name: "dije Bolsa de Dinero",
+      price: 0,
+      image: "/joyeria/oro laminado/dij (1).jpeg",
+      description: "Dije oro laminado 18K.",
+    },
+    {
+      id: 6002,
+      name: "dije RX ref1",
+      price: 0,
+      image: "/joyeria/oro laminado/dij (2).jpeg",
+      description: "Dije oro laminado 18K.",
+    },
+    {
+      id: 6003,
+      name: "dije Tijeras ",
+      price: 0,
+      image: "/joyeria/oro laminado/dij (3).jpeg",
+      description: "Dije oro laminado 18K.",
+    },
+    {
+      id: 6004,
+      name: "dije RX ref2",
+      price: 0,
+      image: "/joyeria/oro laminado/dij (4).jpeg",
+      description: "Dije oro laminado 18K.",
+    },
+    {
+      id: 6005,
+      name: "dije Sagrada Familia",
+      price: 0,
+      image: "/joyeria/oro laminado/dij (5).jpeg",
+      description: "Dije oro laminado 18K.",
+    },
+    {
+      id: 6006,
+      name: "dije Caballo ref1",
+      price: 0,
+      image: "/joyeria/oro laminado/dij (6).jpeg",
+      description: "Dije oro laminado 18K.",
+    },
+    {
+      id: 6007,
+      name: "dije Caballo ref2",
+      price: 0,
+      image: "/joyeria/oro laminado/dij (7).jpeg",
+      description: "Dije oro laminado 18K.",
+    },
+    {
+      id: 6008,
+      name: "dije Video Juegos",
+      price: 0,
+      image: "/joyeria/oro laminado/dij (8).jpeg",
+      description: "Dije oro laminado 18K.",
+    },
+    {
+      id: 6009,
+      name: "dije Virgen de guadalupe pequeño",
+      price: 0,
+      image: "/joyeria/oro laminado/dij (9).jpeg",
+      description: "Dije oro laminado 18K.",
+    },
+    {
+      id: 6010,
+      name: "dije Virgen de guadalupe grande",
+      price: 0,
+      image: "/joyeria/oro laminado/dij (10).jpeg",
+      description: "Dije oro laminado 18K.",
+    },
+    {
+      id: 6011,
+      name: "dije RX ref2",
+      price: 0,
+      image: "/joyeria/oro laminado/dij (11).jpeg",
+      description: "Dije oro laminado 18K.",
+    },
+    {
+      id: 6012,
+      name: "dije Atletico Nacional",
+      price: 0,
+      image: "/joyeria/oro laminado/dij (12).jpeg",
+      description: "Dije oro laminado 18K.",
+    },
+    {
+      id: 6013,
+      name: "dije San miguel Arcangel",
+      price: 0,
+      image: "/joyeria/oro laminado/dij (13).jpeg",
+      description: "Dije oro laminado 18K.",
+    },
+    {
+      id: 6014,
+      name: "dije RX grande ref3",
+      price: 0,
+      image: "/joyeria/oro laminado/dij (14).jpeg",
+      description: "Dije oro laminado 18K.",
+    },
+    {
+      id: 6015,
+      name: "dije virgen de guadalupe ref3",
+      price: 0,
+      image: "/joyeria/oro laminado/dij (15).jpeg",
+      description: "Dije oro laminado 18K.",
+    },
+    {
+      id: 6016,
+      name: "dije San benito ref1",
+      price: 0,
+      image: "/joyeria/oro laminado/dij (16).jpeg",
+      description: "Dije oro laminado 18K.",
+    },
+    {
+      id: 6017,
+      name: "dije Sagrada Familia ref2",
+      price: 0,
+      image: "/joyeria/oro laminado/dij (17).jpeg",
+      description: "Dije oro laminado 18K.",
+    },
+    {
+      id: 6018,
+      name: "dije Cruz ref1",
+      price: 0,
+      image: "/joyeria/oro laminado/dij (18).jpeg",
+      description: "Dije oro laminado 18K.",
+    },
+    {
+      id: 6019,
+      name: "dije virgen del carmen ref1",
+      price: 0,
+      image: "/joyeria/oro laminado/dij (19).jpeg",
+      description: "Dije oro laminado 18K.",
+    },
+    {
+      id: 6020,
+      name: "dije Rostro de dios ref1",
+      price: 0,
+      image: "/joyeria/oro laminado/dij (20).jpeg",
+      description: "Dije oro laminado 18K.",
+    },
+    {
+      id: 6021,
+      name: "dije Corazon ref1",
+      price: 0,
+      image: "/joyeria/oro laminado/dij (21).jpeg",
+      description: "Dije oro laminado 18K.",
+    },
+    {
+      id: 6022,
+      name: "dije Cruz ref2",
+      price: 0,
+      image: "/joyeria/oro laminado/dij (22).jpeg",
+      description: "Dije oro laminado 18K.",
+    },
+    {
+      id: 6023,
+      name: "dije Oso ref1",
+      price: 0,
+      image: "/joyeria/oro laminado/dij (23).jpeg",
+      description: "Dije oro laminado 18K.",
+    },
+    {
+      id: 6024,
+      name: "dije Oso ref2",
+      price: 0,
+      image: "/joyeria/oro laminado/dij (24).jpeg",
+      description: "Dije oro laminado 18K.",
+    },
+    {
+      id: 6025,
+      name: "dije RX ref3",
+      price: 0,
+      image: "/joyeria/oro laminado/dij (25).jpeg",
+      description: "Dije oro laminado 18K.",
+    },
+    {
+      id: 6026,
+      name: "dije Caballo ref3",
+      price: 0,
+      image: "/joyeria/oro laminado/dij (26).jpeg",
+      description: "Dije oro laminado 18K.",
+    },
+    {
+      id: 6027,
+      name: "dije mini cruz ref1",
+      price: 0,
+      image: "/joyeria/oro laminado/dij (27).jpeg",
+      description: "Dije oro laminado 18K.",
+    },
+    {
+      id: 6028,
+      name: "dije Recordatorio ref1",
+      price: 0,
+      image: "/joyeria/oro laminado/dij (28).jpeg",
+      description: "Dije oro laminado 18K.",
+    },
+    {
+      id: 6029,
+      name: "dije Virgen del Carmen ref2",
+      price: 0,
+      image: "/joyeria/oro laminado/dij (29).jpeg",
+      description: "Dije oro laminado 18K.",
+    },
+    {
+      id: 6030,
+      name: "dije Van Cleef ref1",
+      price: 0,
+      image: "/joyeria/oro laminado/dij (30).jpeg",
+      description: "Dije oro laminado 18K.",
+    },
+  ];
+  const presPreviewImages = [
+    "/joyeria/oro laminado/pres (1).jpeg",
+    "/joyeria/oro laminado/pres (2).jpeg",
+    "/joyeria/oro laminado/pres (3).jpeg",
+    "/joyeria/oro laminado/pres (4).jpeg",
+    "/joyeria/oro laminado/pres (5).jpeg",
+    "/joyeria/oro laminado/pres (6).jpeg",
+  ];
+  const galleryItems = galleryCategory === "oro"
+    ? galleryMode === "cadenas"
+      ? goldGalleryExtras
+      : dijGalleryExtras
+    : silverItems;
+  const activeGalleryItem = galleryItems[galleryIndex];
+  const goToPrevImage = () => {
+    setGalleryIndex((prev) =>
+      galleryItems.length ? (prev - 1 + galleryItems.length) % galleryItems.length : 0
+    );
+  };
+  const goToNextImage = () => {
+    setGalleryIndex((prev) =>
+      galleryItems.length ? (prev + 1) % galleryItems.length : 0
+    );
+  };
+
+
+  const getGalleryOptions = () => {
+    const total = galleryIndex === 4 ? 5 : 6;
+    return Array.from({ length: total }, (_, i) => `Cadena ${i + 1}`);
+  };
+  const addGalleryItem = (optionLabel?: string) => {
+    if (!activeGalleryItem) {
+      return;
+    }
+    const imageNumber = galleryIndex + 1;
+    // For dijes, use the actual product name from the gallery item
+    const label = galleryMode === "dijes"
+      ? activeGalleryItem.name
+      : optionLabel ?? "Cadena";
+    const key = `${activeGalleryItem.image}::${label}::${galleryMode}`;
+    setGalleryCart((prev) => {
+      const existing = prev.find((item) => item.id === key);
+      if (existing) {
+        return prev.map((item) =>
+          item.id === key ? { ...item, quantity: item.quantity + 1 } : item
+        );
+      }
+      return [
+        ...prev,
+        {
+          id: key,
+          name: label,
+          image: activeGalleryItem.image,
+          optionLabel: label,
+          quantity: 1,
+          imageNumber,
+          type: galleryMode,
+        },
+      ];
+    });
+  };
+
+  const removeGalleryItem = (id: string) => {
+    setGalleryCart((prev) => prev.filter((item) => item.id !== id));
+  };
+
+  const updateGalleryQuantity = (id: string, nextQuantity: number) => {
+    if (nextQuantity <= 0) {
+      removeGalleryItem(id);
+      return;
+    }
+    setGalleryCart((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, quantity: nextQuantity } : item
+      )
+    );
+  };
+
+  const clearGalleryCart = () => {
+    setGalleryCart([]);
+  };
+
+  const normalizePhone = (value: string) => value.replace(/\D/g, "");
+  const galleryCheckoutPhone = "3009870850";
+  const buildGalleryMessage = () => {
+    const lines = galleryCart
+      .map(
+        (item) => {
+          const optionText = item.type === "dijes"
+            ? `Dije ${item.optionLabel}`
+            : item.optionLabel;
+          return `- ${item.name} (${optionText}, Imagen ${item.imageNumber}) x${item.quantity}`;
+        }
+      )
+      .join("\n");
+    return [
+      "Hola, quiero cotizar estas opciones de la galeria:",
+      "",
+      "Productos seleccionados:",
+      lines,
+      "",
+      `Total de seleccionados: ${galleryCart.length}`,
+    ].join("\n");
+  };
+  const handleGalleryCheckout = () => {
+    if (typeof window === "undefined" || galleryCart.length === 0) {
+      return;
+    }
+    const rawPhone = normalizePhone(galleryCheckoutPhone);
+    const phone = rawPhone.length === 10 ? `57${rawPhone}` : rawPhone;
+    const message = buildGalleryMessage();
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
+
   return (
     <div className="min-h-screen bg-black text-white px-4 py-10">
       <div className="max-w-5xl mx-auto">
@@ -1499,33 +2234,117 @@ export default function JoyeriaPage() {
               <p className="text-zinc-300 mt-2 text-sm sm:text-base">
                 Piezas premium con acabado dorado y brillo intenso.
               </p>
+              {/* Filtros oro laminado 18K */}
+              <div className="mt-4 flex flex-wrap justify-center gap-2">
+                {['cadenas', 'pulseras', 'anillo', 'dije', 'candongas', 'combos', 'topos-aretes', 'pareja', 'virgen'].map((filtro) => (
+                  <button
+                    key={filtro}
+                    type="button"
+                    onClick={() => setOroFilter(filtro)}
+                    className={`rounded-full px-3 py-1.5 text-xs sm:px-4 sm:py-2 sm:text-sm font-semibold shadow border border-amber-400 transition-all duration-200 tracking-wide uppercase ${
+                      oroFilter === filtro
+                        ? 'bg-amber-400 text-black border-amber-400 shadow-md scale-105'
+                        : 'bg-black/80 border-amber-400 text-amber-200 hover:bg-amber-500/10 hover:text-amber-300 hover:border-amber-300'
+                    }`}
+                    style={{letterSpacing: '0.04em', minWidth: '80px'}}
+                  >
+                    {filtro === 'topos-aretes' ? 'Topos y Aretes' : filtro.charAt(0).toUpperCase() + filtro.slice(1)}
+                  </button>
+                ))}
+                <button
+                  type="button"
+                  onClick={() => setOroFilter("")}
+                  className={`rounded-full px-3 py-1.5 text-xs sm:px-4 sm:py-2 sm:text-sm font-semibold shadow border border-amber-400 transition-all duration-200 tracking-wide uppercase ${
+                    oroFilter === ""
+                      ? 'bg-zinc-800 text-white border-amber-400 shadow-md scale-105'
+                      : 'bg-black/80 border-amber-400 text-amber-200 hover:bg-amber-500/10 hover:text-amber-300 hover:border-amber-300'
+                  }`}
+                  style={{letterSpacing: '0.04em', minWidth: '80px'}}
+                >
+                  Todos
+                </button>
+              </div>
             </div>
             <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-              {goldItems.map((item) => (
-                <div
-                  key={item.id}
-                  className="rounded-lg border border-amber-500/20 bg-zinc-900/80 overflow-hidden"
-                >
-                  <div className="relative h-40 sm:h-48 bg-black cursor-pointer" onClick={() => setSelectedImage(item.image)}>
-                    <Image src={withBasePath(item.image)} alt={item.name} fill className="object-cover" />
-                  </div>
-                  <div className="p-3">
-                    <h3 className="text-sm sm:text-base font-semibold text-white line-clamp-1">{item.name}</h3>
-                    <p className="text-xs text-zinc-300 mt-1 line-clamp-1">{item.description}</p>
-                    <div className="mt-2 flex items-center justify-between gap-2">
-                      <span className="text-base sm:text-lg text-amber-300 font-semibold">
-                        {item.price > 0 ? `$${item.price.toLocaleString("es-CO")}` : "Consultar"}
-                      </span>
-                      <button
-                        onClick={() => addToCart(item)}
-                        className="rounded-full bg-amber-500 text-black px-3 py-1.5 text-xs sm:text-sm font-semibold hover:bg-amber-400 transition"
-                      >
-                        {addedId === item.id ? "✓" : "Agregar"}
-                      </button>
+              {/* Galeria destacada solo en Todos y cadenas */}
+              {(oroFilter === "" || oroFilter === "cadenas") && (
+                <div className="col-span-2 rounded-2xl border border-amber-500/40 bg-gradient-to-b from-zinc-900/70 to-zinc-950/80 p-7 sm:p-8 min-h-[200px] sm:min-h-[220px] flex flex-col items-center justify-center text-center shadow-[0_10px_40px_rgba(0,0,0,0.35)] hover:border-amber-400/70 hover:shadow-[0_12px_50px_rgba(217,119,6,0.15)] transition">
+                  <span className="text-[11px] uppercase tracking-[0.35em] text-white/90">
+                    Galeria destacada
+                  </span>
+                  <span className="mt-3 h-px w-12 bg-amber-500/40" />
+                  <span className="mt-3 text-sm sm:text-base text-amber-200/90 font-semibold max-w-md">
+                    Personaliza tu cadena para que te salga en precios mucho mas menores, desde los 80.000 y con dijes desde los 130.000 en adelante
+                  </span>
+                  <div className="mt-4 w-full max-w-xs">
+                    <p className="text-xs sm:text-sm text-zinc-300">
+                      Muestras de personalizacion: asi podria quedar tu cadena.
+                    </p>
+                    <div className="mt-2 grid grid-cols-3 gap-1.5">
+                      {presPreviewImages.map((src, index) => (
+                        <button
+                          key={src}
+                          type="button"
+                          onClick={() => {
+                            setSelectedImage(src);
+                          }}
+                          className="relative aspect-square rounded-md overflow-hidden border border-amber-500/10 hover:border-amber-400/60 transition"
+                          aria-label="Abrir muestra de personalizacion"
+                        >
+                          <Image src={withBasePath(src)} alt="Muestra de personalizacion" fill className="object-cover" />
+                        </button>
+                      ))}
                     </div>
                   </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setGalleryCategory("oro");
+                      setGalleryMode("cadenas");
+                      setGalleryIndex(0);
+                      setIsGalleryOpen(true);
+                    }}
+                    className="mt-5 inline-flex items-center justify-center rounded-full border border-amber-400/80 px-5 py-2 text-sm sm:text-base font-semibold text-amber-200 hover:border-amber-300 hover:text-amber-100 transition"
+                  >
+                    Ver galeria de cadenas
+                  </button>
                 </div>
-              ))}
+              )}
+              {goldItems
+                .filter((item) => {
+                  if (oroFilter === "") return true;
+                  const name = item.name.toLowerCase();
+                  if (oroFilter === "cadenas") return name.includes("cadena");
+                  if (oroFilter === "pulseras") return name.includes("pulsera");
+                  if (oroFilter === "combos") return name.includes("combo");
+                  if (oroFilter === "topos-aretes") return name.startsWith("topos") || name.startsWith("arete");
+                  return name.startsWith(oroFilter);
+                })
+                .map((item) => (
+                  <div
+                    key={item.id}
+                    className="rounded-lg border border-amber-500/20 bg-zinc-900/80 overflow-hidden"
+                  >
+                    <div className="relative h-40 sm:h-48 bg-black cursor-pointer" onClick={() => setSelectedImage(item.image)}>
+                      <Image src={withBasePath(item.image)} alt={item.name} fill className="object-cover" />
+                    </div>
+                    <div className="p-3">
+                      <h3 className="text-sm sm:text-base font-semibold text-white line-clamp-1">{item.name}</h3>
+                      <p className="text-xs text-zinc-300 mt-1 line-clamp-1">{item.description}</p>
+                      <div className="mt-2 flex items-center justify-between gap-2">
+                        <span className="text-base sm:text-lg text-amber-300 font-semibold">
+                          {item.price > 0 ? `$${item.price.toLocaleString("es-CO")}` : "Consultar"}
+                        </span>
+                        <button
+                          onClick={() => addToCart(item)}
+                          className="rounded-full bg-amber-500 text-black px-3 py-1.5 text-xs sm:text-sm font-semibold hover:bg-amber-400 transition"
+                        >
+                          {addedId === item.id ? "✓" : "Agregar"}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
             </div>
           </div>
           )}
@@ -1599,6 +2418,268 @@ export default function JoyeriaPage() {
           </svg>
         </button>
       </div>
+
+      {/* Modal de galeria */}
+      {isGalleryOpen && (
+        <div
+          className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] flex items-center justify-center p-4"
+          onClick={() => setIsGalleryOpen(false)}
+        >
+          <div
+            className="relative w-full max-w-5xl max-h-[85vh] bg-zinc-950/95 border border-amber-500/30 rounded-2xl p-5 sm:p-6 shadow-2xl overflow-y-auto gallery-scrollbar"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between gap-4 pb-4 border-b border-amber-500/10">
+              <div className="flex-1 text-center">
+                <h3 className="text-base sm:text-lg font-semibold text-amber-200">
+                  {galleryCategory === "oro"
+                    ? galleryMode === "cadenas"
+                      ? "Galeria de cadenas en Oro laminado 18K"
+                      : "Galeria de dijes en Oro laminado 18K"
+                    : "Galeria Plata ley 925"}
+                </h3>
+                <p className="text-xs sm:text-sm text-zinc-400 mt-1">
+                  Selecciona una imagen para ampliarla.
+                </p>
+                {galleryCategory === "oro" && (
+                  <div className="mt-3 flex items-center justify-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setGalleryMode("cadenas");
+                        setGalleryIndex(0);
+                      }}
+                      className={`rounded-full px-4 py-1.5 text-xs sm:text-sm font-semibold transition ${
+                        galleryMode === "cadenas"
+                          ? "bg-amber-500 text-black"
+                          : "border border-amber-500/40 text-amber-200 hover:border-amber-300"
+                      }`}
+                    >
+                      Cadenas
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setGalleryMode("dijes");
+                        setGalleryIndex(0);
+                      }}
+                      className={`rounded-full px-4 py-1.5 text-xs sm:text-sm font-semibold transition ${
+                        galleryMode === "dijes"
+                          ? "bg-amber-500 text-black"
+                          : "border border-amber-500/40 text-amber-200 hover:border-amber-300"
+                      }`}
+                    >
+                      Dijes
+                    </button>
+                  </div>
+                )}
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="hidden sm:inline-flex items-center rounded-full border border-amber-500/30 px-3 py-1 text-xs text-amber-200/90">
+                  {galleryItems.length} fotos
+                </span>
+                <button
+                  onClick={() => setIsGalleryOpen(false)}
+                  className="bg-black/80 border border-amber-500/40 text-white rounded-full w-9 h-9 flex items-center justify-center hover:text-amber-400 transition"
+                  aria-label="Cerrar"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div className="mt-4">
+              {activeGalleryItem && (
+                <div className="rounded-2xl border border-amber-500/20 bg-black/60 overflow-hidden">
+                  <div className="relative h-[260px] sm:h-[360px] lg:h-[420px]">
+                    <button
+                      type="button"
+                      onClick={goToPrevImage}
+                      className="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black/70 border border-amber-500/30 text-amber-200 hover:text-amber-100 hover:border-amber-400 transition"
+                      aria-label="Anterior"
+                    >
+                      <svg className="w-5 h-5 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                      </svg>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={goToNextImage}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black/70 border border-amber-500/30 text-amber-200 hover:text-amber-100 hover:border-amber-400 transition"
+                      aria-label="Siguiente"
+                    >
+                      <svg className="w-5 h-5 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSelectedImage(activeGalleryItem.image);
+                      }}
+                      className="absolute inset-0"
+                      aria-label="Abrir imagen"
+                    >
+                      <Image
+                        src={withBasePath(activeGalleryItem.image)}
+                        alt={activeGalleryItem.name}
+                        fill
+                        className="object-contain"
+                      />
+                    </button>
+                  </div>
+                  <div className="px-4 py-3 bg-zinc-950/60 border-t border-amber-500/10">
+                    <p className="text-sm sm:text-base font-semibold text-amber-200 text-center">
+                      {activeGalleryItem.name}
+                    </p>
+                    <p className="text-xs sm:text-sm text-zinc-300 mt-1 text-center">
+                      {activeGalleryItem.description}
+                    </p>
+                    {galleryCategory === "oro" && (
+                      <div className="mt-4">
+                        <p className="text-xs sm:text-sm text-zinc-300 text-center">
+                          Selecciona una opcion para agregar al carrito de la galeria
+                        </p>
+                        <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
+                          {galleryMode === "dijes" ? (
+                            <button
+                              type="button"
+                              onClick={() => addGalleryItem()}
+                              className="rounded-full border border-amber-500/40 px-4 py-1 text-xs sm:text-sm text-amber-200 hover:border-amber-300 hover:text-amber-100 transition"
+                            >
+                              Agregar
+                            </button>
+                          ) : (
+                            getGalleryOptions().map((option) => (
+                              <button
+                                key={option}
+                                type="button"
+                                onClick={() => addGalleryItem(option)}
+                                className="rounded-full border border-amber-500/40 px-3 py-1 text-xs sm:text-sm text-amber-200 hover:border-amber-300 hover:text-amber-100 transition"
+                              >
+                                {option}
+                              </button>
+                            ))
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+            {galleryCategory === "oro" && (
+              <div className="mt-4 rounded-2xl border border-amber-500/40 bg-black p-4 shadow-lg">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-2">
+                    <Image
+                      src={withBasePath("/joyeria/logo.png.jpg")}
+                      alt="Urlaty Logo"
+                      width={32}
+                      height={32}
+                      className="object-contain"
+                    />
+                    <div>
+                      <p className="text-sm sm:text-base font-semibold text-amber-200">
+                        {galleryMode === "dijes" ? "Carrito de dijes" : "Carrito de cadenas"}
+                      </p>
+                      <p className="text-[11px] text-amber-200/70">Solo para la galeria</p>
+                    </div>
+                  </div>
+                  <span className="text-xs text-amber-200/90">{galleryCart.length} seleccionadas</span>
+                </div>
+                {galleryCart.length === 0 ? (
+                  <p className="text-xs sm:text-sm text-amber-200/70 mt-3">
+                    Aun no has agregado opciones.
+                  </p>
+                ) : (
+                  <div className="mt-3 grid gap-2">
+                    {galleryCart.map((item) => (
+                      <div
+                        key={item.id}
+                        className="flex items-center gap-3 rounded-lg border border-amber-500/30 bg-black/80 p-2"
+                      >
+                        <div className="relative h-12 w-12 rounded-md overflow-hidden border border-amber-500/10">
+                          <Image src={withBasePath(item.image)} alt={item.name} fill className="object-cover" />
+                        </div>
+                        <div className="flex-1">
+                          <p className="text-xs sm:text-sm text-amber-200 font-semibold">
+                            {item.type === "dijes"
+                              ? `${item.name} - Imagen ${item.imageNumber}`
+                              : item.optionLabel}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <button
+                            onClick={() => updateGalleryQuantity(item.id, item.quantity - 1)}
+                            className="w-5 h-5 rounded-full border border-amber-500/40 text-amber-200 hover:border-amber-300 hover:text-amber-100 transition flex items-center justify-center text-[10px]"
+                          >
+                            -
+                          </button>
+                          <span className="text-xs font-semibold w-5 text-center text-amber-200">
+                            {item.quantity}
+                          </span>
+                          <button
+                            onClick={() => updateGalleryQuantity(item.id, item.quantity + 1)}
+                            className="w-5 h-5 rounded-full border border-amber-500/40 text-amber-200 hover:border-amber-300 hover:text-amber-100 transition flex items-center justify-center text-[10px]"
+                          >
+                            +
+                          </button>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => removeGalleryItem(item.id)}
+                          className="text-xs text-amber-300 hover:text-amber-100 transition"
+                        >
+                          Quitar
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                <div className="mt-4 flex flex-col sm:flex-row gap-2">
+                  <button
+                    type="button"
+                    onClick={handleGalleryCheckout}
+                    className="w-full sm:flex-1 bg-amber-500 text-black py-2 rounded-full hover:bg-amber-400 transition text-sm font-semibold"
+                  >
+                    Cotiza tu cadena personalizada
+                  </button>
+                  <button
+                    type="button"
+                    onClick={clearGalleryCart}
+                    className="w-full sm:flex-1 border border-amber-500 text-amber-200 py-2 rounded-full hover:bg-amber-500/10 transition text-sm font-semibold"
+                  >
+                    Vaciar carrito
+                  </button>
+                </div>
+              </div>
+            )}
+            <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 overflow-y-auto max-h-[44vh] pr-1">
+              {galleryItems.map((item, index) => (
+                <button
+                  key={`${galleryCategory}-${item.id}`}
+                  type="button"
+                  onClick={() => {
+                    setSelectedImage(item.image);
+                  }}
+                  className={`relative h-28 sm:h-32 bg-black rounded-xl overflow-hidden border transition ${
+                    item.id === activeGalleryItem?.id
+                      ? "border-amber-400/80 shadow-[0_0_0_1px_rgba(245,158,11,0.45)]"
+                      : "border-amber-500/10 hover:border-amber-500/40 hover:shadow-[0_0_0_1px_rgba(245,158,11,0.25)]"
+                  }`}
+                >
+                  <span className="absolute left-2 top-2 z-10 rounded-full bg-black/80 border border-amber-400/60 px-2 py-0.5 text-[10px] font-semibold text-amber-200">
+                    {index + 1}
+                  </span>
+                  <Image src={withBasePath(item.image)} alt={item.name} fill className="object-cover" />
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Modal para imagen grande */}
       {selectedImage && (

@@ -58,7 +58,7 @@ const products: Product[] = [
   {
     id: 5,
     name: "Combo aguila",
-    price: 220000,
+    price: 260000,
     category: "Oro laminado 18K",
     image:
       "/joyeria/aguila comb.jpeg",

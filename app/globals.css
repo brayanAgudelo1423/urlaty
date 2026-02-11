@@ -27,6 +27,29 @@ body {
   min-height: 100vh;
 }
 
+.gallery-scrollbar {
+  scrollbar-color: rgba(245, 158, 11, 0.7) transparent;
+  scrollbar-width: thin;
+}
+
+.gallery-scrollbar::-webkit-scrollbar {
+  width: 10px;
+}
+
+.gallery-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.gallery-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(245, 158, 11, 0.55);
+  border-radius: 999px;
+  border: 2px solid rgba(0, 0, 0, 0.4);
+}
+
+.gallery-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(245, 158, 11, 0.8);
+}
+
 /* Eliminar separaciones entre secciones */
 header, section, footer {
   background: transparent !important;
