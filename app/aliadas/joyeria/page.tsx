@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+// import dynamic from "next/dynamic";
+// const PersonalizarPulsera = dynamic(() => import("./PersonalizarPulsera"), { ssr: false });
 import { FaInstagram, FaWhatsapp } from "react-icons/fa";
 
 interface Product {
@@ -21,7 +23,7 @@ interface GalleryCartItem {
   optionLabel: string;
   quantity: number;
   imageNumber: number;
-  type: "cadenas" | "dijes";
+  type: "cadenas" | "dijes" | "herrajes";
 }
 
 export default function JoyeriaPage() {
@@ -31,12 +33,22 @@ export default function JoyeriaPage() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<"oro" | "plata">("oro");
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
-  const [galleryCategory, setGalleryCategory] = useState<"oro" | "plata">("oro");
-  const [galleryMode, setGalleryMode] = useState<"cadenas" | "dijes">("cadenas");
-  const [galleryIndex, setGalleryIndex] = useState(0);
-  const [galleryCart, setGalleryCart] = useState<GalleryCartItem[]>([]);
+  // Galería destacada (Personaliza tu cadena)
+  const [cadenaGalleryOpen, setCadenaGalleryOpen] = useState(false);
+  const [cadenaGalleryMode, setCadenaGalleryMode] = useState<'cadenas' | 'dijes'>('cadenas');
+  const [cadenaGalleryIndex, setCadenaGalleryIndex] = useState(0);
+  const [cadenaGalleryCart, setCadenaGalleryCart] = useState<GalleryCartItem[]>([]);
+  // Personaliza tu pulsera
+  const [pulseraGalleryOpen, setPulseraGalleryOpen] = useState(false);
+  const [pulseraGalleryMode, setPulseraGalleryMode] = useState<'balineria' | 'herrajes' | 'dijes'>('balineria');
+  const [pulseraGalleryIndex, setPulseraGalleryIndex] = useState(0);
+  const [pulseraGalleryCart, setPulseraGalleryCart] = useState<GalleryCartItem[]>([]);
+  // Balineria options
+  const [selectedBalinOption, setSelectedBalinOption] = useState<number | null>(null);
+  const [balinQuantity, setBalinQuantity] = useState<number>(1);
   // Filtro para oro laminado 18K
   const [oroFilter, setOroFilter] = useState<string>("");
+  // const [showPersonalizar, setShowPersonalizar] = useState(false);
   const assetBasePath = process.env.NODE_ENV === "production" ? "/urlaty" : "";
   const withBasePath = (src: string) => {
     if (src.startsWith("http")) {
@@ -2056,39 +2068,146 @@ export default function JoyeriaPage() {
     "/joyeria/oro laminado/pres (5).jpeg",
     "/joyeria/oro laminado/pres (6).jpeg",
   ];
-  const galleryItems = galleryCategory === "oro"
-    ? galleryMode === "cadenas"
-      ? goldGalleryExtras
-      : dijGalleryExtras
-    : silverItems;
-  const activeGalleryItem = galleryItems[galleryIndex];
-  const goToPrevImage = () => {
-    setGalleryIndex((prev) =>
-      galleryItems.length ? (prev - 1 + galleryItems.length) % galleryItems.length : 0
+  // Galería destacada (Personaliza tu cadena)
+  const cadenaGalleryItems = cadenaGalleryMode === 'cadenas' ? goldGalleryExtras : dijGalleryExtras;
+  const cadenaActiveGalleryItem = cadenaGalleryItems[cadenaGalleryIndex];
+  const goToPrevCadenaImage = () => {
+    setCadenaGalleryIndex((prev) =>
+      cadenaGalleryItems.length ? (prev - 1 + cadenaGalleryItems.length) % cadenaGalleryItems.length : 0
     );
   };
-  const goToNextImage = () => {
-    setGalleryIndex((prev) =>
-      galleryItems.length ? (prev + 1) % galleryItems.length : 0
+  const goToNextCadenaImage = () => {
+    setCadenaGalleryIndex((prev) =>
+      cadenaGalleryItems.length ? (prev + 1) % cadenaGalleryItems.length : 0
+    );
+  };
+  // Personaliza tu pulsera (balineria, herrajes, dijes)
+  // Puedes cambiar los arrays según tus imágenes para cada modo
+  // Para 'dijes' de personaliza tu pulsera, mostrar las primeras 30 imágenes que empiezan por 'dijespulseras' en la carpeta oro laminado
+  const pulperDijes = [
+    { id: 10001, name: "Niña Patin", price: 0, image: "/joyeria/oro laminado/dijespulseras (1).jpeg", description: "Dije para pulsera oro laminado 18K." },
+    { id: 10002, name: "Cactus", price: 0, image: "/joyeria/oro laminado/dijespulseras (2).jpeg", description: "Dije para pulsera oro laminado 18K." },
+    { id: 10003, name: "Estrella ref1", price: 0, image: "/joyeria/oro laminado/dijespulseras (3).jpeg", description: "Dije para pulsera oro laminado 18K." },
+    { id: 10004, name: "Mariposa ref1", price: 0, image: "/joyeria/oro laminado/dijespulseras (4).jpeg", description: "Dije para pulsera oro laminado 18K." },
+    { id: 10005, name: "Luna ref1", price: 0, image: "/joyeria/oro laminado/dijespulseras (5).jpeg", description: "Dije para pulsera oro laminado 18K." },
+    { id: 10006, name: "Niño ref1", price: 0, image: "/joyeria/oro laminado/dijespulseras (6).jpeg", description: "Dije para pulsera oro laminado 18K." },
+    { id: 10007, name: "Virgen de guadalupe pequeña ref1", price: 0, image: "/joyeria/oro laminado/dijespulseras (7).jpeg", description: "Dije para pulsera oro laminado 18K." },
+    { id: 10008, name: "Virgen de guadalupe ref2", price: 0, image: "/joyeria/oro laminado/dijespulseras (8).jpeg", description: "Dije para pulsera oro laminado 18K." },
+    { id: 10009, name: "flecha", price: 0, image: "/joyeria/oro laminado/dijespulseras (9).jpeg", description: "Dije para pulsera oro laminado 18K." },
+    { id: 10010, name: "estrella ref2", price: 0, image: "/joyeria/oro laminado/dijespulseras (10).jpeg", description: "Dije para pulsera oro laminado 18K." },
+    { id: 10011, name: "esmeralda", price: 0, image: "/joyeria/oro laminado/dijespulseras (11).jpeg", description: "Dije para pulsera oro laminado 18K." },
+    { id: 10012, name: "Corazon ref1", price: 0, image: "/joyeria/oro laminado/dijespulseras (12).jpeg", description: "Dije para pulsera oro laminado 18K." },
+    { id: 10013, name: "Circon", price: 0, image: "/joyeria/oro laminado/dijespulseras (13).jpeg", description: "Dije para pulsera oro laminado 18K." },
+    { id: 10014, name: "Caballo ref1", price: 0, image: "/joyeria/oro laminado/dijespulseras (14).jpeg", description: "Dije para pulsera oro laminado 18K." },
+    { id: 10015, name: "Avion ref1", price: 0, image: "/joyeria/oro laminado/dijespulseras (15).jpeg", description: "Dije para pulsera oro laminado 18K." },
+    { id: 10016, name: "Ganster", price: 0, image: "/joyeria/oro laminado/dijespulseras (16).jpeg", description: "Dije para pulsera oro laminado 18K." },
+    { id: 10017, name: "San miguel", price: 0, image: "/joyeria/oro laminado/dijespulseras (17).jpeg", description: "Dije para pulsera oro laminado 18K." },
+    { id: 10018, name: "Oso ref1", price: 0, image: "/joyeria/oro laminado/dijespulseras (18).jpeg", description: "Dije para pulsera oro laminado 18K." },
+    { id: 10019, name: "Bolsa de dinero", price: 0, image: "/joyeria/oro laminado/dijespulseras (19).jpeg", description: "Dije para pulsera oro laminado 18K." },
+    { id: 10020, name: "Atelitico Nacional", price: 0, image: "/joyeria/oro laminado/dijespulseras (20).jpeg", description: "Dije para pulsera oro laminado 18K." },
+    { id: 10021, name: "Van Cleef", price: 0, image: "/joyeria/oro laminado/dijespulseras (21).jpeg", description: "Dije para pulsera oro laminado 18K." },
+    { id: 10022, name: "RX ref1", price: 0, image: "/joyeria/oro laminado/dijespulseras (22).jpeg", description: "Dije para pulsera oro laminado 18K." },
+    { id: 10023, name: "Caballo ref2", price: 0, image: "/joyeria/oro laminado/dijespulseras (23).jpeg", description: "Dije para pulsera oro laminado 18K." },
+    { id: 10024, name: "San Benito ref1", price: 0, image: "/joyeria/oro laminado/dijespulseras (24).jpeg", description: "Dije para pulsera oro laminado 18K." },
+    { id: 10025, name: "Virgen del Carmen ref1", price: 0, image: "/joyeria/oro laminado/dijespulseras (25).jpeg", description: "Dije para pulsera oro laminado 18K." },
+    { id: 10026, name: "RX ref2", price: 0, image: "/joyeria/oro laminado/dijespulseras (26).jpeg", description: "Dije para pulsera oro laminado 18K." },
+    { id: 10027, name: "Cruz ref1", price: 0, image: "/joyeria/oro laminado/dijespulseras (27).jpeg", description: "Dije para pulsera oro laminado 18K." },
+    { id: 10028, name: "Virgen del carmen ref2", price: 0, image: "/joyeria/oro laminado/dijespulseras (28).jpeg", description: "Dije para pulsera oro laminado 18K." },
+    { id: 10029, name: "RX grande ref3", price: 0, image: "/joyeria/oro laminado/dijespulseras (29).jpeg", description: "Dije para pulsera oro laminado 18K." },
+    { id: 10030, name: "Rostro jesus ref.pul", price: 0, image: "/joyeria/oro laminado/dijespulseras (30).jpeg", description: "Dije para pulsera oro laminado 18K." },
+  ];
+  const pulseraBalineria = [
+    {
+      id: 5101,
+      name: "Balineria lisa",
+      price: 0,
+      image: "/joyeria/oro laminado/bali (1).jpeg",
+      description: "Muestra de pulsera oro laminado 18K.",
+    },
+    {
+      id: 5102,
+      name: "balineria Rosa",
+      price: 0,
+      image: "/joyeria/oro laminado/bali (2).jpeg",
+      description: "Muestra de pulsera oro laminado 18K.",
+    },
+    {
+      id: 5103,
+      name: "Balineria Diamantada",
+      price: 0,
+      image: "/joyeria/oro laminado/bali (3).jpeg",
+      description: "Muestra de pulsera oro laminado 18K.",
+    },
+  ];
+  // Herrajes para personaliza tu pulsera: 15 nuevas imágenes
+  const herrajesPulsera = [
+    { id: 8001, name: "Herraje Versace", price: 0, image: "/joyeria/oro laminado/herraje (1).jpeg", description: 'Herraje para pulsera oro laminado 18K.' },
+    { id: 8002, name: "Herraje San Benito", price: 0, image: "/joyeria/oro laminado/herraje (2).jpeg", description: 'Herraje para pulsera oro laminado 18K.' },
+    { id: 8003, name: "Herraje Caballo ref1", price: 0, image: "/joyeria/oro laminado/herraje (3).jpeg", description: 'Herraje para pulsera oro laminado 18K.' },
+    { id: 8004, name: "Herraje Timon ref1", price: 0, image: "/joyeria/oro laminado/herraje (4).jpeg", description: 'Herraje para pulsera oro laminado 18K.' },
+    { id: 8005, name: "Herraje Virgen del Carmen", price: 0, image: "/joyeria/oro laminado/herraje (5).jpeg", description: 'Herraje para pulsera oro laminado 18K.' },
+    { id: 8006, name: "Herraje San Benito pequeño ref2", price: 0, image: "/joyeria/oro laminado/herraje (6).jpeg", description: 'Herraje para pulsera oro laminado 18K.' },
+    { id: 8007, name: "Herraje Bolsa de dinero", price: 0, image: "/joyeria/oro laminado/herraje (7).jpeg", description: 'Herraje para pulsera oro laminado 18K.' },
+    { id: 8008, name: "Herraje Virgen de Guadalupe", price: 0, image: "/joyeria/oro laminado/herraje (8).jpeg", description: 'Herraje para pulsera oro laminado 18K.' },
+    { id: 8009, name: "Herrajen ref1 virgen", price: 0, image: "/joyeria/oro laminado/herraje (9).jpeg", description: 'Herraje para pulsera oro laminado 18K.' },
+    { id: 8010, name: "Herraje Sagrada Familia", price: 0, image: "/joyeria/oro laminado/herraje (10).jpeg", description: 'Herraje para pulsera oro laminado 18K.' },
+    { id: 8011, name: "Herraje San Miguel", price: 0, image: "/joyeria/oro laminado/herraje (11).jpeg", description: 'Herraje para pulsera oro laminado 18K.' },
+    { id: 8012, name: "Herraje Sagrada Familia ref2", price: 0, image: "/joyeria/oro laminado/herraje (12).jpeg", description: 'Herraje para pulsera oro laminado 18K.' },
+    { id: 8013, name: "Herraje Rolex ref1", price: 0, image: "/joyeria/oro laminado/herraje (13).jpeg", description: 'Herraje para pulsera oro laminado 18K.' },
+    { id: 8014, name: "Herraje Rolex ref2", price: 0, image: "/joyeria/oro laminado/herraje (14).jpeg", description: 'Herraje para pulsera oro laminado 18K.' },
+    { id: 8015, name: "Herraje LV", price: 0, image: "/joyeria/oro laminado/herraje (15).jpeg", description: 'Herraje para pulsera oro laminado 18K.' },
+  ];
+  // Filtro de pulseras/dijes/herrajes
+  let pulseraGalleryItems = [];
+  if (pulseraGalleryMode === 'balineria') {
+    pulseraGalleryItems = pulseraBalineria;
+  } else if (pulseraGalleryMode === 'herrajes') {
+    pulseraGalleryItems = herrajesPulsera;
+  } else if (pulseraGalleryMode === 'dijes') {
+    pulseraGalleryItems = pulperDijes;
+  }
+  // Aquí puedes agregar más filtros si tienes un filtro externo (por ejemplo, por tipo de pulsera o por nombre)
+  const pulseraActiveGalleryItem = pulseraGalleryItems[pulseraGalleryIndex];
+  const goToPrevPulseraImage = () => {
+    setPulseraGalleryIndex((prev) =>
+      pulseraGalleryItems.length ? (prev - 1 + pulseraGalleryItems.length) % pulseraGalleryItems.length : 0
+    );
+  };
+  const goToNextPulseraImage = () => {
+    setPulseraGalleryIndex((prev) =>
+      pulseraGalleryItems.length ? (prev + 1) % pulseraGalleryItems.length : 0
     );
   };
 
 
-  const getGalleryOptions = () => {
-    const total = galleryIndex === 4 ? 5 : 6;
-    return Array.from({ length: total }, (_, i) => `Cadena ${i + 1}`);
-  };
-  const addGalleryItem = (optionLabel?: string) => {
-    if (!activeGalleryItem) {
-      return;
+  // Eliminado getGalleryOptions, ahora las opciones están hardcodeadas en cada modal
+  // Agregar item a galería destacada (cadena)
+  const addCadenaGalleryItem = (optionLabel?: string) => {
+    if (!cadenaActiveGalleryItem) return;
+    const imageNumber = cadenaGalleryIndex + 1;
+    let label = optionLabel;
+    let type: 'cadenas' | 'dijes' = cadenaGalleryMode;
+    let nameToShow = label;
+    if (!label) {
+      if (cadenaGalleryMode === 'cadenas') {
+        label = 'Cadena';
+        nameToShow = `Cadena (Foto ${imageNumber})`;
+      } else if (cadenaGalleryMode === 'dijes') {
+        label = cadenaActiveGalleryItem.name;
+        nameToShow = `Dije ${cadenaActiveGalleryItem.name} (Foto ${imageNumber})`;
+      } else {
+        label = cadenaActiveGalleryItem.name;
+        nameToShow = `${cadenaActiveGalleryItem.name} (Foto ${imageNumber})`;
+      }
+    } else {
+      if (cadenaGalleryMode === 'dijes') {
+        nameToShow = `Dije ${label} (Foto ${imageNumber})`;
+      } else {
+        nameToShow = `${label} (Foto ${imageNumber})`;
+      }
     }
-    const imageNumber = galleryIndex + 1;
-    // For dijes, use the actual product name from the gallery item
-    const label = galleryMode === "dijes"
-      ? activeGalleryItem.name
-      : optionLabel ?? "Cadena";
-    const key = `${activeGalleryItem.image}::${label}::${galleryMode}`;
-    setGalleryCart((prev) => {
+    const key = `${cadenaActiveGalleryItem.image}::${label}::${cadenaGalleryMode}`;
+    setCadenaGalleryCart((prev) => {
       const existing = prev.find((item) => item.id === key);
       if (existing) {
         return prev.map((item) =>
@@ -2099,66 +2218,153 @@ export default function JoyeriaPage() {
         ...prev,
         {
           id: key,
-          name: label,
-          image: activeGalleryItem.image,
-          optionLabel: label,
+          name: nameToShow!,
+          image: cadenaActiveGalleryItem.image,
+          optionLabel: nameToShow!,
           quantity: 1,
           imageNumber,
-          type: galleryMode,
+          type,
+        },
+      ];
+    });
+  };
+  // Agregar item a galería de pulsera (herrajes)
+  const addPulseraGalleryItem = (optionLabel?: string) => {
+    if (!pulseraActiveGalleryItem) return;
+    const imageNumber = pulseraGalleryIndex + 1;
+    let label = optionLabel;
+    let type: 'balineria' | 'herrajes' | 'dijes' = pulseraGalleryMode;
+    let nameToShow = label;
+    if (!label) {
+      if (pulseraGalleryMode === 'dijes') {
+        label = pulseraActiveGalleryItem.name;
+        nameToShow = `Dije ${pulseraActiveGalleryItem.name} (Foto ${imageNumber})`;
+      } else if (pulseraGalleryMode === 'herrajes') {
+        label = pulseraActiveGalleryItem.name;
+        nameToShow = ` ${pulseraActiveGalleryItem.name} (Foto ${imageNumber})`;
+      } else {
+        label = 'Balineria';
+        nameToShow = label;
+      }
+    } else if (pulseraGalleryMode === 'dijes') {
+      nameToShow = `Dije ${label} (Foto ${imageNumber})`;
+    } else if (pulseraGalleryMode === 'herrajes') {
+      nameToShow = `Herraje ${label} (Foto ${imageNumber})`;
+    }
+    const key = `${pulseraActiveGalleryItem.image}::${label}::${pulseraGalleryMode}`;
+    setPulseraGalleryCart((prev) => {
+      const existing = prev.find((item) => item.id === key);
+      if (existing) {
+        return prev.map((item) =>
+          item.id === key ? { ...item, quantity: item.quantity + 1 } : item
+        );
+      }
+      return [
+        ...prev,
+        {
+          id: key,
+          name: nameToShow!,
+          image: pulseraActiveGalleryItem.image,
+          optionLabel: nameToShow!,
+          quantity: 1,
+          imageNumber,
+          type,
         },
       ];
     });
   };
 
-  const removeGalleryItem = (id: string) => {
-    setGalleryCart((prev) => prev.filter((item) => item.id !== id));
+  const removeCadenaGalleryItem = (id: string) => {
+    setCadenaGalleryCart((prev) => prev.filter((item) => item.id !== id));
+  };
+  const removePulseraGalleryItem = (id: string) => {
+    setPulseraGalleryCart((prev) => prev.filter((item) => item.id !== id));
   };
 
-  const updateGalleryQuantity = (id: string, nextQuantity: number) => {
+  const updateCadenaGalleryQuantity = (id: string, nextQuantity: number) => {
     if (nextQuantity <= 0) {
-      removeGalleryItem(id);
+      removeCadenaGalleryItem(id);
       return;
     }
-    setGalleryCart((prev) =>
+    setCadenaGalleryCart((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, quantity: nextQuantity } : item
+      )
+    );
+  };
+  const updatePulseraGalleryQuantity = (id: string, nextQuantity: number) => {
+    if (nextQuantity <= 0) {
+      removePulseraGalleryItem(id);
+      return;
+    }
+    setPulseraGalleryCart((prev) =>
       prev.map((item) =>
         item.id === id ? { ...item, quantity: nextQuantity } : item
       )
     );
   };
 
-  const clearGalleryCart = () => {
-    setGalleryCart([]);
-  };
+  const clearCadenaGalleryCart = () => setCadenaGalleryCart([]);
+  const clearPulseraGalleryCart = () => setPulseraGalleryCart([]);
 
   const normalizePhone = (value: string) => value.replace(/\D/g, "");
   const galleryCheckoutPhone = "3009870850";
-  const buildGalleryMessage = () => {
-    const lines = galleryCart
+  const buildCadenaGalleryMessage = () => {
+    const lines = cadenaGalleryCart
       .map(
         (item) => {
-          const optionText = item.type === "dijes"
-            ? `Dije ${item.optionLabel}`
-            : item.optionLabel;
+          const optionText = item.type === 'dijes' ? `Dije ${item.optionLabel}` : item.optionLabel;
           return `- ${item.name} (${optionText}, Imagen ${item.imageNumber}) x${item.quantity}`;
         }
       )
       .join("\n");
     return [
-      "Hola, quiero cotizar estas opciones de la galeria:",
+      "Hola, quiero cotizar estas opciones de la galeria de cadenas:",
       "",
       "Productos seleccionados:",
       lines,
       "",
-      `Total de seleccionados: ${galleryCart.length}`,
+      `Total de seleccionados: ${cadenaGalleryCart.length}`,
     ].join("\n");
   };
-  const handleGalleryCheckout = () => {
-    if (typeof window === "undefined" || galleryCart.length === 0) {
+  const buildPulseraGalleryMessage = () => {
+    const lines = pulseraGalleryCart
+      .map(
+        (item) => {
+          let optionText = item.optionLabel;
+          if (item.type === 'dijes') optionText = `Dije ${item.optionLabel}`;
+          if (item.type === 'herrajes') optionText = `Herraje ${item.optionLabel}`;
+          if (item.type === 'balineria') optionText = `Balineria ${item.optionLabel}`;
+          return `- ${item.name} (${optionText}, Imagen ${item.imageNumber}) x${item.quantity}`;
+        }
+      )
+      .join("\n");
+    return [
+      "Hola, quiero cotizar estas opciones de la galeria de pulsera:",
+      "",
+      "Productos seleccionados:",
+      lines,
+      "",
+      `Total de seleccionados: ${pulseraGalleryCart.length}`,
+    ].join("\n");
+  };
+  const handleCadenaGalleryCheckout = () => {
+    if (typeof window === "undefined" || cadenaGalleryCart.length === 0) {
       return;
     }
     const rawPhone = normalizePhone(galleryCheckoutPhone);
     const phone = rawPhone.length === 10 ? `57${rawPhone}` : rawPhone;
-    const message = buildGalleryMessage();
+    const message = buildCadenaGalleryMessage();
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
+  const handlePulseraGalleryCheckout = () => {
+    if (typeof window === "undefined" || pulseraGalleryCart.length === 0) {
+      return;
+    }
+    const rawPhone = normalizePhone(galleryCheckoutPhone);
+    const phone = rawPhone.length === 10 ? `57${rawPhone}` : rawPhone;
+    const message = buildPulseraGalleryMessage();
     const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank", "noopener,noreferrer");
   };
@@ -2266,6 +2472,9 @@ export default function JoyeriaPage() {
               </div>
             </div>
             <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                            {/* Card estilo joyería blanco y dorado filtrado */}
+                            {/* Card de lujo y personalización de pulseras eliminado */}
+
               {/* Galeria destacada solo en Todos y cadenas */}
               {(oroFilter === "" || oroFilter === "cadenas") && (
                 <div className="col-span-2 rounded-2xl border border-amber-500/40 bg-gradient-to-b from-zinc-900/70 to-zinc-950/80 p-7 sm:p-8 min-h-[200px] sm:min-h-[220px] flex flex-col items-center justify-center text-center shadow-[0_10px_40px_rgba(0,0,0,0.35)] hover:border-amber-400/70 hover:shadow-[0_12px_50px_rgba(217,119,6,0.15)] transition">
@@ -2299,10 +2508,8 @@ export default function JoyeriaPage() {
                   <button
                     type="button"
                     onClick={() => {
-                      setGalleryCategory("oro");
-                      setGalleryMode("cadenas");
-                      setGalleryIndex(0);
-                      setIsGalleryOpen(true);
+                      setCadenaGalleryIndex(0);
+                      setCadenaGalleryOpen(true);
                     }}
                     className="mt-5 inline-flex items-center justify-center rounded-full border border-amber-400/80 px-5 py-2 text-sm sm:text-base font-semibold text-amber-200 hover:border-amber-300 hover:text-amber-100 transition"
                   >
@@ -2310,6 +2517,51 @@ export default function JoyeriaPage() {
                   </button>
                 </div>
               )}
+              {/* Personaliza tu pulsera SIEMPRE visible, independiente de filtro */}
+              <div className="col-span-2 rounded-2xl border border-amber-500/40 bg-gradient-to-b from-zinc-900/70 to-zinc-950/80 p-7 sm:p-8 min-h-[200px] sm:min-h-[220px] flex flex-col items-center justify-center text-center shadow-[0_10px_40px_rgba(0,0,0,0.35)] hover:border-amber-400/70 hover:shadow-[0_12px_50px_rgba(217,119,6,0.15)] transition">
+                <span className="text-[11px] uppercase tracking-[0.35em] text-white/90">
+                  Personaliza tu pulsera
+                </span>
+                <span className="mt-3 h-px w-12 bg-amber-500/40" />
+                <span className="mt-3 text-sm sm:text-base text-amber-200/90 font-semibold max-w-md">
+                  Personaliza tu pulsera para que te salga en precios mucho más bajos, desde los 30.000 y con dijes desde los 50.000 en adelante
+                </span>
+                <div className="mt-4 w-full max-w-xs">
+                  <p className="text-xs sm:text-sm text-zinc-300">
+                    Muestras de personalización: así podría quedar tu pulsera.
+                  </p>
+                  <div className="mt-2 grid grid-cols-3 gap-1.5">
+                    {[
+                      "/joyeria/oro laminado/muespul (1).jpeg",
+                      "/joyeria/oro laminado/muespul (2).jpeg",
+                      "/joyeria/oro laminado/muespul (3).jpeg"
+                    ].map((src, index) => (
+                      <button
+                        key={src}
+                        type="button"
+                        onClick={() => {
+                          setSelectedImage(src);
+                        }}
+                        className="relative aspect-square rounded-md overflow-hidden border border-amber-500/10 hover:border-amber-400/60 transition"
+                        aria-label="Abrir muestra de pulsera"
+                      >
+                        <Image src={withBasePath(src)} alt="Muestra de pulsera" fill className="object-cover" />
+                      </button>
+                    ))}
+                  </div>
+                  {/* ...existing code... */}
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setPulseraGalleryIndex(0);
+                    setPulseraGalleryOpen(true);
+                  }}
+                  className="mt-5 inline-flex items-center justify-center rounded-full border border-amber-400/80 px-5 py-2 text-sm sm:text-base font-semibold text-amber-200 hover:border-amber-300 hover:text-amber-100 transition"
+                >
+                  Ver galería de pulseras
+                </button>
+              </div>
               {goldItems
                 .filter((item) => {
                   if (oroFilter === "") return true;
@@ -2419,11 +2671,11 @@ export default function JoyeriaPage() {
         </button>
       </div>
 
-      {/* Modal de galeria */}
-      {isGalleryOpen && (
+      {/* Modal galería destacada (Personaliza tu cadena) */}
+      {cadenaGalleryOpen && (
         <div
           className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] flex items-center justify-center p-4"
-          onClick={() => setIsGalleryOpen(false)}
+          onClick={() => setCadenaGalleryOpen(false)}
         >
           <div
             className="relative w-full max-w-5xl max-h-[85vh] bg-zinc-950/95 border border-amber-500/30 rounded-2xl p-5 sm:p-6 shadow-2xl overflow-y-auto gallery-scrollbar"
@@ -2432,54 +2684,48 @@ export default function JoyeriaPage() {
             <div className="flex items-center justify-between gap-4 pb-4 border-b border-amber-500/10">
               <div className="flex-1 text-center">
                 <h3 className="text-base sm:text-lg font-semibold text-amber-200">
-                  {galleryCategory === "oro"
-                    ? galleryMode === "cadenas"
-                      ? "Galeria de cadenas en Oro laminado 18K"
-                      : "Galeria de dijes en Oro laminado 18K"
-                    : "Galeria Plata ley 925"}
+                  Galeria de cadenas en Oro laminado 18K
                 </h3>
                 <p className="text-xs sm:text-sm text-zinc-400 mt-1">
                   Selecciona una imagen para ampliarla.
                 </p>
-                {galleryCategory === "oro" && (
-                  <div className="mt-3 flex items-center justify-center gap-2">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setGalleryMode("cadenas");
-                        setGalleryIndex(0);
-                      }}
-                      className={`rounded-full px-4 py-1.5 text-xs sm:text-sm font-semibold transition ${
-                        galleryMode === "cadenas"
-                          ? "bg-amber-500 text-black"
-                          : "border border-amber-500/40 text-amber-200 hover:border-amber-300"
-                      }`}
-                    >
-                      Cadenas
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setGalleryMode("dijes");
-                        setGalleryIndex(0);
-                      }}
-                      className={`rounded-full px-4 py-1.5 text-xs sm:text-sm font-semibold transition ${
-                        galleryMode === "dijes"
-                          ? "bg-amber-500 text-black"
-                          : "border border-amber-500/40 text-amber-200 hover:border-amber-300"
-                      }`}
-                    >
-                      Dijes
-                    </button>
-                  </div>
-                )}
+                <div className="mt-3 flex items-center justify-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setCadenaGalleryMode('cadenas');
+                      setCadenaGalleryIndex(0);
+                    }}
+                    className={`rounded-full px-4 py-1.5 text-xs sm:text-sm font-semibold transition ${
+                      cadenaGalleryMode === 'cadenas'
+                        ? 'bg-amber-500 text-black'
+                        : 'border border-amber-500/40 text-amber-200 hover:border-amber-300'
+                    }`}
+                  >
+                    Cadenas
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setCadenaGalleryMode('dijes');
+                      setCadenaGalleryIndex(0);
+                    }}
+                    className={`rounded-full px-4 py-1.5 text-xs sm:text-sm font-semibold transition ${
+                      cadenaGalleryMode === 'dijes'
+                        ? 'bg-amber-500 text-black'
+                        : 'border border-amber-500/40 text-amber-200 hover:border-amber-300'
+                    }`}
+                  >
+                    Dijes
+                  </button>
+                </div>
               </div>
               <div className="flex items-center gap-3">
                 <span className="hidden sm:inline-flex items-center rounded-full border border-amber-500/30 px-3 py-1 text-xs text-amber-200/90">
-                  {galleryItems.length} fotos
+                  {cadenaGalleryItems.length} fotos
                 </span>
                 <button
-                  onClick={() => setIsGalleryOpen(false)}
+                  onClick={() => setCadenaGalleryOpen(false)}
                   className="bg-black/80 border border-amber-500/40 text-white rounded-full w-9 h-9 flex items-center justify-center hover:text-amber-400 transition"
                   aria-label="Cerrar"
                 >
@@ -2490,12 +2736,12 @@ export default function JoyeriaPage() {
               </div>
             </div>
             <div className="mt-4">
-              {activeGalleryItem && (
+              {cadenaActiveGalleryItem && (
                 <div className="rounded-2xl border border-amber-500/20 bg-black/60 overflow-hidden">
                   <div className="relative h-[260px] sm:h-[360px] lg:h-[420px]">
                     <button
                       type="button"
-                      onClick={goToPrevImage}
+                      onClick={goToPrevCadenaImage}
                       className="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black/70 border border-amber-500/30 text-amber-200 hover:text-amber-100 hover:border-amber-400 transition"
                       aria-label="Anterior"
                     >
@@ -2505,7 +2751,7 @@ export default function JoyeriaPage() {
                     </button>
                     <button
                       type="button"
-                      onClick={goToNextImage}
+                      onClick={goToNextCadenaImage}
                       className="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black/70 border border-amber-500/30 text-amber-200 hover:text-amber-100 hover:border-amber-400 transition"
                       aria-label="Siguiente"
                     >
@@ -2516,14 +2762,14 @@ export default function JoyeriaPage() {
                     <button
                       type="button"
                       onClick={() => {
-                        setSelectedImage(activeGalleryItem.image);
+                        setSelectedImage(cadenaActiveGalleryItem.image);
                       }}
                       className="absolute inset-0"
                       aria-label="Abrir imagen"
                     >
                       <Image
-                        src={withBasePath(activeGalleryItem.image)}
-                        alt={activeGalleryItem.name}
+                        src={withBasePath(cadenaActiveGalleryItem.image)}
+                        alt={cadenaActiveGalleryItem.name}
                         fill
                         className="object-contain"
                       />
@@ -2531,141 +2777,415 @@ export default function JoyeriaPage() {
                   </div>
                   <div className="px-4 py-3 bg-zinc-950/60 border-t border-amber-500/10">
                     <p className="text-sm sm:text-base font-semibold text-amber-200 text-center">
-                      {activeGalleryItem.name}
+                      {cadenaActiveGalleryItem.name}
                     </p>
                     <p className="text-xs sm:text-sm text-zinc-300 mt-1 text-center">
-                      {activeGalleryItem.description}
+                      {cadenaActiveGalleryItem.description}
                     </p>
-                    {galleryCategory === "oro" && (
-                      <div className="mt-4">
-                        <p className="text-xs sm:text-sm text-zinc-300 text-center">
-                          Selecciona una opcion para agregar al carrito de la galeria
-                        </p>
-                        <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
-                          {galleryMode === "dijes" ? (
-                            <button
-                              type="button"
-                              onClick={() => addGalleryItem()}
-                              className="rounded-full border border-amber-500/40 px-4 py-1 text-xs sm:text-sm text-amber-200 hover:border-amber-300 hover:text-amber-100 transition"
-                            >
-                              Agregar
-                            </button>
-                          ) : (
-                            getGalleryOptions().map((option) => (
+                    <div className="mt-4">
+                      <p className="text-xs sm:text-sm text-zinc-300 text-center">
+                        Selecciona una opcion para agregar al carrito de la galeria
+                      </p>
+                      <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
+                        {cadenaGalleryMode === 'dijes' ? (
+                          <button
+                            type="button"
+                            onClick={() => addCadenaGalleryItem()}
+                            className="rounded-full border border-amber-500/40 px-4 py-1 text-xs sm:text-sm text-amber-200 hover:border-amber-300 hover:text-amber-100 transition"
+                          >
+                            Agregar
+                          </button>
+                        ) : (
+                          (() => {
+                            const isFoto5 = cadenaGalleryIndex === 4;
+                            const options = isFoto5
+                              ? ["Cadena 1", "Cadena 2", "Cadena 3", "Cadena 4", "Cadena 5"]
+                              : ["Cadena 1", "Cadena 2", "Cadena 3", "Cadena 4", "Cadena 5", "Cadena 6"];
+                            return options.map((option) => (
                               <button
                                 key={option}
                                 type="button"
-                                onClick={() => addGalleryItem(option)}
+                                onClick={() => addCadenaGalleryItem(option)}
                                 className="rounded-full border border-amber-500/40 px-3 py-1 text-xs sm:text-sm text-amber-200 hover:border-amber-300 hover:text-amber-100 transition"
                               >
                                 {option}
                               </button>
-                            ))
-                          )}
-                        </div>
+                            ));
+                          })()
+                        )}
                       </div>
-                    )}
+                    </div>
                   </div>
                 </div>
               )}
             </div>
-            {galleryCategory === "oro" && (
-              <div className="mt-4 rounded-2xl border border-amber-500/40 bg-black p-4 shadow-lg">
-                <div className="flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-2">
-                    <Image
-                      src={withBasePath("/joyeria/logo.png.jpg")}
-                      alt="Urlaty Logo"
-                      width={32}
-                      height={32}
-                      className="object-contain"
-                    />
-                    <div>
-                      <p className="text-sm sm:text-base font-semibold text-amber-200">
-                        {galleryMode === "dijes" ? "Carrito de dijes" : "Carrito de cadenas"}
-                      </p>
-                      <p className="text-[11px] text-amber-200/70">Solo para la galeria</p>
-                    </div>
+            <div className="mt-4 rounded-2xl border border-amber-500/40 bg-black p-4 shadow-lg">
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-2">
+                  <Image
+                    src={withBasePath("/joyeria/logo.png.jpg")}
+                    alt="Urlaty Logo"
+                    width={32}
+                    height={32}
+                    className="object-contain"
+                  />
+                  <div>
+                    <p className="text-sm sm:text-base font-semibold text-amber-200">
+                      Carrito de cadenas
+                    </p>
+                    <p className="text-[11px] text-amber-200/70">Solo para la galeria</p>
                   </div>
-                  <span className="text-xs text-amber-200/90">{galleryCart.length} seleccionadas</span>
                 </div>
-                {galleryCart.length === 0 ? (
-                  <p className="text-xs sm:text-sm text-amber-200/70 mt-3">
-                    Aun no has agregado opciones.
-                  </p>
-                ) : (
-                  <div className="mt-3 grid gap-2">
-                    {galleryCart.map((item) => (
-                      <div
-                        key={item.id}
-                        className="flex items-center gap-3 rounded-lg border border-amber-500/30 bg-black/80 p-2"
-                      >
-                        <div className="relative h-12 w-12 rounded-md overflow-hidden border border-amber-500/10">
-                          <Image src={withBasePath(item.image)} alt={item.name} fill className="object-cover" />
-                        </div>
-                        <div className="flex-1">
-                          <p className="text-xs sm:text-sm text-amber-200 font-semibold">
-                            {item.type === "dijes"
-                              ? `${item.name} - Imagen ${item.imageNumber}`
-                              : item.optionLabel}
-                          </p>
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <button
-                            onClick={() => updateGalleryQuantity(item.id, item.quantity - 1)}
-                            className="w-5 h-5 rounded-full border border-amber-500/40 text-amber-200 hover:border-amber-300 hover:text-amber-100 transition flex items-center justify-center text-[10px]"
-                          >
-                            -
-                          </button>
-                          <span className="text-xs font-semibold w-5 text-center text-amber-200">
-                            {item.quantity}
-                          </span>
-                          <button
-                            onClick={() => updateGalleryQuantity(item.id, item.quantity + 1)}
-                            className="w-5 h-5 rounded-full border border-amber-500/40 text-amber-200 hover:border-amber-300 hover:text-amber-100 transition flex items-center justify-center text-[10px]"
-                          >
-                            +
-                          </button>
-                        </div>
+                <span className="text-xs text-amber-200/90">{cadenaGalleryCart.length} seleccionadas</span>
+              </div>
+              {cadenaGalleryCart.length === 0 ? (
+                <p className="text-xs sm:text-sm text-amber-200/70 mt-3">
+                  Aun no has agregado opciones.
+                </p>
+              ) : (
+                <div className="mt-3 grid gap-2">
+                  {cadenaGalleryCart.map((item) => (
+                    <div
+                      key={item.id}
+                      className="flex items-center gap-3 rounded-lg border border-amber-500/30 bg-black/80 p-2"
+                    >
+                      <div className="relative h-12 w-12 rounded-md overflow-hidden border border-amber-500/10">
+                        <Image src={withBasePath(item.image)} alt={item.name} fill className="object-cover" />
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-xs sm:text-sm text-amber-200 font-semibold">
+                          {item.optionLabel}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-1">
                         <button
-                          type="button"
-                          onClick={() => removeGalleryItem(item.id)}
-                          className="text-xs text-amber-300 hover:text-amber-100 transition"
+                          onClick={() => updateCadenaGalleryQuantity(item.id, item.quantity - 1)}
+                          className="w-5 h-5 rounded-full border border-amber-500/40 text-amber-200 hover:border-amber-300 hover:text-amber-100 transition flex items-center justify-center text-[10px]"
                         >
-                          Quitar
+                          -
+                        </button>
+                        <span className="text-xs font-semibold w-5 text-center text-amber-200">
+                          {item.quantity}
+                        </span>
+                        <button
+                          onClick={() => updateCadenaGalleryQuantity(item.id, item.quantity + 1)}
+                          className="w-5 h-5 rounded-full border border-amber-500/40 text-amber-200 hover:border-amber-300 hover:text-amber-100 transition flex items-center justify-center text-[10px]"
+                        >
+                          +
                         </button>
                       </div>
-                    ))}
-                  </div>
-                )}
-                <div className="mt-4 flex flex-col sm:flex-row gap-2">
-                  <button
-                    type="button"
-                    onClick={handleGalleryCheckout}
-                    className="w-full sm:flex-1 bg-amber-500 text-black py-2 rounded-full hover:bg-amber-400 transition text-sm font-semibold"
-                  >
-                    Cotiza tu cadena personalizada
-                  </button>
-                  <button
-                    type="button"
-                    onClick={clearGalleryCart}
-                    className="w-full sm:flex-1 border border-amber-500 text-amber-200 py-2 rounded-full hover:bg-amber-500/10 transition text-sm font-semibold"
-                  >
-                    Vaciar carrito
-                  </button>
+                      <button
+                        type="button"
+                        onClick={() => removeCadenaGalleryItem(item.id)}
+                        className="text-xs text-amber-300 hover:text-amber-100 transition"
+                      >
+                        Quitar
+                      </button>
+                    </div>
+                  ))}
                 </div>
-              </div>
-            )}
-            <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 overflow-y-auto max-h-[44vh] pr-1">
-              {galleryItems.map((item, index) => (
+              )}
+              <div className="mt-4 flex flex-col sm:flex-row gap-2">
                 <button
-                  key={`${galleryCategory}-${item.id}`}
+                  type="button"
+                  onClick={handleCadenaGalleryCheckout}
+                  className="w-full sm:flex-1 bg-amber-500 text-black py-2 rounded-full hover:bg-amber-400 transition text-sm font-semibold"
+                >
+                  Cotiza tu cadena personalizada
+                </button>
+                <button
+                  type="button"
+                  onClick={clearCadenaGalleryCart}
+                  className="w-full sm:flex-1 border border-amber-500 text-amber-200 py-2 rounded-full hover:bg-amber-500/10 transition text-sm font-semibold"
+                >
+                  Vaciar carrito
+                </button>
+              </div>
+            </div>
+            <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 overflow-y-auto max-h-[44vh] pr-1">
+              {cadenaGalleryItems.map((item, index) => (
+                <button
+                  key={`cadena-${item.id}`}
                   type="button"
                   onClick={() => {
                     setSelectedImage(item.image);
                   }}
                   className={`relative h-28 sm:h-32 bg-black rounded-xl overflow-hidden border transition ${
-                    item.id === activeGalleryItem?.id
+                    item.id === cadenaActiveGalleryItem?.id
+                      ? "border-amber-400/80 shadow-[0_0_0_1px_rgba(245,158,11,0.45)]"
+                      : "border-amber-500/10 hover:border-amber-500/40 hover:shadow-[0_0_0_1px_rgba(245,158,11,0.25)]"
+                  }`}
+                >
+                  <span className="absolute left-2 top-2 z-10 rounded-full bg-black/80 border border-amber-400/60 px-2 py-0.5 text-[10px] font-semibold text-amber-200">
+                    {index + 1}
+                  </span>
+                  <Image src={withBasePath(item.image)} alt={item.name} fill className="object-cover" />
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Modal galería de personaliza tu pulsera (balineria, herrajes, dijes) */}
+      {pulseraGalleryOpen && (
+        <div
+          className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] flex items-center justify-center p-4"
+          onClick={() => setPulseraGalleryOpen(false)}
+        >
+          <div
+            className="relative w-full max-w-5xl max-h-[85vh] bg-zinc-950/95 border border-amber-500/30 rounded-2xl p-5 sm:p-6 shadow-2xl overflow-y-auto gallery-scrollbar"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between gap-4 pb-4 border-b border-amber-500/10">
+              <div className="flex-1 text-center">
+                <h3 className="text-base sm:text-lg font-semibold text-amber-200">
+                  Galeria de pulsera en Oro laminado 18K
+                </h3>
+                <p className="text-xs sm:text-sm text-zinc-400 mt-1">
+                  Selecciona una imagen para ampliarla.
+                </p>
+                <div className="mt-3 flex items-center justify-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setPulseraGalleryMode('balineria');
+                      setPulseraGalleryIndex(0);
+                    }}
+                    className={`rounded-full px-4 py-1.5 text-xs sm:text-sm font-semibold transition ${
+                      pulseraGalleryMode === 'balineria'
+                        ? 'bg-amber-500 text-black'
+                        : 'border border-amber-500/40 text-amber-200 hover:border-amber-300'
+                    }`}
+                  >
+                    Balineria
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setPulseraGalleryMode('herrajes');
+                      setPulseraGalleryIndex(0);
+                    }}
+                    className={`rounded-full px-4 py-1.5 text-xs sm:text-sm font-semibold transition ${
+                      pulseraGalleryMode === 'herrajes'
+                        ? 'bg-amber-500 text-black'
+                        : 'border border-amber-500/40 text-amber-200 hover:border-amber-300'
+                    }`}
+                  >
+                    Herrajes
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setPulseraGalleryMode('dijes');
+                      setPulseraGalleryIndex(0);
+                    }}
+                    className={`rounded-full px-4 py-1.5 text-xs sm:text-sm font-semibold transition ${
+                      pulseraGalleryMode === 'dijes'
+                        ? 'bg-amber-500 text-black'
+                        : 'border border-amber-500/40 text-amber-200 hover:border-amber-300'
+                    }`}
+                  >
+                    Dijes
+                  </button>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="hidden sm:inline-flex items-center rounded-full border border-amber-500/30 px-3 py-1 text-xs text-amber-200/90">
+                  {pulseraGalleryItems.length} fotos
+                </span>
+                <button
+                  onClick={() => setPulseraGalleryOpen(false)}
+                  className="bg-black/80 border border-amber-500/40 text-white rounded-full w-9 h-9 flex items-center justify-center hover:text-amber-400 transition"
+                  aria-label="Cerrar"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div className="mt-4">
+              {pulseraActiveGalleryItem && (
+                <div className="rounded-2xl border border-amber-500/20 bg-black/60 overflow-hidden">
+                  <div className="relative h-[260px] sm:h-[360px] lg:h-[420px]">
+                    <button
+                      type="button"
+                      onClick={goToPrevPulseraImage}
+                      className="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black/70 border border-amber-500/30 text-amber-200 hover:text-amber-100 hover:border-amber-400 transition"
+                      aria-label="Anterior"
+                    >
+                      <svg className="w-5 h-5 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                      </svg>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={goToNextPulseraImage}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black/70 border border-amber-500/30 text-amber-200 hover:text-amber-100 hover:border-amber-400 transition"
+                      aria-label="Siguiente"
+                    >
+                      <svg className="w-5 h-5 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSelectedImage(pulseraActiveGalleryItem.image);
+                      }}
+                      className="absolute inset-0"
+                      aria-label="Abrir imagen"
+                    >
+                      <Image
+                        src={withBasePath(pulseraActiveGalleryItem.image)}
+                        alt={pulseraActiveGalleryItem.name}
+                        fill
+                        className="object-contain"
+                      />
+                    </button>
+                  </div>
+                  <div className="px-4 py-3 bg-zinc-950/60 border-t border-amber-500/10">
+                    <p className="text-sm sm:text-base font-semibold text-amber-200 text-center">
+                      {pulseraActiveGalleryItem.name}
+                    </p>
+                    <p className="text-xs sm:text-sm text-zinc-300 mt-1 text-center">
+                      {pulseraActiveGalleryItem.description}
+                    </p>
+                    <div className="mt-4">
+                      <p className="text-xs sm:text-sm text-zinc-300 text-center">
+                        Selecciona una opcion para agregar al carrito de la galeria
+                      </p>
+                      <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
+                        {(pulseraGalleryMode === 'dijes' || pulseraGalleryMode === 'herrajes') ? (
+                          <button
+                            type="button"
+                            onClick={() => addPulseraGalleryItem()}
+                            className="rounded-full border border-amber-500/40 px-4 py-1 text-xs sm:text-sm text-amber-200 hover:border-amber-300 hover:text-amber-100 transition"
+                          >
+                            Agregar
+                          </button>
+                        ) : (
+                          (() => {
+                            let options = ["Balin 3 liso ", "Balin 4 liso", "Balin 5 liso", "Balin 6 liso", "Balin 7 liso", "Balin 8 liso"];
+                            if (pulseraActiveGalleryItem) {
+                              const name = pulseraActiveGalleryItem.name.toLowerCase();
+                              if (name.includes("rosa")) {
+                                options = ["Balin 3 rosa", "Balin 4 rosa", "Balin 5 rosa", "Balin 6 rosa", "Balin 7 rosa", "Balin 8 rosa"];
+                              } else if (name.includes("diamantada")) {
+                                options = ["Balin 3 Diamantado", "Balin 4 Diamantado", "Balin 5 Diamantado", "Balin 6 Diamantado", "Balin 7 Diamantado", "Balin 8 Diamantado"];
+                              }
+                            }
+                            return options.map((option) => (
+                              <button
+                                key={option}
+                                type="button"
+                                onClick={() => addPulseraGalleryItem(option)}
+                                className="rounded-full border border-amber-500/40 px-3 py-1 text-xs sm:text-sm text-amber-200 hover:border-amber-300 hover:text-amber-100 transition"
+                              >
+                                {option}
+                              </button>
+                            ));
+                          })()
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className="mt-4 rounded-2xl border border-amber-500/40 bg-black p-4 shadow-lg">
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-2">
+                  <Image
+                    src={withBasePath("/joyeria/logo.png.jpg")}
+                    alt="Urlaty Logo"
+                    width={32}
+                    height={32}
+                    className="object-contain"
+                  />
+                  <div>
+                    <p className="text-sm sm:text-base font-semibold text-amber-200">
+                      Carrito de pulsera
+                    </p>
+                    <p className="text-[11px] text-amber-200/70">Solo para la galeria</p>
+                  </div>
+                </div>
+                <span className="text-xs text-amber-200/90">{pulseraGalleryCart.length} seleccionadas</span>
+              </div>
+              {pulseraGalleryCart.length === 0 ? (
+                <p className="text-xs sm:text-sm text-amber-200/70 mt-3">
+                  Aun no has agregado opciones.
+                </p>
+              ) : (
+                <div className="mt-3 grid gap-2">
+                  {pulseraGalleryCart.map((item) => (
+                    <div
+                      key={item.id}
+                      className="flex items-center gap-3 rounded-lg border border-amber-500/30 bg-black/80 p-2"
+                    >
+                      <div className="relative h-12 w-12 rounded-md overflow-hidden border border-amber-500/10">
+                        <Image src={withBasePath(item.image)} alt={item.name} fill className="object-cover" />
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-xs sm:text-sm text-amber-200 font-semibold">
+                          {item.optionLabel}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <button
+                          onClick={() => updatePulseraGalleryQuantity(item.id, item.quantity - 1)}
+                          className="w-5 h-5 rounded-full border border-amber-500/40 text-amber-200 hover:border-amber-300 hover:text-amber-100 transition flex items-center justify-center text-[10px]"
+                        >
+                          -
+                        </button>
+                        <span className="text-xs font-semibold w-5 text-center text-amber-200">
+                          {item.quantity}
+                        </span>
+                        <button
+                          onClick={() => updatePulseraGalleryQuantity(item.id, item.quantity + 1)}
+                          className="w-5 h-5 rounded-full border border-amber-500/40 text-amber-200 hover:border-amber-300 hover:text-amber-100 transition flex items-center justify-center text-[10px]"
+                        >
+                          +
+                        </button>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => removePulseraGalleryItem(item.id)}
+                        className="text-xs text-amber-300 hover:text-amber-100 transition"
+                      >
+                        Quitar
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+              <div className="mt-4 flex flex-col sm:flex-row gap-2">
+                <button
+                  type="button"
+                  onClick={handlePulseraGalleryCheckout}
+                  className="w-full sm:flex-1 bg-amber-500 text-black py-2 rounded-full hover:bg-amber-400 transition text-sm font-semibold"
+                >
+                  Cotiza tu pulsera personalizada
+                </button>
+                <button
+                  type="button"
+                  onClick={clearPulseraGalleryCart}
+                  className="w-full sm:flex-1 border border-amber-500 text-amber-200 py-2 rounded-full hover:bg-amber-500/10 transition text-sm font-semibold"
+                >
+                  Vaciar carrito
+                </button>
+              </div>
+            </div>
+            <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 overflow-y-auto max-h-[44vh] pr-1">
+              {pulseraGalleryItems.map((item, index) => (
+                <button
+                  key={`pulsera-${item.id}`}
+                  type="button"
+                  onClick={() => {
+                    setSelectedImage(item.image);
+                  }}
+                  className={`relative h-28 sm:h-32 bg-black rounded-xl overflow-hidden border transition ${
+                    item.id === pulseraActiveGalleryItem?.id
                       ? "border-amber-400/80 shadow-[0_0_0_1px_rgba(245,158,11,0.45)]"
                       : "border-amber-500/10 hover:border-amber-500/40 hover:shadow-[0_0_0_1px_rgba(245,158,11,0.25)]"
                   }`}
@@ -2697,13 +3217,16 @@ export default function JoyeriaPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
-            <Image
-              src={withBasePath(selectedImage ?? "")}
-              alt="Imagen ampliada"
-              width={1000}
-              height={700}
-              className="object-contain w-full h-full rounded-lg"
-            />
+            {selectedImage && (
+              <Image
+                src={withBasePath(selectedImage)}
+                alt="Imagen ampliada"
+                width={1000}
+                height={700}
+                className="object-contain w-full h-full rounded-lg"
+                unoptimized
+              />
+            )}
           </div>
         </div>
       )}
