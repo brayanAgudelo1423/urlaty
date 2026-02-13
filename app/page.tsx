@@ -239,7 +239,7 @@ export default function Home() {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <Image 
-                src={`${process.env.NODE_ENV === 'production' ? '/urlaty' : ''}/joyeria/logo.png`}
+                src="/joyeria/logo.png"
                 alt="Urlaty Logo" 
                 width={50} 
                 height={50} 
