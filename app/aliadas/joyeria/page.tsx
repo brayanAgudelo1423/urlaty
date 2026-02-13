@@ -2833,13 +2833,9 @@ export default function JoyeriaPage() {
             <div className="mt-4 rounded-2xl border border-amber-500/40 bg-black p-4 shadow-lg">
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-2">
-                  <Image
-                    src={withBasePath("/joyeria/logo.png.jpg")}
-                    alt="Urlaty Logo"
-                    width={32}
-                    height={32}
-                    className="object-contain"
-                  />
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-8 h-8 text-amber-300">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.35 2.7A1 1 0 007 17h12a1 1 0 001-1v-1a1 1 0 00-1-1H7zm0 0V6m0 7a1 1 0 001 1h8a1 1 0 001-1" />
+                  </svg>
                   <div>
                     <p className="text-sm sm:text-base font-semibold text-amber-200">
                       Carrito de cadenas
