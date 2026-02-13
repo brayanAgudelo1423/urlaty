@@ -2586,9 +2586,16 @@ export default function JoyeriaPage() {
                         </span>
                         <button
                           onClick={() => addToCart(item)}
-                          className="rounded-full bg-amber-500 text-black px-3 py-1.5 text-xs sm:text-sm font-semibold hover:bg-amber-400 transition"
+                          className="rounded-full bg-amber-500 text-black px-3 py-1.5 text-xs sm:text-sm font-semibold hover:bg-amber-400 transition flex items-center gap-2"
                         >
-                          {addedId === item.id ? "✓" : "Agregar"}
+                          {addedId === item.id ? "✓" : (
+                            <>
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-4 h-4">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.35 2.7A1 1 0 007 17h12a1 1 0 001-1v-1a1 1 0 00-1-1H7zm0 0V6m0 7a1 1 0 001 1h8a1 1 0 001-1" />
+                              </svg>
+                              Agregar
+                            </>
+                          )}
                         </button>
                       </div>
                     </div>
