@@ -49,13 +49,10 @@ export default function JoyeriaPage() {
   // Filtro para oro laminado 18K
   const [oroFilter, setOroFilter] = useState<string>("");
   // const [showPersonalizar, setShowPersonalizar] = useState(false);
-  const assetBasePath = process.env.NODE_ENV === "production" ? "/urlaty" : "";
+  const assetBasePath = process.env.NEXT_PUBLIC_DOMAIN || "https://urlaty.online";
   const withBasePath = (src: string) => {
     if (src.startsWith("http")) {
       return src;
-    }
-    if (src.startsWith(assetBasePath)) {
-      return encodeURI(src);
     }
     return encodeURI(`${assetBasePath}${src}`);
   };
@@ -2477,7 +2474,7 @@ export default function JoyeriaPage() {
 
               {/* Galeria destacada solo en Todos y cadenas */}
               {(oroFilter === "" || oroFilter === "cadenas") && (
-                <div className="col-span-2 rounded-2xl border border-amber-500/40 bg-gradient-to-b from-zinc-900/70 to-zinc-950/80 p-7 sm:p-8 min-h-[200px] sm:min-h-[220px] flex flex-col items-center justify-center text-center shadow-[0_10px_40px_rgba(0,0,0,0.35)] hover:border-amber-400/70 hover:shadow-[0_12px_50px_rgba(217,119,6,0.15)] transition">
+                <div className="col-span-2 rounded-2xl border border-amber-500/40 bg-linear-to-b from-zinc-900/70 to-zinc-950/80 p-7 sm:p-8 min-h-50 sm:min-h-55 flex flex-col items-center justify-center text-center shadow-[0_10px_40px_rgba(0,0,0,0.35)] hover:border-amber-400/70 hover:shadow-[0_12px_50px_rgba(217,119,6,0.15)] transition">
                   <span className="text-[11px] uppercase tracking-[0.35em] text-white/90">
                     Galeria destacada
                   </span>
@@ -2518,7 +2515,7 @@ export default function JoyeriaPage() {
                 </div>
               )}
               {/* Personaliza tu pulsera SIEMPRE visible, independiente de filtro */}
-              <div className="col-span-2 rounded-2xl border border-amber-500/40 bg-gradient-to-b from-zinc-900/70 to-zinc-950/80 p-7 sm:p-8 min-h-[200px] sm:min-h-[220px] flex flex-col items-center justify-center text-center shadow-[0_10px_40px_rgba(0,0,0,0.35)] hover:border-amber-400/70 hover:shadow-[0_12px_50px_rgba(217,119,6,0.15)] transition">
+              <div className="col-span-2 rounded-2xl border border-amber-500/40 bg-linear-to-b from-zinc-900/70 to-zinc-950/80 p-7 sm:p-8 min-h-50 sm:min-h-55 flex flex-col items-center justify-center text-center shadow-[0_10px_40px_rgba(0,0,0,0.35)] hover:border-amber-400/70 hover:shadow-[0_12px_50px_rgba(217,119,6,0.15)] transition">
                 <span className="text-[11px] uppercase tracking-[0.35em] text-white/90">
                   Personaliza tu pulsera
                 </span>
@@ -2674,7 +2671,7 @@ export default function JoyeriaPage() {
       {/* Modal galería destacada (Personaliza tu cadena) */}
       {cadenaGalleryOpen && (
         <div
-          className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] flex items-center justify-center p-4"
+          className="fixed inset-0 bg-black/80 backdrop-blur-sm z-100 flex items-center justify-center p-4"
           onClick={() => setCadenaGalleryOpen(false)}
         >
           <div
@@ -2738,7 +2735,7 @@ export default function JoyeriaPage() {
             <div className="mt-4">
               {cadenaActiveGalleryItem && (
                 <div className="rounded-2xl border border-amber-500/20 bg-black/60 overflow-hidden">
-                  <div className="relative h-[260px] sm:h-[360px] lg:h-[420px]">
+                  <div className="relative h-65 sm:h-90 lg:h-105">
                     <button
                       type="button"
                       onClick={goToPrevCadenaImage}
@@ -2929,7 +2926,7 @@ export default function JoyeriaPage() {
       {/* Modal galería de personaliza tu pulsera (balineria, herrajes, dijes) */}
       {pulseraGalleryOpen && (
         <div
-          className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] flex items-center justify-center p-4"
+          className="fixed inset-0 bg-black/80 backdrop-blur-sm z-100 flex items-center justify-center p-4"
           onClick={() => setPulseraGalleryOpen(false)}
         >
           <div
@@ -3007,7 +3004,7 @@ export default function JoyeriaPage() {
             <div className="mt-4">
               {pulseraActiveGalleryItem && (
                 <div className="rounded-2xl border border-amber-500/20 bg-black/60 overflow-hidden">
-                  <div className="relative h-[260px] sm:h-[360px] lg:h-[420px]">
+                  <div className="relative h-65 sm:h-90 lg:h-105">
                     <button
                       type="button"
                       onClick={goToPrevPulseraImage}
@@ -3204,13 +3201,13 @@ export default function JoyeriaPage() {
       {/* Modal para imagen grande */}
       {selectedImage && (
         <div
-          className="fixed inset-0 bg-black/90 z-[100] flex items-center justify-center p-4"
+          className="fixed inset-0 bg-black/90 z-100 flex items-center justify-center p-4"
           onClick={() => setSelectedImage(null)}
         >
           <div className="relative w-full max-w-3xl max-h-[75vh]" onClick={(e) => e.stopPropagation()}>
             <button
               onClick={() => setSelectedImage(null)}
-              className="absolute top-2 right-2 bg-black/80 border border-amber-500/40 text-white rounded-full w-9 h-9 flex items-center justify-center hover:text-amber-400 transition z-[101]"
+              className="absolute top-2 right-2 bg-black/80 border border-amber-500/40 text-white rounded-full w-9 h-9 flex items-center justify-center hover:text-amber-400 transition z-101"
               aria-label="Cerrar"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -3238,7 +3235,7 @@ export default function JoyeriaPage() {
         rel="noopener noreferrer"
         className="fixed bottom-24 left-6 z-50 flex items-center gap-3 group"
       >
-        <div className="bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-all">
+        <div className="bg-linear-to-tr from-yellow-400 via-pink-500 to-purple-600 w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-all">
           <FaInstagram className="w-7 h-7 text-white" />
         </div>
         <div className="bg-white px-4 py-2 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
