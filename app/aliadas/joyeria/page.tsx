@@ -23,7 +23,7 @@ interface GalleryCartItem {
   optionLabel: string;
   quantity: number;
   imageNumber: number;
-  type: "cadenas" | "dijes" | "herrajes";
+  type: "cadenas" | "dijes" | "herrajes" | "balineria";
 }
 
 export default function JoyeriaPage() {
@@ -2158,7 +2158,7 @@ export default function JoyeriaPage() {
     { id: 8015, name: "Herraje LV", price: 0, image: "/joyeria/oro laminado/herraje (15).jpeg", description: 'Herraje para pulsera oro laminado 18K.' },
   ];
   // Filtro de pulseras/dijes/herrajes
-  let pulseraGalleryItems = [];
+  let pulseraGalleryItems: { id: number; name: string; price: number; image: string; description: string }[] = [];
   if (pulseraGalleryMode === 'balineria') {
     pulseraGalleryItems = pulseraBalineria;
   } else if (pulseraGalleryMode === 'herrajes') {
@@ -2186,7 +2186,7 @@ export default function JoyeriaPage() {
     if (!cadenaActiveGalleryItem) return;
     const imageNumber = cadenaGalleryIndex + 1;
     let label = optionLabel;
-    let type: 'cadenas' | 'dijes' = cadenaGalleryMode;
+    const type: 'cadenas' | 'dijes' = cadenaGalleryMode;
     let nameToShow = label;
     if (!label) {
       if (cadenaGalleryMode === 'cadenas') {
@@ -2233,7 +2233,7 @@ export default function JoyeriaPage() {
     if (!pulseraActiveGalleryItem) return;
     const imageNumber = pulseraGalleryIndex + 1;
     let label = optionLabel;
-    let type: 'balineria' | 'herrajes' | 'dijes' = pulseraGalleryMode;
+    const type: 'balineria' | 'herrajes' | 'dijes' = pulseraGalleryMode;
     let nameToShow = label;
     if (!label) {
       if (pulseraGalleryMode === 'dijes') {
