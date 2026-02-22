@@ -3,7 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
+import { fetchAliadaJoyeriaProducts, fetchGalleries, type AliadaJoyeriaProduct, type GalleriesData } from "@/lib/api";
 // import dynamic from "next/dynamic";
 // const PersonalizarPulsera = dynamic(() => import("./PersonalizarPulsera"), { ssr: false });
 import { FaInstagram, FaWhatsapp } from "react-icons/fa";
@@ -48,13 +49,14 @@ export default function JoyeriaPage() {
   const [balinQuantity, setBalinQuantity] = useState<number>(1);
   // Filtro para oro laminado 18K
   const [oroFilter, setOroFilter] = useState<string>("");
+  const [aliadaProducts, setAliadaProducts] = useState<AliadaJoyeriaProduct[]>([]);
+  const [galleries, setGalleries] = useState<GalleriesData | null>(null);
   // const [showPersonalizar, setShowPersonalizar] = useState(false);
-  const assetBasePath = process.env.NEXT_PUBLIC_DOMAIN || "https://urlaty.online";
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
   const withBasePath = (src: string) => {
-    if (src.startsWith("http")) {
-      return src;
-    }
-    return encodeURI(`${assetBasePath}${src}`);
+    if (src.startsWith("http")) return src;
+    const path = src.startsWith("/") ? src : `/${src}`;
+    return encodeURI(basePath ? `${basePath}${path}` : path);
   };
 
   useEffect(() => {
@@ -67,6 +69,11 @@ export default function JoyeriaPage() {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    fetchAliadaJoyeriaProducts().then(setAliadaProducts).catch(() => {});
+    fetchGalleries().then(setGalleries).catch(() => {});
   }, []);
 
   const scrollToTop = () => {
@@ -1758,329 +1765,75 @@ export default function JoyeriaPage() {
 
   ];
 
-  const addToCart = (product: Product) => {
-    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-    const existingItem = cart.find((item: Product & { quantity: number }) => item.id === product.id);
+  // API es fuente principal: si hay productos oro/plata del backend, se usan; si no, fallback estático
+  const goldItemsDisplay = useMemo(() => {
+    const fromApi = aliadaProducts.filter((p) => p.category === "oro");
+    if (fromApi.length > 0) return fromApi;
+    return goldItems;
+  }, [aliadaProducts]);
 
-    if (existingItem) {
-      existingItem.quantity += 1;
-    } else {
-      cart.push({ ...product, quantity: 1, category: "Joyería" });
-    }
+  const silverItemsDisplay = useMemo(() => {
+    const fromApi = aliadaProducts.filter((p) => p.category === "plata");
+    if (fromApi.length > 0) return fromApi;
+    return silverItems;
+  }, [aliadaProducts]);
 
-    localStorage.setItem("cart", JSON.stringify(cart));
-    setAddedId(product.id);
-    setTimeout(() => setAddedId(null), 1200);
-  };
+  const mergeGallery = useMemo(() => (staticList: Product[], sectionKey: keyof GalleriesData) => {
+    if (!galleries || !Array.isArray(galleries[sectionKey])) return staticList;
+    const fromApi = galleries[sectionKey];
+    const overrides = new Map(fromApi.map((p) => [p.id, p]));
+    return staticList.map((p) => {
+      const over = overrides.get(p.id);
+      if (over) return { ...p, ...over };
+      return p;
+    });
+  }, [galleries]);
 
+  // Arrays de galería definidos antes de los useMemo que los usan
   const goldGalleryExtras: Product[] = [
-    {
-      id: 5001,
-      name: "cadena",
-      price: 0,
-      image: "/joyeria/oro laminado/gal (1).jpeg",
-      description: "Pregunta por tu cadena: son ediciones limitadas, mas economicas y muy apetecidas.",
-    },
-    {
-      id: 5002,
-      name: "cadena",
-      price: 0,
-      image: "/joyeria/oro laminado/gal (2).jpeg",
-      description: "Pregunta por tu cadena: son ediciones limitadas, mas economicas y muy apetecidas.",
-    },
-    {
-      id: 5003,
-      name: "cadena",
-      price: 0,
-      image: "/joyeria/oro laminado/gal (3).jpeg",
-      description: "Pregunta por tu cadena: son ediciones limitadas, mas economicas y muy apetecidas.",
-    },
-    {
-      id: 5004,
-      name: "cadena",
-      price: 0,
-      image: "/joyeria/oro laminado/gal (4).jpeg",
-      description: "Pregunta por tu cadena: son ediciones limitadas, mas economicas y muy apetecidas.",
-    },
-    {
-      id: 5005,
-      name: "cadena",
-      price: 0,
-      image: "/joyeria/oro laminado/gal (5).jpeg",
-      description: "Pregunta por tu cadena: son ediciones limitadas, mas economicas y muy apetecidas.",
-    },
-    {
-      id: 5006,
-      name: "cadena",
-      price: 0,
-      image: "/joyeria/oro laminado/gal (6).jpeg",
-      description: "Pregunta por tu cadena: son ediciones limitadas, mas economicas y muy apetecidas.",
-    },
-    {
-      id: 5007,
-      name: "cadena",
-      price: 0,
-      image: "/joyeria/oro laminado/gal (7).jpeg",
-      description: "Pregunta por tu cadena: son ediciones limitadas, mas economicas y muy apetecidas.",
-    },
-    {
-      id: 5008,
-      name: "cadena",
-      price: 0,
-      image: "/joyeria/oro laminado/gal (8).jpeg",
-      description: "Pregunta por tu cadena: son ediciones limitadas, mas economicas y muy apetecidas.",
-    },
-    {
-      id: 5009,
-      name: "cadena",
-      price: 0,
-      image: "/joyeria/oro laminado/gal (9).jpeg",
-      description: "Pregunta por tu cadena: son ediciones limitadas, mas economicas y muy apetecidas.",
-    },
-    {
-      id: 5010,
-      name: "cadena",
-      price: 0,
-      image: "/joyeria/oro laminado/gal (10).jpeg",
-      description: "Pregunta por tu cadena: son ediciones limitadas, mas economicas y muy apetecidas.",
-    },
+    { id: 5001, name: "cadena", price: 0, image: "/joyeria/oro laminado/gal (1).jpeg", description: "Pregunta por tu cadena: son ediciones limitadas, mas economicas y muy apetecidas." },
+    { id: 5002, name: "cadena", price: 0, image: "/joyeria/oro laminado/gal (2).jpeg", description: "Pregunta por tu cadena: son ediciones limitadas, mas economicas y muy apetecidas." },
+    { id: 5003, name: "cadena", price: 0, image: "/joyeria/oro laminado/gal (3).jpeg", description: "Pregunta por tu cadena: son ediciones limitadas, mas economicas y muy apetecidas." },
+    { id: 5004, name: "cadena", price: 0, image: "/joyeria/oro laminado/gal (4).jpeg", description: "Pregunta por tu cadena: son ediciones limitadas, mas economicas y muy apetecidas." },
+    { id: 5005, name: "cadena", price: 0, image: "/joyeria/oro laminado/gal (5).jpeg", description: "Pregunta por tu cadena: son ediciones limitadas, mas economicas y muy apetecidas." },
+    { id: 5006, name: "cadena", price: 0, image: "/joyeria/oro laminado/gal (6).jpeg", description: "Pregunta por tu cadena: son ediciones limitadas, mas economicas y muy apetecidas." },
+    { id: 5007, name: "cadena", price: 0, image: "/joyeria/oro laminado/gal (7).jpeg", description: "Pregunta por tu cadena: son ediciones limitadas, mas economicas y muy apetecidas." },
+    { id: 5008, name: "cadena", price: 0, image: "/joyeria/oro laminado/gal (8).jpeg", description: "Pregunta por tu cadena: son ediciones limitadas, mas economicas y muy apetecidas." },
+    { id: 5009, name: "cadena", price: 0, image: "/joyeria/oro laminado/gal (9).jpeg", description: "Pregunta por tu cadena: son ediciones limitadas, mas economicas y muy apetecidas." },
+    { id: 5010, name: "cadena", price: 0, image: "/joyeria/oro laminado/gal (10).jpeg", description: "Pregunta por tu cadena: son ediciones limitadas, mas economicas y muy apetecidas." },
   ];
   const dijGalleryExtras: Product[] = [
-    {
-      id: 6001,
-      name: "dije Bolsa de Dinero",
-      price: 0,
-      image: "/joyeria/oro laminado/dij (1).jpeg",
-      description: "Dije oro laminado 18K.",
-    },
-    {
-      id: 6002,
-      name: "dije RX ref1",
-      price: 0,
-      image: "/joyeria/oro laminado/dij (2).jpeg",
-      description: "Dije oro laminado 18K.",
-    },
-    {
-      id: 6003,
-      name: "dije Tijeras ",
-      price: 0,
-      image: "/joyeria/oro laminado/dij (3).jpeg",
-      description: "Dije oro laminado 18K.",
-    },
-    {
-      id: 6004,
-      name: "dije RX ref2",
-      price: 0,
-      image: "/joyeria/oro laminado/dij (4).jpeg",
-      description: "Dije oro laminado 18K.",
-    },
-    {
-      id: 6005,
-      name: "dije Sagrada Familia",
-      price: 0,
-      image: "/joyeria/oro laminado/dij (5).jpeg",
-      description: "Dije oro laminado 18K.",
-    },
-    {
-      id: 6006,
-      name: "dije Caballo ref1",
-      price: 0,
-      image: "/joyeria/oro laminado/dij (6).jpeg",
-      description: "Dije oro laminado 18K.",
-    },
-    {
-      id: 6007,
-      name: "dije Caballo ref2",
-      price: 0,
-      image: "/joyeria/oro laminado/dij (7).jpeg",
-      description: "Dije oro laminado 18K.",
-    },
-    {
-      id: 6008,
-      name: "dije Video Juegos",
-      price: 0,
-      image: "/joyeria/oro laminado/dij (8).jpeg",
-      description: "Dije oro laminado 18K.",
-    },
-    {
-      id: 6009,
-      name: "dije Virgen de guadalupe pequeño",
-      price: 0,
-      image: "/joyeria/oro laminado/dij (9).jpeg",
-      description: "Dije oro laminado 18K.",
-    },
-    {
-      id: 6010,
-      name: "dije Virgen de guadalupe grande",
-      price: 0,
-      image: "/joyeria/oro laminado/dij (10).jpeg",
-      description: "Dije oro laminado 18K.",
-    },
-    {
-      id: 6011,
-      name: "dije RX ref2",
-      price: 0,
-      image: "/joyeria/oro laminado/dij (11).jpeg",
-      description: "Dije oro laminado 18K.",
-    },
-    {
-      id: 6012,
-      name: "dije Atletico Nacional",
-      price: 0,
-      image: "/joyeria/oro laminado/dij (12).jpeg",
-      description: "Dije oro laminado 18K.",
-    },
-    {
-      id: 6013,
-      name: "dije San miguel Arcangel",
-      price: 0,
-      image: "/joyeria/oro laminado/dij (13).jpeg",
-      description: "Dije oro laminado 18K.",
-    },
-    {
-      id: 6014,
-      name: "dije RX grande ref3",
-      price: 0,
-      image: "/joyeria/oro laminado/dij (14).jpeg",
-      description: "Dije oro laminado 18K.",
-    },
-    {
-      id: 6015,
-      name: "dije virgen de guadalupe ref3",
-      price: 0,
-      image: "/joyeria/oro laminado/dij (15).jpeg",
-      description: "Dije oro laminado 18K.",
-    },
-    {
-      id: 6016,
-      name: "dije San benito ref1",
-      price: 0,
-      image: "/joyeria/oro laminado/dij (16).jpeg",
-      description: "Dije oro laminado 18K.",
-    },
-    {
-      id: 6017,
-      name: "dije Sagrada Familia ref2",
-      price: 0,
-      image: "/joyeria/oro laminado/dij (17).jpeg",
-      description: "Dije oro laminado 18K.",
-    },
-    {
-      id: 6018,
-      name: "dije Cruz ref1",
-      price: 0,
-      image: "/joyeria/oro laminado/dij (18).jpeg",
-      description: "Dije oro laminado 18K.",
-    },
-    {
-      id: 6019,
-      name: "dije virgen del carmen ref1",
-      price: 0,
-      image: "/joyeria/oro laminado/dij (19).jpeg",
-      description: "Dije oro laminado 18K.",
-    },
-    {
-      id: 6020,
-      name: "dije Rostro de dios ref1",
-      price: 0,
-      image: "/joyeria/oro laminado/dij (20).jpeg",
-      description: "Dije oro laminado 18K.",
-    },
-    {
-      id: 6021,
-      name: "dije Corazon ref1",
-      price: 0,
-      image: "/joyeria/oro laminado/dij (21).jpeg",
-      description: "Dije oro laminado 18K.",
-    },
-    {
-      id: 6022,
-      name: "dije Cruz ref2",
-      price: 0,
-      image: "/joyeria/oro laminado/dij (22).jpeg",
-      description: "Dije oro laminado 18K.",
-    },
-    {
-      id: 6023,
-      name: "dije Oso ref1",
-      price: 0,
-      image: "/joyeria/oro laminado/dij (23).jpeg",
-      description: "Dije oro laminado 18K.",
-    },
-    {
-      id: 6024,
-      name: "dije Oso ref2",
-      price: 0,
-      image: "/joyeria/oro laminado/dij (24).jpeg",
-      description: "Dije oro laminado 18K.",
-    },
-    {
-      id: 6025,
-      name: "dije RX ref3",
-      price: 0,
-      image: "/joyeria/oro laminado/dij (25).jpeg",
-      description: "Dije oro laminado 18K.",
-    },
-    {
-      id: 6026,
-      name: "dije Caballo ref3",
-      price: 0,
-      image: "/joyeria/oro laminado/dij (26).jpeg",
-      description: "Dije oro laminado 18K.",
-    },
-    {
-      id: 6027,
-      name: "dije mini cruz ref1",
-      price: 0,
-      image: "/joyeria/oro laminado/dij (27).jpeg",
-      description: "Dije oro laminado 18K.",
-    },
-    {
-      id: 6028,
-      name: "dije Recordatorio ref1",
-      price: 0,
-      image: "/joyeria/oro laminado/dij (28).jpeg",
-      description: "Dije oro laminado 18K.",
-    },
-    {
-      id: 6029,
-      name: "dije Virgen del Carmen ref2",
-      price: 0,
-      image: "/joyeria/oro laminado/dij (29).jpeg",
-      description: "Dije oro laminado 18K.",
-    },
-    {
-      id: 6030,
-      name: "dije Van Cleef ref1",
-      price: 0,
-      image: "/joyeria/oro laminado/dij (30).jpeg",
-      description: "Dije oro laminado 18K.",
-    },
+    { id: 6001, name: "dije Bolsa de Dinero", price: 0, image: "/joyeria/oro laminado/dij (1).jpeg", description: "Dije oro laminado 18K." },
+    { id: 6002, name: "dije RX ref1", price: 0, image: "/joyeria/oro laminado/dij (2).jpeg", description: "Dije oro laminado 18K." },
+    { id: 6003, name: "dije Tijeras ", price: 0, image: "/joyeria/oro laminado/dij (3).jpeg", description: "Dije oro laminado 18K." },
+    { id: 6004, name: "dije RX ref2", price: 0, image: "/joyeria/oro laminado/dij (4).jpeg", description: "Dije oro laminado 18K." },
+    { id: 6005, name: "dije Sagrada Familia", price: 0, image: "/joyeria/oro laminado/dij (5).jpeg", description: "Dije oro laminado 18K." },
+    { id: 6006, name: "dije Caballo ref1", price: 0, image: "/joyeria/oro laminado/dij (6).jpeg", description: "Dije oro laminado 18K." },
+    { id: 6007, name: "dije Caballo ref2", price: 0, image: "/joyeria/oro laminado/dij (7).jpeg", description: "Dije oro laminado 18K." },
+    { id: 6008, name: "dije Video Juegos", price: 0, image: "/joyeria/oro laminado/dij (8).jpeg", description: "Dije oro laminado 18K." },
+    { id: 6009, name: "dije Virgen de guadalupe pequeño", price: 0, image: "/joyeria/oro laminado/dij (9).jpeg", description: "Dije oro laminado 18K." },
+    { id: 6010, name: "dije Virgen de guadalupe grande", price: 0, image: "/joyeria/oro laminado/dij (10).jpeg", description: "Dije oro laminado 18K." },
+    { id: 6011, name: "dije RX ref2", price: 0, image: "/joyeria/oro laminado/dij (11).jpeg", description: "Dije oro laminado 18K." },
+    { id: 6012, name: "dije Atletico Nacional", price: 0, image: "/joyeria/oro laminado/dij (12).jpeg", description: "Dije oro laminado 18K." },
+    { id: 6013, name: "dije San miguel Arcangel", price: 0, image: "/joyeria/oro laminado/dij (13).jpeg", description: "Dije oro laminado 18K." },
+    { id: 6014, name: "dije RX grande ref3", price: 0, image: "/joyeria/oro laminado/dij (14).jpeg", description: "Dije oro laminado 18K." },
+    { id: 6015, name: "dije virgen de guadalupe ref3", price: 0, image: "/joyeria/oro laminado/dij (15).jpeg", description: "Dije oro laminado 18K." },
+    { id: 6016, name: "dije San benito ref1", price: 0, image: "/joyeria/oro laminado/dij (16).jpeg", description: "Dije oro laminado 18K." },
+    { id: 6017, name: "dije Sagrada Familia ref2", price: 0, image: "/joyeria/oro laminado/dij (17).jpeg", description: "Dije oro laminado 18K." },
+    { id: 6018, name: "dije Cruz ref1", price: 0, image: "/joyeria/oro laminado/dij (18).jpeg", description: "Dije oro laminado 18K." },
+    { id: 6019, name: "dije virgen del carmen ref1", price: 0, image: "/joyeria/oro laminado/dij (19).jpeg", description: "Dije oro laminado 18K." },
+    { id: 6020, name: "dije Rostro de dios ref1", price: 0, image: "/joyeria/oro laminado/dij (20).jpeg", description: "Dije oro laminado 18K." },
+    { id: 6021, name: "dije Corazon ref1", price: 0, image: "/joyeria/oro laminado/dij (21).jpeg", description: "Dije oro laminado 18K." },
+    { id: 6022, name: "dije Cruz ref2", price: 0, image: "/joyeria/oro laminado/dij (22).jpeg", description: "Dije oro laminado 18K." },
+    { id: 6023, name: "dije Oso ref1", price: 0, image: "/joyeria/oro laminado/dij (23).jpeg", description: "Dije oro laminado 18K." },
+    { id: 6024, name: "dije Oso ref2", price: 0, image: "/joyeria/oro laminado/dij (24).jpeg", description: "Dije oro laminado 18K." },
+    { id: 6025, name: "dije RX ref3", price: 0, image: "/joyeria/oro laminado/dij (25).jpeg", description: "Dije oro laminado 18K." },
+    { id: 6026, name: "dije Caballo ref3", price: 0, image: "/joyeria/oro laminado/dij (26).jpeg", description: "Dije oro laminado 18K." },
+    { id: 6027, name: "dije mini cruz ref1", price: 0, image: "/joyeria/oro laminado/dij (27).jpeg", description: "Dije oro laminado 18K." },
+    { id: 6028, name: "dije Recordatorio ref1", price: 0, image: "/joyeria/oro laminado/dij (28).jpeg", description: "Dije oro laminado 18K." },
+    { id: 6029, name: "dije Virgen del Carmen ref2", price: 0, image: "/joyeria/oro laminado/dij (29).jpeg", description: "Dije oro laminado 18K." },
+    { id: 6030, name: "dije Van Cleef ref1", price: 0, image: "/joyeria/oro laminado/dij (30).jpeg", description: "Dije oro laminado 18K." },
   ];
-  const presPreviewImages = [
-    "/joyeria/oro laminado/pres (1).jpeg",
-    "/joyeria/oro laminado/pres (2).jpeg",
-    "/joyeria/oro laminado/pres (3).jpeg",
-    "/joyeria/oro laminado/pres (4).jpeg",
-    "/joyeria/oro laminado/pres (5).jpeg",
-    "/joyeria/oro laminado/pres (6).jpeg",
-  ];
-  // Galería destacada (Personaliza tu cadena)
-  const cadenaGalleryItems = cadenaGalleryMode === 'cadenas' ? goldGalleryExtras : dijGalleryExtras;
-  const cadenaActiveGalleryItem = cadenaGalleryItems[cadenaGalleryIndex];
-  const goToPrevCadenaImage = () => {
-    setCadenaGalleryIndex((prev) =>
-      cadenaGalleryItems.length ? (prev - 1 + cadenaGalleryItems.length) % cadenaGalleryItems.length : 0
-    );
-  };
-  const goToNextCadenaImage = () => {
-    setCadenaGalleryIndex((prev) =>
-      cadenaGalleryItems.length ? (prev + 1) % cadenaGalleryItems.length : 0
-    );
-  };
-  // Personaliza tu pulsera (balineria, herrajes, dijes)
-  // Puedes cambiar los arrays según tus imágenes para cada modo
-  // Para 'dijes' de personaliza tu pulsera, mostrar las primeras 30 imágenes que empiezan por 'dijespulseras' en la carpeta oro laminado
   const pulperDijes = [
     { id: 10001, name: "Niña Patin", price: 0, image: "/joyeria/oro laminado/dijespulseras (1).jpeg", description: "Dije para pulsera oro laminado 18K." },
     { id: 10002, name: "Cactus", price: 0, image: "/joyeria/oro laminado/dijespulseras (2).jpeg", description: "Dije para pulsera oro laminado 18K." },
@@ -2114,54 +1867,78 @@ export default function JoyeriaPage() {
     { id: 10030, name: "Rostro jesus ref.pul", price: 0, image: "/joyeria/oro laminado/dijespulseras (30).jpeg", description: "Dije para pulsera oro laminado 18K." },
   ];
   const pulseraBalineria = [
-    {
-      id: 5101,
-      name: "Balineria lisa",
-      price: 0,
-      image: "/joyeria/oro laminado/bali (1).jpeg",
-      description: "Muestra de pulsera oro laminado 18K.",
-    },
-    {
-      id: 5102,
-      name: "balineria Rosa",
-      price: 0,
-      image: "/joyeria/oro laminado/bali (2).jpeg",
-      description: "Muestra de pulsera oro laminado 18K.",
-    },
-    {
-      id: 5103,
-      name: "Balineria Diamantada",
-      price: 0,
-      image: "/joyeria/oro laminado/bali (3).jpeg",
-      description: "Muestra de pulsera oro laminado 18K.",
-    },
+    { id: 5101, name: "Balineria lisa", price: 0, image: "/joyeria/oro laminado/bali (1).jpeg", description: "Muestra de pulsera oro laminado 18K." },
+    { id: 5102, name: "balineria Rosa", price: 0, image: "/joyeria/oro laminado/bali (2).jpeg", description: "Muestra de pulsera oro laminado 18K." },
+    { id: 5103, name: "Balineria Diamantada", price: 0, image: "/joyeria/oro laminado/bali (3).jpeg", description: "Muestra de pulsera oro laminado 18K." },
   ];
-  // Herrajes para personaliza tu pulsera: 15 nuevas imágenes
   const herrajesPulsera = [
-    { id: 8001, name: "Herraje Versace", price: 0, image: "/joyeria/oro laminado/herraje (1).jpeg", description: 'Herraje para pulsera oro laminado 18K.' },
-    { id: 8002, name: "Herraje San Benito", price: 0, image: "/joyeria/oro laminado/herraje (2).jpeg", description: 'Herraje para pulsera oro laminado 18K.' },
-    { id: 8003, name: "Herraje Caballo ref1", price: 0, image: "/joyeria/oro laminado/herraje (3).jpeg", description: 'Herraje para pulsera oro laminado 18K.' },
-    { id: 8004, name: "Herraje Timon ref1", price: 0, image: "/joyeria/oro laminado/herraje (4).jpeg", description: 'Herraje para pulsera oro laminado 18K.' },
-    { id: 8005, name: "Herraje Virgen del Carmen", price: 0, image: "/joyeria/oro laminado/herraje (5).jpeg", description: 'Herraje para pulsera oro laminado 18K.' },
-    { id: 8006, name: "Herraje San Benito pequeño ref2", price: 0, image: "/joyeria/oro laminado/herraje (6).jpeg", description: 'Herraje para pulsera oro laminado 18K.' },
-    { id: 8007, name: "Herraje Bolsa de dinero", price: 0, image: "/joyeria/oro laminado/herraje (7).jpeg", description: 'Herraje para pulsera oro laminado 18K.' },
-    { id: 8008, name: "Herraje Virgen de Guadalupe", price: 0, image: "/joyeria/oro laminado/herraje (8).jpeg", description: 'Herraje para pulsera oro laminado 18K.' },
-    { id: 8009, name: "Herrajen ref1 virgen", price: 0, image: "/joyeria/oro laminado/herraje (9).jpeg", description: 'Herraje para pulsera oro laminado 18K.' },
-    { id: 8010, name: "Herraje Sagrada Familia", price: 0, image: "/joyeria/oro laminado/herraje (10).jpeg", description: 'Herraje para pulsera oro laminado 18K.' },
-    { id: 8011, name: "Herraje San Miguel", price: 0, image: "/joyeria/oro laminado/herraje (11).jpeg", description: 'Herraje para pulsera oro laminado 18K.' },
-    { id: 8012, name: "Herraje Sagrada Familia ref2", price: 0, image: "/joyeria/oro laminado/herraje (12).jpeg", description: 'Herraje para pulsera oro laminado 18K.' },
-    { id: 8013, name: "Herraje Rolex ref1", price: 0, image: "/joyeria/oro laminado/herraje (13).jpeg", description: 'Herraje para pulsera oro laminado 18K.' },
-    { id: 8014, name: "Herraje Rolex ref2", price: 0, image: "/joyeria/oro laminado/herraje (14).jpeg", description: 'Herraje para pulsera oro laminado 18K.' },
-    { id: 8015, name: "Herraje LV", price: 0, image: "/joyeria/oro laminado/herraje (15).jpeg", description: 'Herraje para pulsera oro laminado 18K.' },
+    { id: 8001, name: "Herraje Versace", price: 0, image: "/joyeria/oro laminado/herraje (1).jpeg", description: "Herraje para pulsera oro laminado 18K." },
+    { id: 8002, name: "Herraje San Benito", price: 0, image: "/joyeria/oro laminado/herraje (2).jpeg", description: "Herraje para pulsera oro laminado 18K." },
+    { id: 8003, name: "Herraje Caballo ref1", price: 0, image: "/joyeria/oro laminado/herraje (3).jpeg", description: "Herraje para pulsera oro laminado 18K." },
+    { id: 8004, name: "Herraje Timon ref1", price: 0, image: "/joyeria/oro laminado/herraje (4).jpeg", description: "Herraje para pulsera oro laminado 18K." },
+    { id: 8005, name: "Herraje Virgen del Carmen", price: 0, image: "/joyeria/oro laminado/herraje (5).jpeg", description: "Herraje para pulsera oro laminado 18K." },
+    { id: 8006, name: "Herraje San Benito pequeño ref2", price: 0, image: "/joyeria/oro laminado/herraje (6).jpeg", description: "Herraje para pulsera oro laminado 18K." },
+    { id: 8007, name: "Herraje Bolsa de dinero", price: 0, image: "/joyeria/oro laminado/herraje (7).jpeg", description: "Herraje para pulsera oro laminado 18K." },
+    { id: 8008, name: "Herraje Virgen de Guadalupe", price: 0, image: "/joyeria/oro laminado/herraje (8).jpeg", description: "Herraje para pulsera oro laminado 18K." },
+    { id: 8009, name: "Herrajen ref1 virgen", price: 0, image: "/joyeria/oro laminado/herraje (9).jpeg", description: "Herraje para pulsera oro laminado 18K." },
+    { id: 8010, name: "Herraje Sagrada Familia", price: 0, image: "/joyeria/oro laminado/herraje (10).jpeg", description: "Herraje para pulsera oro laminado 18K." },
+    { id: 8011, name: "Herraje San Miguel", price: 0, image: "/joyeria/oro laminado/herraje (11).jpeg", description: "Herraje para pulsera oro laminado 18K." },
+    { id: 8012, name: "Herraje Sagrada Familia ref2", price: 0, image: "/joyeria/oro laminado/herraje (12).jpeg", description: "Herraje para pulsera oro laminado 18K." },
+    { id: 8013, name: "Herraje Rolex ref1", price: 0, image: "/joyeria/oro laminado/herraje (13).jpeg", description: "Herraje para pulsera oro laminado 18K." },
+    { id: 8014, name: "Herraje Rolex ref2", price: 0, image: "/joyeria/oro laminado/herraje (14).jpeg", description: "Herraje para pulsera oro laminado 18K." },
+    { id: 8015, name: "Herraje LV", price: 0, image: "/joyeria/oro laminado/herraje (15).jpeg", description: "Herraje para pulsera oro laminado 18K." },
   ];
-  // Filtro de pulseras/dijes/herrajes
+
+  const goldGalleryExtrasDisplay = useMemo(() => mergeGallery(goldGalleryExtras, "cadena_cadenas"), [mergeGallery, goldGalleryExtras]);
+  const dijGalleryExtrasDisplay = useMemo(() => mergeGallery(dijGalleryExtras, "cadena_dijes"), [mergeGallery, dijGalleryExtras]);
+  const pulseraBalineriaDisplay = useMemo(() => mergeGallery(pulseraBalineria, "pulsera_balineria"), [mergeGallery, pulseraBalineria]);
+  const herrajesPulseraDisplay = useMemo(() => mergeGallery(herrajesPulsera, "pulsera_herrajes"), [mergeGallery, herrajesPulsera]);
+  const pulperDijesDisplay = useMemo(() => mergeGallery(pulperDijes, "pulsera_dijes"), [mergeGallery, pulperDijes]);
+
+  const addToCart = (product: Product) => {
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+    const existingItem = cart.find((item: Product & { quantity: number }) => item.id === product.id);
+
+    if (existingItem) {
+      existingItem.quantity += 1;
+    } else {
+      cart.push({ ...product, quantity: 1, category: "Joyería" });
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    setAddedId(product.id);
+    setTimeout(() => setAddedId(null), 1200);
+  };
+
+  const presPreviewImages = [
+    "/joyeria/oro laminado/pres (1).jpeg",
+    "/joyeria/oro laminado/pres (2).jpeg",
+    "/joyeria/oro laminado/pres (3).jpeg",
+    "/joyeria/oro laminado/pres (4).jpeg",
+    "/joyeria/oro laminado/pres (5).jpeg",
+    "/joyeria/oro laminado/pres (6).jpeg",
+  ];
+  // Galería destacada (Personaliza tu cadena) — con datos editables desde API
+  const cadenaGalleryItems = cadenaGalleryMode === 'cadenas' ? goldGalleryExtrasDisplay : dijGalleryExtrasDisplay;
+  const cadenaActiveGalleryItem = cadenaGalleryItems[cadenaGalleryIndex];
+  const goToPrevCadenaImage = () => {
+    setCadenaGalleryIndex((prev) =>
+      cadenaGalleryItems.length ? (prev - 1 + cadenaGalleryItems.length) % cadenaGalleryItems.length : 0
+    );
+  };
+  const goToNextCadenaImage = () => {
+    setCadenaGalleryIndex((prev) =>
+      cadenaGalleryItems.length ? (prev + 1) % cadenaGalleryItems.length : 0
+    );
+  };
+  // Filtro de pulseras/dijes/herrajes — con datos editables desde API
   let pulseraGalleryItems: { id: number; name: string; price: number; image: string; description: string }[] = [];
   if (pulseraGalleryMode === 'balineria') {
-    pulseraGalleryItems = pulseraBalineria;
+    pulseraGalleryItems = pulseraBalineriaDisplay;
   } else if (pulseraGalleryMode === 'herrajes') {
-    pulseraGalleryItems = herrajesPulsera;
+    pulseraGalleryItems = herrajesPulseraDisplay;
   } else if (pulseraGalleryMode === 'dijes') {
-    pulseraGalleryItems = pulperDijes;
+    pulseraGalleryItems = pulperDijesDisplay;
   }
   // Aquí puedes agregar más filtros si tienes un filtro externo (por ejemplo, por tipo de pulsera o por nombre)
   const pulseraActiveGalleryItem = pulseraGalleryItems[pulseraGalleryIndex];
@@ -2395,7 +2172,7 @@ export default function JoyeriaPage() {
             </div>
           </div>
           <Link
-            href="/cart"
+            href="/cart/"
             className="inline-flex items-center justify-center rounded-full border border-amber-500/40 px-5 py-2 text-amber-200 hover:bg-amber-500/10"
           >
             Ver carrito
@@ -2559,7 +2336,7 @@ export default function JoyeriaPage() {
                   Ver galería de pulseras
                 </button>
               </div>
-              {goldItems
+              {goldItemsDisplay
                 .filter((item) => {
                   if (oroFilter === "") return true;
                   const name = item.name.toLowerCase();
@@ -2619,7 +2396,7 @@ export default function JoyeriaPage() {
               </p>
             </div>
             <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-              {silverItems.map((item) => (
+              {silverItemsDisplay.map((item) => (
                 <div
                   key={item.id}
                   className="rounded-lg border border-amber-500/20 bg-zinc-900/80 overflow-hidden"
@@ -2833,9 +2610,13 @@ export default function JoyeriaPage() {
             <div className="mt-4 rounded-2xl border border-amber-500/40 bg-black p-4 shadow-lg">
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-8 h-8 text-amber-300">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.35 2.7A1 1 0 007 17h12a1 1 0 001-1v-1a1 1 0 00-1-1H7zm0 0V6m0 7a1 1 0 001 1h8a1 1 0 001-1" />
-                  </svg>
+                  <Image
+                    src={withBasePath("/joyeria/logo.png")}
+                    alt="Urlaty Logo"
+                    width={32}
+                    height={32}
+                    className="object-contain"
+                  />
                   <div>
                     <p className="text-sm sm:text-base font-semibold text-amber-200">
                       Carrito de cadenas
@@ -3104,7 +2885,7 @@ export default function JoyeriaPage() {
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-2">
                   <Image
-                    src={withBasePath("/joyeria/logo.png.jpg")}
+                    src={withBasePath("/joyeria/logo.png")}
                     alt="Urlaty Logo"
                     width={32}
                     height={32}

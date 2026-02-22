@@ -117,7 +117,7 @@ export default function BilleterasPage() {
             <p className="text-zinc-300 mt-2">Billeteras elegantes con acabados premium.</p>
           </div>
           <Link
-            href="/cart"
+            href="/cart/"
             className="inline-flex items-center justify-center rounded-full border border-amber-500/40 px-5 py-2 text-amber-200 hover:bg-amber-500/10"
           >
             Ver carrito

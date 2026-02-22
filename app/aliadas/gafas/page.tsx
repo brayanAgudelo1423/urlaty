@@ -19,15 +19,11 @@ export default function GafasPage() {
   const [addedId, setAddedId] = useState<number | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const assetBasePath = process.env.NODE_ENV === "production" ? "/urlaty" : "";
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
   const withBasePath = (src: string) => {
-    if (src.startsWith("http")) {
-      return src;
-    }
-    if (src.startsWith(assetBasePath)) {
-      return encodeURI(src);
-    }
-    return encodeURI(`${assetBasePath}${src}`);
+    if (src.startsWith("http")) return src;
+    const path = src.startsWith("/") ? src : `/${src}`;
+    return encodeURI(basePath ? `${basePath}${path}` : path);
   };
 
   useEffect(() => {
@@ -165,7 +161,7 @@ export default function GafasPage() {
             </div>
           </div>
           <Link
-            href="/cart"
+            href="/cart/"
             className="inline-flex items-center justify-center rounded-full border border-amber-500/40 px-5 py-2 text-amber-200 hover:bg-amber-500/10"
           >
             Ver carrito

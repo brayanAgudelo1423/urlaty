@@ -4,137 +4,21 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaInstagram, FaWhatsapp } from "react-icons/fa";
+import { fetchProducts, type Product } from "@/lib/api";
 
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  category: string;
-  image: string;
-  description: string;
-}
-
-const products: Product[] = [
-  {
-    id: 1,
-    name: "Combo one dios",
-    price: 310000,
-    category: "Oro laminado 18K",
-    image:
-      "/joyeria/combito.jpeg",
-    description:
-      "Combo pulsera, dos dijes y cadena",
-  },
-  {
-    id: 2,
-    name: "Pulsera RX grande",
-    price: 185000,
-    category: "Oro laminado 18K",
-    image:
-      "/joyeria/rolex grande.jpeg",
-    description:
-      "Pulsera RX grande con balineria",
-  },
-  {
-    id: 3,
-    name: "3 carriles",
-    price: 120000,
-    category: "Oro laminado 18K",
-    image:
-      "/joyeria/3k.jpeg",
-    description:
-      "3 carriles elegante",
-  },
-  {
-    id: 4,
-    name: "Pulseras",
-    price: 85000,
-    category: "Oro laminado 18K",
-    image:
-      "/joyeria/pulseras viej.jpeg",
-    description:
-      "Pulseras ",
-  },
-  {
-    id: 5,
-    name: "Combo aguila",
-    price: 260000,
-    category: "Oro laminado 18K",
-    image:
-      "/joyeria/aguila comb.jpeg",
-    description:
-      "cadena, dije y aretes ",
-  },
-  {
-    id: 6,
-    name: "pulsera san miguel",
-    price: 105000,
-    category: "Oro laminado 18K",
-    image:
-      "/joyeria/pulsera sanVieja.jpeg",
-    description:
-      "Pulsera san miguel en oro laminado 18K.",
-  },
-  {
-    id: 7,
-    name: "cadena virgen de guadalupe",
-    price: 180000,
-    category: "Oro laminado 18K",
-    image:
-      "/joyeria/virgenVieja.jpeg",
-    description:
-      "cadena con dije de la virgen ",
-  },
-  {
-    id: 8,
-    name: "combo cruz gucci",
-    price: 200000,
-    category: "Oro laminado 18K",
-    image:
-      "/joyeria/cruz con gucci.jpeg",
-    description:
-      "cadena con dije y aretes gucci",
-  },
-  {
-    id: 9,
-    name: "combo pulsera aretes",
-    price: 150000,
-    category: "Oro laminado 18K",
-    image:
-      "/joyeria/comboViejo.jpeg",
-    description:
-      "pulsera diamantada con aretes ",
-  },
-  {
-    id: 10,
-    name: "pulsera crucificada",
-    price: 110000,
-    category: "Oro laminado 18K",
-    image:
-      "/joyeria/ComboPul.jpeg",
-    description:
-      "pulsera con dije crucificado ",
-  },
-  {
-    id: 11,
-    name: "combo virgen san miguel",
-    price: 165000,
-    category: "Oro laminado 18K",
-    image:
-      "/joyeria/combo san.jpeg",
-    description:
-      "combo pareja de proteccion",
-  },
-  {
-    id: 12,
-    name: "combo Estelar",
-    price: 160000,
-    category: "Oro laminado 18K",
-    image:
-      "/joyeria/pulseraHiloVieja.jpeg",
-    description:
-      "combo pulsera, dije, aretes",
-  },
+const productsFallback: Product[] = [
+  { id: 1, name: "Combo one dios", price: 310000, category: "Oro laminado 18K", image: "/joyeria/combito.jpeg", description: "Combo pulsera, dos dijes y cadena" },
+  { id: 2, name: "Pulsera RX grande", price: 185000, category: "Oro laminado 18K", image: "/joyeria/rolex grande.jpeg", description: "Pulsera RX grande con balineria" },
+  { id: 3, name: "3 carriles", price: 120000, category: "Oro laminado 18K", image: "/joyeria/3k.jpeg", description: "3 carriles elegante" },
+  { id: 4, name: "Pulseras", price: 85000, category: "Oro laminado 18K", image: "/joyeria/pulseras viej.jpeg", description: "Pulseras " },
+  { id: 5, name: "Combo aguila", price: 260000, category: "Oro laminado 18K", image: "/joyeria/aguila comb.jpeg", description: "cadena, dije y aretes " },
+  { id: 6, name: "pulsera san miguel", price: 105000, category: "Oro laminado 18K", image: "/joyeria/pulsera sanVieja.jpeg", description: "Pulsera san miguel en oro laminado 18K." },
+  { id: 7, name: "cadena virgen de guadalupe", price: 180000, category: "Oro laminado 18K", image: "/joyeria/virgenVieja.jpeg", description: "cadena con dije de la virgen " },
+  { id: 8, name: "combo cruz gucci", price: 200000, category: "Oro laminado 18K", image: "/joyeria/cruz con gucci.jpeg", description: "cadena con dije y aretes gucci" },
+  { id: 9, name: "combo pulsera aretes", price: 150000, category: "Oro laminado 18K", image: "/joyeria/comboViejo.jpeg", description: "pulsera diamantada con aretes " },
+  { id: 10, name: "pulsera crucificada", price: 110000, category: "Oro laminado 18K", image: "/joyeria/ComboPul.jpeg", description: "pulsera con dije crucificado " },
+  { id: 11, name: "combo virgen san miguel", price: 165000, category: "Oro laminado 18K", image: "/joyeria/combo san.jpeg", description: "combo pareja de proteccion" },
+  { id: 12, name: "combo Estelar", price: 160000, category: "Oro laminado 18K", image: "/joyeria/pulseraHiloVieja.jpeg", description: "combo pulsera, dije, aretes" },
 ];
 
 const categories = ["Oro laminado 18K"];
@@ -158,14 +42,15 @@ const styles = [
   },
 ];
 
+// Cada tienda aliada lleva a su propia página con su catálogo
 const aliados = [
-  { title: "Gafas", href: "/aliadas/gafas" },
-  { title: "Bolsos", href: "/aliadas/bolsos" },
-  { title: "Joyería", href: "/aliadas/joyeria" },
-  { title: "Tennis", href: "/aliadas/tennis" },
-  { title: "Chanclas", href: "/aliadas/chanclas" },
-  { title: "Correas", href: "/aliadas/correas" },
-  { title: "Billeteras", href: "/aliadas/billeteras" },
+  { title: "Joyería", href: "/aliadas/joyeria/", description: "Ver catálogo joyería" },
+  { title: "Tennis", href: "/aliadas/tennis/", description: "Ver catálogo tennis" },
+  { title: "Gafas", href: "/aliadas/gafas/", description: "Ver catálogo gafas" },
+  { title: "Bolsos", href: "/aliadas/bolsos/", description: "Ver catálogo bolsos" },
+  { title: "Chanclas", href: "/aliadas/chanclas/", description: "Ver catálogo chanclas" },
+  { title: "Correas", href: "/aliadas/correas/", description: "Ver catálogo correas" },
+  { title: "Billeteras", href: "/aliadas/billeteras/", description: "Ver catálogo billeteras" },
 ];
 
 export default function Home() {
@@ -173,15 +58,19 @@ export default function Home() {
   const [cartCount, setCartCount] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const assetBasePath = process.env.NODE_ENV === "production" ? "/urlaty" : "";
+  const [products, setProducts] = useState<Product[]>(productsFallback);
+
+  useEffect(() => {
+    fetchProducts()
+      .then(setProducts)
+      .catch(() => {});
+  }, []);
+
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
   const withBasePath = (src: string) => {
-    if (src.startsWith("http")) {
-      return src;
-    }
-    if (src.startsWith(assetBasePath)) {
-      return encodeURI(src);
-    }
-    return encodeURI(`${assetBasePath}${src}`);
+    if (src.startsWith("http")) return src;
+    const path = src.startsWith("/") ? src : `/${src}`;
+    return encodeURI(basePath ? `${basePath}${path}` : path);
   };
 
   const updateCartCount = () => {
@@ -248,7 +137,7 @@ export default function Home() {
               <h1 className="text-2xl font-bold text-white">Urlaty_Handless</h1>
             </div>
             <Link
-              href="/cart"
+              href="/cart/"
               className="relative p-2 text-zinc-200 hover:text-amber-400 transition"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -312,7 +201,7 @@ export default function Home() {
             <div>
               <h3 className="text-2xl sm:text-3xl font-bold text-white">Tiendas aliadas</h3>
               <p className="text-zinc-300 mt-2">
-                Explora productos complementarios en nuestras marcas aliadas.
+                Haz clic en una tienda para ver su catálogo completo.
               </p>
             </div>
             <Link
@@ -327,9 +216,11 @@ export default function Home() {
               <Link
                 key={aliado.title}
                 href={aliado.href}
-                className="rounded-full border border-amber-500/30 bg-black/60 px-4 py-3 text-center text-sm font-semibold text-white hover:border-amber-400 hover:text-amber-200 transition"
+                className="rounded-xl border border-amber-500/30 bg-black/60 px-4 py-4 text-center text-sm font-semibold text-white hover:border-amber-400 hover:text-amber-200 transition flex flex-col items-center justify-center gap-1"
+                title={aliado.description}
               >
-                {aliado.title}
+                <span>{aliado.title}</span>
+                <span className="text-xs font-normal text-amber-300/90 opacity-90">Ver catálogo</span>
               </Link>
             ))}
           </div>
@@ -507,7 +398,10 @@ export default function Home() {
                 <a href="#estilos" className="hover:text-amber-400">Estilos</a>
               </li>
               <li>
-                <Link href="/cart" className="hover:text-amber-400">Carrito</Link>
+                <Link href="/cart/" className="hover:text-amber-400">Carrito</Link>
+              </li>
+              <li>
+                <Link href="/admin/" className="hover:text-amber-400">Admin</Link>
               </li>
             </ul>
           </div>

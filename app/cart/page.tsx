@@ -35,15 +35,11 @@ export default function CartPage() {
     }
     router.push("/");
   };
-  const assetBasePath = process.env.NODE_ENV === "production" ? "/urlaty" : "";
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
   const withBasePath = (src: string) => {
-    if (src.startsWith("http")) {
-      return src;
-    }
-    if (src.startsWith(assetBasePath)) {
-      return encodeURI(src);
-    }
-    return encodeURI(`${assetBasePath}${src}`);
+    if (src.startsWith("http")) return src;
+    const path = src.startsWith("/") ? src : `/${src}`;
+    return encodeURI(basePath ? `${basePath}${path}` : path);
   };
 
   useEffect(() => {
